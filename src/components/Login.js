@@ -11,7 +11,7 @@ const validateForm = (errors) => {
   return valid;
 };
 
-const Login = ({ user, setUser }) => {
+const Login = () => {
   const [loginInfo, setLoginInfo] = useState({ username: "", password: "" });
   const [errors, setErrors] = useState({ username: "", password: "" });
 
