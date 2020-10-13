@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { Button, Form, Container, Row, Col, Card } from "react-bootstrap";
+import "../style/Register.css";
 
 const validateForm = (errors) => {
   let valid = true;
@@ -97,18 +98,11 @@ const Register = () => {
   };
 
   return (
-    <div
-      style={{
-        backgroundImage:
-          "url(https://www.xmple.com/wallpaper/gradient-black-blue-linear-3840x2160-c2-000000-00ced1-a-15-f-14.svg)",
-        height: "100%",
-        width: "100%",
-      }}
-    >
+    <div id="registerBackground">
       <Container className="align-items-center">
         <Row className="d-flex justify-content-center">
           <Col sm={6} className="align-items-center">
-            <Card bg="light" className="loginCard">
+            <Card bg="light" className="registerCard">
               <Card.Body>
                 <Card.Title className="text-center">
                   <h1>Create Account</h1>
