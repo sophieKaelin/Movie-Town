@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import PosterCarousel from "./components/PosterCarousel.js";
 import Login from "./components/Login.js";
 import Register from "./components/Register.js";
+import NavBar from "./components/NavBar.js";
 import {
   BrowserRouter as Router,
   Switch,
@@ -17,6 +18,7 @@ function App() {
     <Router>
       <Switch>
         <Route path="/home">
+          <NavBar />
           <PosterCarousel />
         </Route>
         <Route path="/login">
