@@ -3,6 +3,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PosterCarousel from "./components/PosterCarousel.js";
+import Login from "./components/Login.js";
 import {
   BrowserRouter as Router,
   Switch,
@@ -17,7 +18,9 @@ function App() {
         <Route path="/home">
           <PosterCarousel />
         </Route>
-        <Route path="/login"></Route>
+        <Route path="/login">
+          <Login />
+        </Route>
         <Route path="/register"></Route>
         {/* ALWAYS LEAVE LAST */}
         <Route path="/">
