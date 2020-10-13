@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "./logo.svg";
-import "./App.css";
+import "./style/App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PosterCarousel from "./components/PosterCarousel.js";
 import Login from "./components/Login.js";
