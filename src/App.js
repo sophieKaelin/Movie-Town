@@ -6,34 +6,39 @@ import PosterCarousel from "./components/PosterCarousel.js";
 import Login from "./components/Login.js";
 import Register from "./components/Register.js";
 import NavBar from "./components/NavBar.js";
+import Profile from "./components/Profile.js";
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Redirect,
 } from "react-router-dom";
 
 function App() {
-  return (
-    <Router>
-      <Switch>
-        <Route path="/home">
-          <NavBar />
-          <PosterCarousel />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/register">
-          <Register />
-        </Route>
-        {/* ALWAYS LEAVE LAST */}
-        <Route path="/">
-          <Redirect to="/home" />
-        </Route>
-      </Switch>
-    </Router>
-  );
+	return (
+		<Router>
+			<Switch>
+				<Route path="/home">
+					<NavBar />
+					<PosterCarousel />
+				</Route>
+				<Route path="/login">
+					<Login />
+				</Route>
+				<Route path="/register">
+					<Register />
+				</Route>
+				<Route path="/profile">
+					<NavBar />
+					<Profile />
+				</Route>
+				{/* ALWAYS LEAVE LAST */}
+				<Route path="/">
+					<Redirect to="/home" />
+				</Route>
+			</Switch>
+		</Router>
+	);
 }
 
 export default App;
