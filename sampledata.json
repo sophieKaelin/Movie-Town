@@ -1,0 +1,64 @@
+{
+    "users": [
+        {
+            "username": "starfishsophie",
+            "password": "sophie",
+            "avatar": "http://robohash.org/bob",
+            "follows": ["b_radkenny", "george_summerglue"],
+            "watched": ["tt0332280", "tt0126029", "tt2674426"],
+            "toWatch": []
+        },
+        {
+            "username": "b_radkenny",
+            "password": "bradley",
+            "avatar": "http://robohash.org/bob",
+            "follows": ["starfishsophie", "george_summerglue"],
+            "watched": ["tt4154796", "tt2527338", "tt8503618", "tt0317219"],
+            "toWatch": ["tt0332280"]
+        },
+        {
+            "username": "george_summerglue",
+            "password": "george",
+            "avatar": "http://robohash.org/bob",
+            "follows": ["b_radkenny", "cece_hollins", "cuddlewhale"],
+            "watched": ["tt0088247", "tt0103064", "tt0181852"],
+            "toWatch": []
+        },
+        {
+            "username": "cece_hollins",
+            "password": "cece",
+            "avatar": "http://robohash.org/bob",
+            "follows": ["b_radkenny", "starfishsophie", "george_summerglue"],
+            "watched": ["tt0114709", "tt0120363", "tt0435761"],
+            "toWatch": []
+        },
+        {
+            "username": "cuddlewhale",
+            "password": "sam",
+            "avatar": "http://robohash.org/bob",
+            "follows": ["cece_hollins", "starfishsophie", "george_summerglue"],
+            "watched": ["tt0266543"],
+            "toWatch": ["tt0181852", "tt0120363"]
+        }
+    ],
+    "reviews": [
+        {
+            "username": "starfishsophie",
+            "titleid": "tt0332280",
+            "timestamp": "2020-07-15 07:25:28",
+            "stars": 5,
+            "content": "I Will never get tired of this movie. Brings me to tears everytime. A must watch for every rom-com lover!",
+            "likes": ["b_radkenny", "cuddlewhale"],
+            "comments": []
+        },
+        {
+            "username": "b_radkenny",
+            "titleid": "tt0317219",
+            "timestamp": "2020-07-15 07:25:28",
+            "stars": 5,
+            "content": "Broom Broom, I like Cards",
+            "likes": ["b_radkenny", "george_summerglue"],
+            "comments": []
+        }
+    ]
+}
