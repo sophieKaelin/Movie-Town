@@ -1,18 +1,9 @@
-require("dotenv").config();
+require("dotenv").config()
 
-const mongoose = require("mongoose"); //node library that connects to MongoDB
+const mongoose = require("mongoose") //node library that connects to MongoDB
 
-const url = process.env.MONGODB_URI;
-
-//Check for password to access DB
-if (process.argv.length < 3) {
-	console.log(
-		"Missing password, structure arguments like: node mongo.js <password>"
-	);
-	process.exit(1);
-}
-
-const password = process.argv[2];
+const url = process.env.MONGODB_URI
+console.log(url)
 
 //Connect to the DB
 mongoose
@@ -21,12 +12,12 @@ mongoose
 		useUnifiedTopology: true,
 	})
 	.then((result) => {
-		console.log("You are connected to the DB");
+		console.log("You are connected to the DB")
 	})
 	.catch((error) => {
-		console.log(error);
-		console.log("Could not connect to DB");
-	});
+		console.log(error)
+		console.log("Could not connect to DB")
+	})
 
 const usersSchema = new mongoose.Schema({
 	username: String,
@@ -35,9 +26,9 @@ const usersSchema = new mongoose.Schema({
 	follows: Array,
 	watched: Array,
 	toWatch: Array,
-});
+})
 
-const User = mongoose.model("User", usersSchema);
+const User = mongoose.model("User", usersSchema)
 
 const reviewSchema = new mongoose.Schema({
 	username: String,
@@ -47,8 +38,8 @@ const reviewSchema = new mongoose.Schema({
 	content: String,
 	likes: Array,
 	comments: Array,
-});
+})
 
-const Review = mongoose.model("Review", reviewSchema);
+const Review = mongoose.model("Review", reviewSchema)
 
-module.exports = { User, Review };
+module.exports = { User, Review }
