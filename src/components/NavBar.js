@@ -1,10 +1,10 @@
-import React from "react";
-import "bootstrap/dist/css/bootstrap.css";
-import { Nav, Navbar, Button } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import React from "react"
+import "bootstrap/dist/css/bootstrap.css"
+import { Nav, Navbar, Button } from "react-bootstrap"
+import { useHistory } from "react-router-dom"
 
 const NavBar = () => {
-	const history = useHistory();
+	const history = useHistory()
 
 	return (
 		<Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
@@ -49,7 +49,7 @@ const NavBar = () => {
 						</svg>
 						Movie List
 					</Nav.Link>
-					<Nav.Link href="#myMovies">
+					<Nav.Link href="/myMovies">
 						<svg
 							width="1em"
 							height="1em"
@@ -83,7 +83,7 @@ const NavBar = () => {
 				</Navbar.Text>
 			</Navbar.Collapse>
 		</Navbar>
-	);
-};
+	)
+}
 
-export default NavBar;
+export default NavBar
