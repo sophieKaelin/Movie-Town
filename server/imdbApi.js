@@ -8,7 +8,16 @@ const omdb = process.env.OMDB_API
 
 IMDBRouter.get("/api/movie/title", async (req, res) => {
 	const urlString = omdb + 't="' + req.body.title + '"'
-	console.log(urlString)
+	axios
+		.get(urlString)
+		.then((result) => {
+			res.json(result.data)
+		})
+		.catch((err) => console.log(err))
+})
+
+IMDBRouter.get("/api/movie/id", async (req, res) => {
+	const urlString = omdb + "i=" + req.query.id
 	axios
 		.get(urlString)
 		.then((result) => {
