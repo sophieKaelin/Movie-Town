@@ -7,6 +7,7 @@ import Login from "./components/Login.js"
 import Register from "./components/Register.js"
 import NavBar from "./components/NavBar.js"
 import Profile from "./components/Profile.js"
+import MovieCard from "./components/MovieCard.js"
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -71,6 +72,10 @@ function App() {
 				<Route path="/profile">
 					<NavBar />
 					<Profile />
+				</Route>
+				<Route path="/myMovies">
+					<NavBar />
+					<MovieCard />
 				</Route>
 				{/* ALWAYS LEAVE LAST */}
 				<Route path="/">
