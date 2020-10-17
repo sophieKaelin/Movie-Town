@@ -4,12 +4,14 @@ const express = require("express")
 const cors = require("cors")
 const fs = require("fs")
 const apiRouter = require("./api")
+const IMDBRouter = require("./imdbApi")
 
 const app = express()
 app.use(cors())
 app.use(express.json())
 app.use(express.static("build"))
 app.use(apiRouter)
+app.use(IMDBRouter)
 
 const path = require("path")
 app.get("*", (request, response) => {
