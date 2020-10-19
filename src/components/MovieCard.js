@@ -2,7 +2,6 @@ import React, { useState } from "react"
 import "bootstrap/dist/css/bootstrap.css"
 import { Card, Row, Col, ListGroup, ListGroupItem } from "react-bootstrap"
 import "../style/MovieCard.css"
-import avengersEndgame from "../moviePosters/avengersEndgame.jpg"
 
 const MovieCard = () => {
 	// store state for star rating
@@ -23,23 +22,22 @@ const MovieCard = () => {
 		"Christopher Markus (screenplay by), Stephen McFeely (screenplay by) ..."
 	const cast = "Robert Downey Jr., Chris Evans, Mark Ruffalo ..."
 	const link = "https://www.imdb.com/title/tt4154796/"
+	const poster =
+		"https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_SX300.jpg"
+
 	return (
 		<Card className="mt-5" style={{ width: "56rem", margin: "auto auto" }}>
 			<Row className="no-gutters">
-				<Col className="col-4" style={{ margin: "auto" }}>
-					<Card.Img
-						className="col-auto img-fluid"
-						src={avengersEndgame}
-						alt={title + " poster"}
-					/>
-				</Col>
 				<Col>
+					<Card.Header>
+						{title} ({year})
+					</Card.Header>
 					<Card.Body>
-						<Card.Title>
-							<h3>
-								{title}, {year}
-							</h3>
-						</Card.Title>
+						<Card.Img
+							className="col-auto img-fluid"
+							src={poster}
+							alt={title + " poster"}
+						/>
 						<div className="rating">
 							{[...Array(5)].map((star, i) => {
 								const ratingValue = i + 1
