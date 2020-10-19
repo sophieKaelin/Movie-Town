@@ -6,3 +6,10 @@ input[type="radio"] {
 	cursor: pointer;
 	transition: color 200ms;
 }
+
+img {
+	float: left;
+	height: 400px !important;
+	width: auto !important;
+	margin-right: 10px;
+}
