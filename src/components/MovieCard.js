@@ -78,11 +78,15 @@ const MovieCard = () => {
 								Your rating is: {starRating}
 							</i>
 						</div>
-						<Card.Text>
-							{rating} | {runtime} | {genre} | {releaseDate}
-						</Card.Text>
-						<Card.Text>{synopsis}</Card.Text>
+
 						<ListGroup className="list-group-flush">
+							<ListGroupItem>
+								<Card.Text>
+									{rating} | {runtime} | {genre} |{" "}
+									{releaseDate}
+								</Card.Text>
+								<Card.Text>{synopsis}</Card.Text>
+							</ListGroupItem>
 							<ListGroupItem>
 								<h6>Directors:</h6> {directors}
 							</ListGroupItem>
