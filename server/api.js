@@ -8,6 +8,45 @@ const { User, Review } = require("../server/schemas")
 
 const apiRouter = express.Router()
 
+//**** LOGIN ****/
+
+//Retrieve User data from a username
+const getUser = async (user) => {
+	// console.log(user)
+	return await User.findOne({ username: user }).then((result) => {
+		return result
+	})
+}
+
+apiRouter.post("/api/login", async (request, response) => {
+	const username = request.body.username
+	const password = request.body.password
+	const user = await getUser(username)
+	console.log(user)
+	if (!user) {
+		//check if the user exists
+		return response
+			.status(401)
+			.json({ error: "invalid username or password" })
+	} else {
+		if (await bcrypt.compare(password, user.password)) {
+			console.log("Password is gooooood")
+			const userForToken = {
+				id: user.id,
+				username: user.username,
+			}
+			const token = jwt.sign(userForToken, process.env.SECRET_KEY)
+			return response
+				.status(200)
+				.json({ token, username: user.username, name: user.name })
+		} else {
+			return response
+				.status(401)
+				.json({ error: "Invalid username or password" })
+		}
+	}
+})
+
 // *****USER API'S*****
 
 apiRouter.get("/api/users", (req, res) => {
@@ -16,8 +55,18 @@ apiRouter.get("/api/users", (req, res) => {
 	})
 })
 
+//TODO: Can merge these two together???
 apiRouter.get("/api/users/username", (req, res) => {
 	User.findOne({ username: req.query.username })
+		.then((user) => {
+			console.log(req.query.username)
+			res.json(user)
+		})
+		.catch((error) => next(error))
+})
+
+apiRouter.get("/api/users/:username", (req, res) => {
+	User.findOne({ username: req.params.username })
 		.then((user) => {
 			console.log(req.query.username)
 			res.json(user)

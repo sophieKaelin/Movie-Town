@@ -1,65 +1,77 @@
-import React, { useState, useEffect } from "react";
-import "./style/App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import axios from 'axios';
-import PosterCarousel from "./components/PosterCarousel.js";
-import Login from "./components/Login.js";
-import Register from "./components/Register.js";
-import NavBar from "./components/NavBar.js";
-import Profile from "./components/Profile.js";
+import React, { useState, useEffect } from "react"
+import "./style/App.css"
+import "bootstrap/dist/css/bootstrap.min.css"
+import axios from "axios"
+import PosterCarousel from "./components/PosterCarousel.js"
+import Login from "./components/Login.js"
+import Register from "./components/Register.js"
+import NavBar from "./components/NavBar.js"
+import Profile from "./components/Profile.js"
 import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
 	Redirect,
-} from "react-router-dom";
+} from "react-router-dom"
+
+//TODO: change this to relative path when pushed to heroku
+const userURL = "http://localhost:3001/api/users/"
 
 function App() {
+	const [users, setUsers] = useState([]) //all users
+	const [user, setUser] = useState(null) //Logged In User
+	const [reviews, setReviews] = useState([]) //all reviews
 
-    const [users, setUsers] = useState([]) //all users
-    const [reviews, setReviews] = useState([]) //all reviews
+	const FsetUser = (user) => {
+		setUser(user)
+	}
 
-    const baseURL = "/api/"
+	//TODO: Remove this because we shouldn't be using local storage
+	useEffect(() => {
+		const localUser = JSON.parse(localStorage.getItem("user"))
+		if (localUser) {
+			axios.get(userURL + localUser.username).then((response) => {
+				setUser(response.data)
+			})
+		}
+	}, [])
 
-    const addNewReview = (newReview) => {
-        axios.post(baseURL + "reviews", newReview)
-          .then(response => {
-            console.log(response)
-            setReviews([...reviews, response.data])
-          })
-    }
+	const baseURL = "/api/"
 
-    const deleteReview = (review) => {
-        console.log("delete", review)
-        axios.delete(baseURL + "reviews/" + review.id)
-            .then((response) => {
-            console.log("delete succeeded")
-            const newReviews = reviews.filter(r => r.id !== review.id)
-            setReviews(newReviews)
-        })
-    }
+	const addNewReview = (newReview) => {
+		axios.post(baseURL + "reviews", newReview).then((response) => {
+			console.log(response)
+			setReviews([...reviews, response.data])
+		})
+	}
 
-    const addNewUser = (newUser) => {
-        axios.post(baseURL + "users", newUser)
-            .then(response => {
-            console.log(response)
-            setUsers([...users, response.data])
-        })
-    }
+	const deleteReview = (review) => {
+		console.log("delete", review)
+		axios.delete(baseURL + "reviews/" + review.id).then((response) => {
+			console.log("delete succeeded")
+			const newReviews = reviews.filter((r) => r.id !== review.id)
+			setReviews(newReviews)
+		})
+	}
 
-    useEffect(() => {
-        axios.get(baseURL + "users")
-        .then((response) => {
-            setUsers(response.data)
-        })
-    }, [])
+	const addNewUser = (newUser) => {
+		axios.post(baseURL + "users", newUser).then((response) => {
+			console.log(response)
+			setUsers([...users, response.data])
+		})
+	}
 
-    useEffect(() => {
-        axios.get(baseURL + "reviews")
-        .then((response) => {
-            setReviews(response.data)
-        })
-    }, [])
+	useEffect(() => {
+		axios.get(baseURL + "users").then((response) => {
+			setUsers(response.data)
+		})
+	}, [])
+
+	useEffect(() => {
+		axios.get(baseURL + "reviews").then((response) => {
+			setReviews(response.data)
+		})
+	}, [])
 
 	return (
 		<Router>
@@ -69,7 +81,7 @@ function App() {
 					<PosterCarousel />
 				</Route>
 				<Route path="/login">
-					<Login />
+					<Login user={user} setUser={FsetUser} />
 				</Route>
 				<Route path="/register">
 					<Register />
@@ -84,7 +96,7 @@ function App() {
 				</Route>
 			</Switch>
 		</Router>
-	);
+	)
 }
 
-export default App;
+export default App
