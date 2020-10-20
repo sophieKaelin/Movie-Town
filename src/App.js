@@ -15,9 +15,27 @@ import {
 	Redirect,
 } from "react-router-dom"
 
+//TODO: change this to relative path when pushed to heroku
+const userURL = "http://localhost:3001/api/users/"
+
 function App() {
 	const [users, setUsers] = useState([]) //all users
+	const [user, setUser] = useState(null) //Logged In User
 	const [reviews, setReviews] = useState([]) //all reviews
+  
+	const FsetUser = (user) => {
+		setUser(user)
+	}
+
+	//TODO: Remove this because we shouldn't be using local storage
+	useEffect(() => {
+		const localUser = JSON.parse(localStorage.getItem("user"))
+		if (localUser) {
+			axios.get(userURL + localUser.username).then((response) => {
+				setUser(response.data)
+			})
+		}
+	}, [])
 
 	const baseURL = "/api/"
 
@@ -64,7 +82,7 @@ function App() {
 					<PosterCarousel />
 				</Route>
 				<Route path="/login">
-					<Login />
+					<Login user={user} setUser={FsetUser} />
 				</Route>
 				<Route path="/register">
 					<Register />
