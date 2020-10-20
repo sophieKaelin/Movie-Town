@@ -2,17 +2,19 @@ import React, { useState, useEffect } from "react"
 import "./style/App.css"
 import "bootstrap/dist/css/bootstrap.min.css"
 import axios from "axios"
-import PosterCarousel from "./components/PosterCarousel.js"
 import Login from "./components/Login.js"
 import Register from "./components/Register.js"
 import NavBar from "./components/NavBar.js"
 import Profile from "./components/Profile.js"
+import Home from "./components/Home.js"
 import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
 	Redirect,
 } from "react-router-dom"
+
+//TODO: Reroute to login page if there is no user logged in (set this on all pages)
 
 //TODO: change this to relative path when pushed to heroku
 const userURL = "http://localhost:3001/api/users/"
@@ -77,8 +79,9 @@ function App() {
 		<Router>
 			<Switch>
 				<Route path="/home">
-					<NavBar />
-					<PosterCarousel />
+					{user ? <Redirect to="/home" /> : <Redirect to="/login" />}
+					<NavBar user={user} setUser={FsetUser} />
+					<Home />
 				</Route>
 				<Route path="/login">
 					<Login user={user} setUser={FsetUser} />
@@ -87,12 +90,12 @@ function App() {
 					<Register />
 				</Route>
 				<Route path="/profile">
-					<NavBar />
+					<NavBar user={user} setUser={FsetUser} />
 					<Profile />
 				</Route>
 				{/* ALWAYS LEAVE LAST */}
 				<Route path="/">
-					<Redirect to="/home" />
+					{user ? <Redirect to="/home" /> : <Redirect to="/login" />}
 				</Route>
 			</Switch>
 		</Router>
