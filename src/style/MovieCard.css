@@ -1,0 +1,15 @@
+input[type="radio"] {
+	display: none;
+}
+
+.star {
+	cursor: pointer;
+	transition: color 200ms;
+}
+
+img {
+	float: left;
+	height: 400px !important;
+	width: auto !important;
+	margin-right: 10px;
+}
