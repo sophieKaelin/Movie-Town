@@ -1,10 +1,17 @@
 import React from "react"
 import "bootstrap/dist/css/bootstrap.css"
 import { Nav, Navbar, Button } from "react-bootstrap"
-import { useHistory } from "react-router-dom"
+import { useHistory, Redirect } from "react-router-dom"
 
-const NavBar = () => {
+const NavBar = ({ user, setUser }) => {
 	const history = useHistory()
+
+	//TODO: Fix this so that it doesn't use localstorage
+	const saveAndLogout = () => {
+		console.log("You have been logged out")
+		localStorage.removeItem("user")
+		setUser(null)
+	}
 
 	return (
 		<Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
@@ -70,16 +77,23 @@ const NavBar = () => {
 			</Navbar.Collapse>
 			<Navbar.Collapse className="justify-content-end">
 				<Navbar.Text>
-					<Button
-						variant="light"
-						className="ml-2"
-						onClick={() => history.push("/login")}
-					>
-						Login
-					</Button>
-					<Button variant="light" className="ml-2">
-						Logout
-					</Button>
+					{user ? (
+						<Button
+							onClick={saveAndLogout}
+							variant="light"
+							className="ml-2"
+						>
+							Logout
+						</Button>
+					) : (
+						<Button
+							variant="light"
+							className="ml-2"
+							onClick={() => history.push("/login")}
+						>
+							Login
+						</Button>
+					)}
 				</Navbar.Text>
 			</Navbar.Collapse>
 		</Navbar>
