@@ -75,10 +75,7 @@ const Login = ({ user, setUser }) => {
 			console.info("Valid Form")
 			login()
 				.then((data) => {
-					console.log("Success:", data)
-					console.log("uuuu", data.username)
 					setUser(data.username)
-					console.log("user is: ", user)
 					//TODO: Don't set things in local storage, that's naughty. We should hash the login.
 					localStorage.setItem("user", JSON.stringify(data))
 				})
@@ -93,7 +90,6 @@ const Login = ({ user, setUser }) => {
 		console.log("Submit username: ", loginInfo.username)
 		console.log("Submit password: ", loginInfo.password)
 	}
-
 	if (user) {
 		return <Redirect to="/" />
 	} else
