@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.css";
-import { Button, Form, Container, Row, Col, Card } from "react-bootstrap";
-import "../style/Register.css";
+import React, { useState } from "react"
+import "bootstrap/dist/css/bootstrap.css"
+import { Button, Form, Container, Row, Col, Card } from "react-bootstrap"
+import "../style/Register.css"
 
 const validateForm = (errors) => {
-	let valid = true;
+	let valid = true
 	Object.values(errors).forEach(
 		// if we have an error string set valid to false
 		(val) => val.length > 0 && (valid = false)
-	);
-	return valid;
-};
+	)
+	return valid
+}
 
 const Register = () => {
 	const [registerInfo, setRegisterInfo] = useState({
@@ -18,17 +18,17 @@ const Register = () => {
 		avatar: "",
 		password: "",
 		confirmPassword: "",
-	});
+	})
 	const [errors, setErrors] = useState({
 		username: "",
 		avatar: "",
 		password: "",
 		confirmPassword: "",
-	});
+	})
 
 	const handleChange = (e) => {
-		e.preventDefault();
-		const { name, value } = e.currentTarget;
+		e.preventDefault()
+		const { name, value } = e.currentTarget
 
 		switch (name) {
 			case "username":
@@ -36,68 +36,68 @@ const Register = () => {
 					setErrors({
 						...errors,
 						username: "Username cannot be blank!",
-					});
-					setRegisterInfo({ ...registerInfo, username: "" });
+					})
+					setRegisterInfo({ ...registerInfo, username: "" })
 				} else {
-					errors.username = "";
-					setErrors({ ...errors, username: "" });
-					setRegisterInfo({ ...registerInfo, username: value });
+					errors.username = ""
+					setErrors({ ...errors, username: "" })
+					setRegisterInfo({ ...registerInfo, username: value })
 				}
-				break;
+				break
 
 			case "password":
 				if (value.length < 8) {
 					setErrors({
 						...errors,
 						password: "Password must be 8 characters long!",
-					});
-					setRegisterInfo({ ...registerInfo, password: "" });
+					})
+					setRegisterInfo({ ...registerInfo, password: "" })
 				} else {
-					setErrors({ ...errors, password: "" });
-					setRegisterInfo({ ...registerInfo, password: value });
+					setErrors({ ...errors, password: "" })
+					setRegisterInfo({ ...registerInfo, password: value })
 				}
-				break;
+				break
 
 			case "confirmPassword":
 				if (value.length < 8) {
 					setErrors({
 						...errors,
 						confirmPassword: "Password must be 8 characters long!",
-					});
-					setRegisterInfo({ ...registerInfo, confirmPassword: "" });
+					})
+					setRegisterInfo({ ...registerInfo, confirmPassword: "" })
 				} else {
-					setErrors({ ...errors, confirmPassword: "" });
+					setErrors({ ...errors, confirmPassword: "" })
 					setRegisterInfo({
 						...registerInfo,
 						confirmPassword: value,
-					});
+					})
 				}
-				break;
+				break
 
 			default:
-				break;
+				break
 		}
-	};
+	}
 
 	const handleSubmit = (e) => {
-		e.preventDefault();
+		e.preventDefault()
 		// check if password field and confirm password field match
 		let passwordsMatch =
 			registerInfo.password.localeCompare(
 				registerInfo.confirmPassword
-			) === 0;
-		console.log(passwordsMatch);
+			) === 0
+		console.log(passwordsMatch)
 		if (validateForm(errors) && passwordsMatch) {
-			console.info("Valid Form");
+			console.info("Valid Form")
 		} else if (!passwordsMatch) {
-			console.info("Passwords dont match!");
-			setErrors({ ...errors, confirmPassword: "Passwords dont match!" });
+			console.info("Passwords dont match!")
+			setErrors({ ...errors, confirmPassword: "Passwords dont match!" })
 		} else {
-			console.error("Invalid Form");
+			console.error("Invalid Form")
 		}
-		console.log("Submit register info: ", registerInfo);
-		console.log("Submit error: ", errors);
-	};
+		console.log("Submit register info: ", registerInfo)
+		console.log("Submit error: ", errors)
+	}
 
 	return (
 		<div id="registerBackground">
@@ -119,7 +119,7 @@ const Register = () => {
 											onChange={handleChange}
 										/>
 										{errors.username.length > 0 && (
-											<Form.Text className="error">
+											<Form.Text className="error text-danger">
 												{errors.username}
 											</Form.Text>
 										)}
@@ -134,7 +134,7 @@ const Register = () => {
 											onChange={handleChange}
 										/>
 										{errors.password.length > 0 && (
-											<Form.Text className="error">
+											<Form.Text className="error text-danger">
 												{errors.password}
 											</Form.Text>
 										)}
@@ -151,7 +151,7 @@ const Register = () => {
 											onChange={handleChange}
 										/>
 										{errors.confirmPassword.length > 0 && (
-											<Form.Text className="error">
+											<Form.Text className="error text-danger">
 												{errors.confirmPassword}
 											</Form.Text>
 										)}
@@ -178,7 +178,7 @@ const Register = () => {
 				</Row>
 			</Container>
 		</div>
-	);
-};
+	)
+}
 
-export default Register;
+export default Register
