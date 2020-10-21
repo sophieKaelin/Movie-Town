@@ -7,7 +7,7 @@ input[type="radio"] {
 	transition: color 200ms;
 }
 
-img {
+.card-img {
 	float: left;
 	height: 400px !important;
 	width: auto !important;

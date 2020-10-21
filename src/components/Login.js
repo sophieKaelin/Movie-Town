@@ -113,7 +113,7 @@ const Login = ({ user, setUser }) => {
 												onChange={handleChange}
 											/>
 											{errors.username.length > 0 && (
-												<Form.Text className="error">
+												<Form.Text className="error text-danger">
 													{errors.username}
 												</Form.Text>
 											)}
@@ -128,7 +128,7 @@ const Login = ({ user, setUser }) => {
 												onChange={handleChange}
 											/>
 											{errors.password.length > 0 && (
-												<Form.Text className="error">
+												<Form.Text className="error text-danger">
 													{errors.password}
 												</Form.Text>
 											)}
