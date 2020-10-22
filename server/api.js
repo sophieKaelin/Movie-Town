@@ -74,30 +74,53 @@ apiRouter.get("/api/users/:username", (req, res) => {
 		.catch((error) => next(error))
 })
 
-// apiRouter.post('/api/users', async (req, res) => {
-//     const body = req.body
-//     let encryptedPassword = ''
-//     const pwcrypt = await bcrypt.hash(body.password, 10).then(result => { encryptedPassword = result })
+apiRouter.post('/api/users', async (req, res) => {
+    const body = req.body
+    let encryptedPassword = ''
+    const pwcrypt = await bcrypt.hash(body.password, 10).then(result => { encryptedPassword = result })
 
-//     const newUser = new User({
-//         username: body.username,
-//         password: encryptedPassword,
-//         avatar: body.avatar,
-//         follows: [],
-//         watched: [],
-//         toWatch: [],
-//     })
-//     newUser.save().then(result => {
-//       res.json(result)
-//     })
-// })
+    const newUser = new User({
+        username: body.username,
+        password: encryptedPassword,
+        avatar: body.avatar,
+        follows: [],
+        watched: [],
+        toWatch: [],
+    })
+    newUser.save().then(result => {
+      res.json(result)
+    })
+})
 
-apiRouter.put("/api/users/:id", (req, res, next) => {
+apiRouter.put("/api/users/:id/follows", (req, res, next) => {
 	const body = req.body
 	const user = {
-		avatar: body.avatar,
 		follows: body.follows,
+	}
+
+	User.findByIdAndUpdate(req.params.id, user, { new: true })
+		.then((updatedUser) => {
+			res.json(updatedUser)
+		})
+		.catch((error) => next(error))
+})
+
+apiRouter.put("/api/users/:id/watched", (req, res, next) => {
+	const body = req.body
+	const user = {
 		watched: body.watched,
+	}
+
+	User.findByIdAndUpdate(req.params.id, user, { new: true })
+		.then((updatedUser) => {
+			res.json(updatedUser)
+		})
+		.catch((error) => next(error))
+})
+
+apiRouter.put("/api/users/:id/toWatch", (req, res, next) => {
+	const body = req.body
+	const user = {
 		toWatch: body.toWatch,
 	}
 
@@ -147,13 +170,52 @@ apiRouter.delete("/api/reviews/:id", (req, res, next) => {
 		.catch((error) => next(error))
 })
 
-apiRouter.put("/api/reviews/:id", (req, res, next) => {
+apiRouter.put("/api/reviews/:id/stars", (req, res, next) => {
 	const body = req.body
 
 	const review = {
 		stars: body.stars,
+	}
+
+	Review.findByIdAndUpdate(req.params.id, review, { new: true })
+		.then((updatedReview) => {
+			res.json(updatedReview)
+		})
+		.catch((error) => next(error))
+})
+
+apiRouter.put("/api/reviews/:id/content", (req, res, next) => {
+	const body = req.body
+
+	const review = {
 		content: body.content,
+	}
+
+	Review.findByIdAndUpdate(req.params.id, review, { new: true })
+		.then((updatedReview) => {
+			res.json(updatedReview)
+		})
+		.catch((error) => next(error))
+})
+
+apiRouter.put("/api/reviews/:id/likes", (req, res, next) => {
+	const body = req.body
+
+	const review = {
 		likes: body.likes,
+	}
+
+	Review.findByIdAndUpdate(req.params.id, review, { new: true })
+		.then((updatedReview) => {
+			res.json(updatedReview)
+		})
+		.catch((error) => next(error))
+})
+
+apiRouter.put("/api/reviews/:id/comments", (req, res, next) => {
+	const body = req.body
+
+	const review = {
 		comments: body.comments,
 	}
 
@@ -164,6 +226,5 @@ apiRouter.put("/api/reviews/:id", (req, res, next) => {
 		.catch((error) => next(error))
 })
 
-// *****LOGIN API'S*****
 
 module.exports = apiRouter
