@@ -42,63 +42,75 @@ function App() {
 		}
 	}, [])
     
-    userServices.addNewUser(newUser)
+    const addNewUser = (newUser) => {
+        userServices.addNewUser(newUser)
         .then((response) => {
             console.log(response)
             setUsers([...users, response.data])
-        })
-    userServices.followUser
+        })}
+    const followUser = (userToFollow, user) => {
+        userServices.followUser
         .then(response => {
             setUser(response.data)
-            setUsers(allUsers.map(u => u.id !== user.id ? u : response.data))
-        })
-    userServices.unfollowUser
+            setUsers(users.map(u => u.id !== user.id ? u : response.data))
+        })}
+    const unfollowUser = (userToFollow, user) => {
+        userServices.unfollowUser
         .then(response => {
             setUser(response.data)
-            setUsers(allUsers.map(u => u.id !== user.id ? u : response.data))
-        })
-    userServices.addWatched
+            setUsers(users.map(u => u.id !== user.id ? u : response.data))
+        })}
+    const addWatched = (titleid, user) => {
+        userServices.addWatched
         .then(response => {
             setUser(response.data)
-            setUsers(allUsers.map(u => u.id !== user.id ? u : response.data))
-        })
-    userServices.addToWatch
+            setUsers(users.map(u => u.id !== user.id ? u : response.data))
+        })}
+    const addToWatch = (titleid, user) => {
+        userServices.addToWatch
         .then(response => {
             setUser(response.data)
-            setUsers(allUsers.map(u => u.id !== user.id ? u : response.data))
-        })
+            setUsers(users.map(u => u.id !== user.id ? u : response.data))
+        })}
 
-    reviewServices.addNewReview
+    const addNewReview = (newReview) => {
+        reviewServices.addNewReview
         .then((response) => {
             console.log(response)
             setReviews([...reviews, response.data])
-        })
-    reviewServices.deleteReview
+        })}
+    const deleteReview = (review) => {
+        reviewServices.deleteReview
         .then((response) => {
             console.log("delete succeeded")
             const newReviews = reviews.filter((r) => r.id !== review.id)
             setReviews(newReviews)
-        })
-    reviewServices.likeReview
+        })}
+    const likeReview = (review, user) => {
+        reviewServices.likeReview
         .then(response => {
             setReviews(reviews.map(r => r.id !== review.id ? r : response.data))
-        })
-    reviewServices.unlikeReview
+        })}
+    const unlikeReview = (review, user) => {
+        reviewServices.unlikeReview
         .then(response => {
             setReviews(reviews.map(r => r.id !== review.id ? r : response.data))
-        })
-    reviewServices.addComment
+        })}
+    const addComment = (review, comment) => {
+        reviewServices.addComment
         .then(response => {
             setReviews(reviews.map(r => r.id !== review.id ? r : response.data))
-        })
-    reviewServices.editStars
+        })}
+    const editStars = (stars, review) => {
+        reviewServices.editStars
         .then(response => {
             setReviews(reviews.map(r => r.id !== review.id ? r : response.data))
-        })
-    reviewServices.editContent
+        })}
+    const editContent = (content, review) => {
+        reviewServices.editContent
         .then(response => {
             setReviews(reviews.map(r => r.id !== review.id ? r : response.data))
-        })
+        })}
     
     const baseURL = "/api/"
 
