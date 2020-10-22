@@ -30,7 +30,7 @@ function App() {
 
 	const FsetUser = (user) => {
 		setUser(user)
-	}
+    }
 
 	//TODO: Remove this because we shouldn't be using local storage
 	useEffect(() => {
@@ -41,8 +41,66 @@ function App() {
 			})
 		}
 	}, [])
+    
+    userServices.addNewUser(newUser)
+        .then((response) => {
+            console.log(response)
+            setUsers([...users, response.data])
+        })
+    userServices.followUser
+        .then(response => {
+            setUser(response.data)
+            setUsers(allUsers.map(u => u.id !== user.id ? u : response.data))
+        })
+    userServices.unfollowUser
+        .then(response => {
+            setUser(response.data)
+            setUsers(allUsers.map(u => u.id !== user.id ? u : response.data))
+        })
+    userServices.addWatched
+        .then(response => {
+            setUser(response.data)
+            setUsers(allUsers.map(u => u.id !== user.id ? u : response.data))
+        })
+    userServices.addToWatch
+        .then(response => {
+            setUser(response.data)
+            setUsers(allUsers.map(u => u.id !== user.id ? u : response.data))
+        })
 
-	const baseURL = "/api/"
+    reviewServices.addNewReview
+        .then((response) => {
+            console.log(response)
+            setReviews([...reviews, response.data])
+        })
+    reviewServices.deleteReview
+        .then((response) => {
+            console.log("delete succeeded")
+            const newReviews = reviews.filter((r) => r.id !== review.id)
+            setReviews(newReviews)
+        })
+    reviewServices.likeReview
+        .then(response => {
+            setReviews(reviews.map(r => r.id !== review.id ? r : response.data))
+        })
+    reviewServices.unlikeReview
+        .then(response => {
+            setReviews(reviews.map(r => r.id !== review.id ? r : response.data))
+        })
+    reviewServices.addComment
+        .then(response => {
+            setReviews(reviews.map(r => r.id !== review.id ? r : response.data))
+        })
+    reviewServices.editStars
+        .then(response => {
+            setReviews(reviews.map(r => r.id !== review.id ? r : response.data))
+        })
+    reviewServices.editContent
+        .then(response => {
+            setReviews(reviews.map(r => r.id !== review.id ? r : response.data))
+        })
+    
+    const baseURL = "/api/"
 
 	useEffect(() => {
 		axios.get(baseURL + "users").then((response) => {

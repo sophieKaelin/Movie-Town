@@ -3,29 +3,28 @@ import axios from 'axios'
 const baseURL = "/api/"
 
 const addNewUser = (newUser) => {
-    axios.post(baseURL + "users", newUser).then((response) => {
-        console.log(response)
-        setUsers([...users, response.data])
-    })
+    axios.post(baseURL + "users", newUser)
 }
 
-const followUser = (user, loggedUser) => {
-    loggedUser.follows.push(user.username)
-    axios.put(baseURL + "users/" + loggedUser.id + "follows", loggedUser)
-      .then(response => {
-        setUser(response.data)
-        setUsers(allUsers.map(u => u.id !== loggedUser.id ? u : response.data))
-      })
+const followUser = (userToFollow, user) => {
+    user.follows.push(userToFollow.username)
+    axios.put(baseURL + "users/" + user.id + "follows", user)
 }
 
-const unfollowUser = (user, loggedUser) => {
-    const index = loggedUser.follows.indexOf(user.username)
-    loggedUser.follows.splice(index, 1)
-    axios.put(baseURL + "users/" + loggedUser.id + "follows", loggedUser)
-      .then(response => {
-        setUser(response.data)
-        setUsers(allUsers.map(u => u.id !== loggedUser.id ? u : response.data))
-      })
+const unfollowUser = (userToFollow, user) => {
+    const index = user.follows.indexOf(userToFollow.username)
+    user.follows.splice(index, 1)
+    axios.put(baseURL + "users/" + user.id + "follows", user)
 }
 
-export default {addNewUser, followUser, unfollowUser}
+const addWatched = (titleid, user) => {
+    user.watched.push(titleid)
+    axios.put(baseURL + "users/" + user.id + "watched", user)
+}
+
+const addToWatch = (titleid, user) => {
+    user.toWatch.push(titleid)
+    axios.put(baseURL + "users/" + user.id + "toWatch", user)
+}
+
+export default {addNewUser, followUser, unfollowUser, addWatched, addToWatch}
