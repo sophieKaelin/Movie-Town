@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const baseURL = "/api/"
+//const baseURL = "/api/" **not working
+const baseURL = "http://localhost:3001/api/"
 
 const addNewReview = (newReview) => {
     axios.post(baseURL + "reviews", newReview)
