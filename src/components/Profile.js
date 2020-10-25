@@ -1,17 +1,37 @@
-import React from "react";
-import "bootstrap/dist/css/bootstrap.css";
-import { Jumbotron, Image, Button } from "react-bootstrap";
-import "../style/Profile.css";
+import React, { useState, useEffect } from "react"
+import "bootstrap/dist/css/bootstrap.css"
+import { Jumbotron, Image, Button } from "react-bootstrap"
+import "../style/Profile.css"
+import { useParams } from "react-router-dom"
+import axios from "axios"
 
-const Profile = () => {
-	let avatar = "https://robohash.org/Dwight";
+const Profile = ({ user }) => {
+	//TODO: change this to relative path when pushed to heroku
+	const userURL = "http://localhost:3001/api/users/"
+	const [userProfile, setUser] = useState(user)
+
+	let otherUser = useParams()
+	useEffect(() => {
+		{
+			user != "**NO_USER**" ? setUser(user) : getUser(otherUser.username)
+		}
+	}, [user])
+
+	const getUser = async (username) => {
+		await axios.get(userURL + username).then((response) => {
+			setUser(response.data)
+		})
+	}
 
 	return (
 		<div>
 			<Jumbotron>
-				<Image src={avatar} roundedCircle className="profileImage" />
-				<h1>FirstName LastName</h1>
-				<h3>Username</h3>
+				<Image
+					src={userProfile.avatar}
+					roundedCircle
+					className="profileImage"
+				/>
+				<h3>{userProfile.username}</h3>
 
 				<Button variant="primary" className="followBtn">
 					Follow
@@ -34,7 +54,7 @@ const Profile = () => {
 				</Button>
 			</Jumbotron>
 		</div>
-	);
-};
+	)
+}
 
-export default Profile;
+export default Profile
