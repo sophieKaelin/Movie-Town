@@ -74,22 +74,24 @@ apiRouter.get("/api/users/:username", (req, res) => {
 		.catch((error) => next(error))
 })
 
-apiRouter.post('/api/users', async (req, res) => {
-    const body = req.body
-    let encryptedPassword = ''
-    const pwcrypt = await bcrypt.hash(body.password, 10).then(result => { encryptedPassword = result })
+apiRouter.post("/api/users", async (req, res) => {
+	const body = req.body
+	let encryptedPassword = ""
+	const pwcrypt = await bcrypt.hash(body.password, 10).then((result) => {
+		encryptedPassword = result
+	})
 
-    const newUser = new User({
-        username: body.username,
-        password: encryptedPassword,
-        avatar: body.avatar,
-        follows: [],
-        watched: [],
-        toWatch: [],
-    })
-    newUser.save().then(result => {
-      res.json(result)
-    })
+	const newUser = new User({
+		username: body.username,
+		password: encryptedPassword,
+		avatar: body.avatar,
+		follows: [],
+		watched: [],
+		toWatch: [],
+	})
+	newUser.save().then((result) => {
+		res.json(result)
+	})
 })
 
 apiRouter.put("/api/users/:id/follows", (req, res, next) => {
@@ -225,6 +227,5 @@ apiRouter.put("/api/reviews/:id/comments", (req, res, next) => {
 		})
 		.catch((error) => next(error))
 })
-
 
 module.exports = apiRouter

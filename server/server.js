@@ -5,6 +5,7 @@ const cors = require("cors")
 const bodyParser = require("body-parser")
 const apiRouter = require("./api")
 const IMDBRouter = require("./imdbApi")
+const userRouter = require("./userRouter")
 
 const app = express()
 app.use(cors())
@@ -14,6 +15,7 @@ app.use(express.static("build"))
 
 app.use(apiRouter)
 app.use(IMDBRouter)
+app.use(userRouter)
 
 const path = require("path")
 app.get("*", (request, response) => {
