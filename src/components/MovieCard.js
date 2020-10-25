@@ -5,20 +5,20 @@ import "../style/MovieCard.css"
 
 const MovieCard = ({ movie }) => {
 	const {
-		title,
-		year,
-		rating,
-		runtime,
-		genre,
-		releaseDate,
-		synopsis,
-		directors,
-		writers,
-		cast,
-		link,
-		poster,
+		Title,
+		Year,
+		Rating,
+		Runtime,
+		Genre,
+		Released,
+		Plot,
+		Director,
+		Writer,
+		Actors,
+		Poster,
 	} = movie
 
+	const Link = "https://www.imdb.com/title/" + movie.imdbID
 	// store state for star rating
 	const [starRating, setStarRating] = useState(null)
 	const [hover, setHover] = useState(null)
@@ -31,13 +31,13 @@ const MovieCard = ({ movie }) => {
 			<Row className="no-gutters">
 				<Col>
 					<Card.Header>
-						{title} ({year})
+						{Title} ({Year})
 					</Card.Header>
 					<Card.Body>
 						<Card.Img
 							className="col-auto img-fluid"
-							src={poster}
-							alt={title + " poster"}
+							src={Poster}
+							alt={Title + " poster"}
 						/>
 
 						<ListGroup className="list-group-flush">
@@ -89,26 +89,25 @@ const MovieCard = ({ movie }) => {
 							</ListGroupItem>
 							<ListGroupItem>
 								<Card.Text>
-									{rating} | {runtime} | {genre} |{" "}
-									{releaseDate}
+									{Rating} | {Runtime} | {Genre} | {Released}
 								</Card.Text>
-								<Card.Text>{synopsis}</Card.Text>
+								<Card.Text>{Plot}</Card.Text>
 							</ListGroupItem>
 							<ListGroupItem>
-								<h6>Directors:</h6> {directors}
+								<h6>Directors:</h6> {Director}
 							</ListGroupItem>
 							<ListGroupItem>
-								<h6>Writers:</h6> {writers}
+								<h6>Writers:</h6> {Writer}
 							</ListGroupItem>
 							<ListGroupItem>
-								<h6>Cast:</h6> {cast}
+								<h6>Cast:</h6> {Actors}
 							</ListGroupItem>
 						</ListGroup>
 					</Card.Body>
 				</Col>
 			</Row>
 			<Card.Footer>
-				<Card.Link href={link}>See more information at IMDb</Card.Link>
+				<Card.Link href={Link}>See more information at IMDb</Card.Link>
 			</Card.Footer>
 		</Card>
 	)
