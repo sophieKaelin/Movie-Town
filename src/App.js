@@ -166,7 +166,7 @@ function App() {
 				</Route>
 				<Route path="/myMovies">
 					<NavBar />
-					<CardList />
+					<CardList user={user} />
 				</Route>
 				<Route path="/reviews">
 					<NavBar />

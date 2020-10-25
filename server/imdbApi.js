@@ -16,14 +16,18 @@ IMDBRouter.get("/api/movie/title", async (req, res) => {
 		.catch((err) => console.log(err))
 })
 
-IMDBRouter.get("/api/movie/id", async (req, res) => {
-	const urlString = omdb + "i=" + req.query.id
-	axios
-		.get(urlString)
-		.then((result) => {
-			res.json(result.data)
-		})
-		.catch((err) => console.log(err))
+IMDBRouter.get("/api/movies", async (req, res) => {
+	let results = []
+	for (const id of req.query.id) {
+		const urlString = omdb + "i=" + id
+		results.push(
+			await axios.get(urlString).then((result) => {
+				return result.data
+			})
+		)
+	}
+
+	res.send(results)
 })
 
 module.exports = IMDBRouter
