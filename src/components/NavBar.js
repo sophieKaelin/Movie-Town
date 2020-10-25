@@ -15,7 +15,10 @@ const NavBar = ({ user, setUser }) => {
 
 	return (
 		<Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
-			<Navbar.Brand href="/home">Movie-Town</Navbar.Brand>
+			<Navbar.Brand href="/home">
+				<span className="movie-logo">movie</span>{" "}
+				<span className="town-logo">town</span>
+			</Navbar.Brand>
 			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 			<Navbar.Collapse id="responsive-navbar-nav">
 				<Nav className="mr-auto">
