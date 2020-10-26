@@ -13,3 +13,7 @@ input[type="radio"] {
 	width: auto !important;
 	margin-right: 10px;
 }
+
+body {
+	padding-bottom: 50px !important;
+}
