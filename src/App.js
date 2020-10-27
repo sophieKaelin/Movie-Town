@@ -17,6 +17,7 @@ import {
 	Route,
 	Redirect,
 } from "react-router-dom"
+import MovieCard from "./components/MovieCard"
 
 //TODO: Reroute to login page if there is no user logged in (set this on all pages)
 
@@ -27,9 +28,14 @@ function App() {
 	const [users, setUsers] = useState([]) //all users
 	const [user, setUser] = useState("") //Logged In User
 	const [reviews, setReviews] = useState([]) //all reviews
+	const [movie, setMovie] = useState([]) //movie currently being searched
 
 	const FsetUser = (user) => {
 		setUser(user)
+	}
+
+	const FsetMovie = (movie) => {
+		setMovie(movie)
 	}
 
 	//TODO: Remove this because we shouldn't be using local storage
@@ -41,7 +47,6 @@ function App() {
 			})
 		}
 	}, [])
-
 
 	const addNewUser = (newUser) => {
 		axios
@@ -152,7 +157,12 @@ function App() {
 			<Switch>
 				<Route path="/home">
 					{user ? <Redirect to="/home" /> : <Redirect to="/login" />}
-					<NavBar user={user} setUser={FsetUser} />
+					<NavBar
+						user={user}
+						setUser={FsetUser}
+						movie={movie}
+						setMovie={FsetMovie}
+					/>
 					<Home />
 				</Route>
 				<Route path="/login">
@@ -162,21 +172,50 @@ function App() {
 					<Register setUser={FsetUser} addNewUser={addNewUser} />
 				</Route>
 				<Route path="/myprofile">
-					<NavBar user={user} setUser={FsetUser} />
+					<NavBar
+						user={user}
+						setUser={FsetUser}
+						movie={movie}
+						setMovie={FsetMovie}
+					/>
 					<Profile user={user} />
 				</Route>
 				<Route path="/profile/:username">
-					<NavBar user={user} setUser={FsetUser} />
+					<NavBar
+						user={user}
+						setUser={FsetUser}
+						movie={movie}
+						setMovie={FsetMovie}
+					/>
 					{/* TODO: Fix this so it's not dodgy. If no user input, then check useParams. Had null check issues */}
 					<Profile user="**NO_USER**" />
 				</Route>
 				<Route path="/myMovies">
-					<NavBar />
+					<NavBar
+						user={user}
+						setUser={FsetUser}
+						movie={movie}
+						setMovie={FsetMovie}
+					/>
 					<CardList user={user} />
 				</Route>
 				<Route path="/reviews">
-					<NavBar />
+					<NavBar
+						user={user}
+						setUser={FsetUser}
+						movie={movie}
+						setMovie={FsetMovie}
+					/>
 					<ReviewCard />
+				</Route>
+				<Route path="/movie/:id">
+					<NavBar
+						user={user}
+						setUser={FsetUser}
+						movie={movie}
+						setMovie={FsetMovie}
+					/>
+					<MovieCard movie={movie} />
 				</Route>
 				{/* ALWAYS LEAVE LAST */}
 				<Route path="/">
