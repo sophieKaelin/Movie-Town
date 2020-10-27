@@ -30,13 +30,13 @@ const SearchBar = ({ history, movie, setMovie }) => {
 	}
 
 	return (
-		<Form inline>
-			{/* TODO: MAKE SEARCH BAR BIGGER */}
+		<Form inline style={{ margin: "15px" }}>
 			<FormControl
 				onChange={handleSearchChange}
 				type="text"
 				placeholder="Search"
 				className="mr-sm-2"
+				style={{ width: "300px" }}
 			/>
 			<Button onClick={search}>Search</Button>
 		</Form>
