@@ -1,9 +1,10 @@
 import React from "react"
 import "bootstrap/dist/css/bootstrap.css"
 import { Nav, Navbar, Button } from "react-bootstrap"
-import { useHistory, Redirect } from "react-router-dom"
+import { useHistory } from "react-router-dom"
+import SearchBar from "./SearchBar.js"
 
-const NavBar = ({ user, setUser }) => {
+const NavBar = ({ user, setUser, movie, setMovie }) => {
 	const history = useHistory()
 
 	//TODO: Fix this so that it doesn't use localstorage
@@ -11,6 +12,7 @@ const NavBar = ({ user, setUser }) => {
 		console.log("You have been logged out")
 		localStorage.removeItem("user")
 		setUser(null)
+		//TODO: REDIRECT TO LOGIN SCREEN, THIS BREAKS UNLESS YOU ARE ON THE HOME SCREEN
 	}
 
 	return (
@@ -96,16 +98,17 @@ const NavBar = ({ user, setUser }) => {
 				</Nav>
 			</Navbar.Collapse>
 			<Navbar.Collapse className="justify-content-end">
+				<SearchBar
+					history={history}
+					movie={movie}
+					setMovie={setMovie}
+				/>
 				<Navbar.Text>
+					{/* TODO: Buggy on all pages except home page */}
 					{user ? (
-						<Button
-							onClick={saveAndLogout}
-							variant="light"
-							className="ml-2"
-						>
-							Logout
-						</Button>
+						<Button onClick={saveAndLogout}>Logout</Button>
 					) : (
+						// TODO: This can be removed cause there will never be a situation where a user will not be logged in, they should be redirected to the login page in that case
 						<Button
 							variant="light"
 							className="ml-2"
