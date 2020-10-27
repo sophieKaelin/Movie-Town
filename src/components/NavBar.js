@@ -1,6 +1,6 @@
 import React from "react"
 import "bootstrap/dist/css/bootstrap.css"
-import { Nav, Navbar, Button } from "react-bootstrap"
+import { Nav, Navbar, NavDropdown, Image } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
 import SearchBar from "./SearchBar.js"
 
@@ -12,7 +12,7 @@ const NavBar = ({ user, setUser, movie, setMovie }) => {
 		console.log("You have been logged out")
 		localStorage.removeItem("user")
 		setUser(null)
-		//TODO: REDIRECT TO LOGIN SCREEN, THIS BREAKS UNLESS YOU ARE ON THE HOME SCREEN
+		history.push("/login")
 	}
 
 	return (
@@ -103,21 +103,64 @@ const NavBar = ({ user, setUser, movie, setMovie }) => {
 					movie={movie}
 					setMovie={setMovie}
 				/>
-				<Navbar.Text>
-					{/* TODO: Buggy on all pages except home page */}
-					{user ? (
-						<Button onClick={saveAndLogout}>Logout</Button>
-					) : (
-						// TODO: This can be removed cause there will never be a situation where a user will not be logged in, they should be redirected to the login page in that case
-						<Button
-							variant="light"
-							className="ml-2"
-							onClick={() => history.push("/login")}
+				<NavDropdown
+					title={
+						<Image
+							style={{
+								height: "50px",
+								width: "50px",
+							}}
+							alt="Logout"
+							src={user.avatar}
+							roundedCircle
+						/>
+					}
+					id="basic-nav-dropdown"
+				>
+					<NavDropdown.Item href="/myProfile">
+						<svg
+							width="1em"
+							height="1em"
+							viewBox="0 0 16 16"
+							className="bi bi-person-circle mr-2 mb-1"
+							fill="currentColor"
+							xmlns="http://www.w3.org/2000/svg"
 						>
-							Login
-						</Button>
-					)}
-				</Navbar.Text>
+							<path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z" />
+							<path
+								fillRule="evenodd"
+								d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
+							/>
+							<path
+								fillRule="evenodd"
+								d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"
+							/>
+						</svg>
+						Profile
+					</NavDropdown.Item>
+					<NavDropdown.Item href="/reviews">
+						<svg
+							width="1em"
+							height="1em"
+							viewBox="0 0 16 16"
+							className="bi bi-pencil-square mr-2 mb-1"
+							fill="currentColor"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+							<path
+								fillRule="evenodd"
+								d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+							/>
+						</svg>
+						Write Review
+					</NavDropdown.Item>
+					<NavDropdown.Divider />
+					{/* TODO: Buggy on all pages except home page */}
+					<NavDropdown.Item onClick={saveAndLogout}>
+						Logout
+					</NavDropdown.Item>
+				</NavDropdown>
 			</Navbar.Collapse>
 		</Navbar>
 	)
