@@ -22,7 +22,7 @@ const NavBar = ({ user, setUser }) => {
 			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 			<Navbar.Collapse id="responsive-navbar-nav">
 				<Nav className="mr-auto">
-					<Nav.Link href="/profile">
+					<Nav.Link href="/myprofile">
 						<svg
 							width="1em"
 							height="1em"
