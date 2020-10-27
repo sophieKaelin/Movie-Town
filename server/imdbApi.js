@@ -7,7 +7,7 @@ const IMDBRouter = express.Router()
 const omdb = process.env.OMDB_API
 
 IMDBRouter.get("/api/movie/title", async (req, res) => {
-	const urlString = omdb + 't="' + req.body.title + '"'
+	const urlString = omdb + 't="' + req.query.title + '"'
 	axios
 		.get(urlString)
 		.then((result) => {
