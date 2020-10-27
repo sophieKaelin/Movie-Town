@@ -12,7 +12,7 @@ const validateForm = (errors) => {
 	return valid
 }
 
-const Register = () => {
+const Register = ({FsetUser, addNewUser}) => {
 	const [registerInfo, setRegisterInfo] = useState({
 		username: "",
 		avatar: "",
@@ -89,6 +89,7 @@ const Register = () => {
 		console.log(passwordsMatch)
 		if (validateForm(errors) && passwordsMatch) {
 			console.info("Valid Form")
+			addNewUser(registerInfo)
 		} else if (!passwordsMatch) {
 			console.info("Passwords dont match!")
 			setErrors({ ...errors, confirmPassword: "Passwords dont match!" })
