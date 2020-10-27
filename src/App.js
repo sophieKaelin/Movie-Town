@@ -9,7 +9,7 @@ import Register from "./components/Register.js"
 import NavBar from "./components/NavBar.js"
 import Profile from "./components/Profile.js"
 import Home from "./components/Home.js"
-import MovieCard from "./components/MovieCard.js"
+import { CardList } from "./components/CardList.js"
 import ReviewCard from "./components/ReviewCard.js"
 import {
 	BrowserRouter as Router,
@@ -42,81 +42,90 @@ function App() {
 		}
 	}, [])
 
-	console.log("APP USER: ", user)
+
 	const addNewUser = (newUser) => {
-		userServices.addNewUser(newUser).then((response) => {
-			console.log(response)
-			setUsers([...users, response.data])
-		})
+		axios
+			.post("http://localhost:3001/api/users", newUser)
+			.then((response) => {
+				console.log(response)
+				setUsers([...users, response.data])
+			})
 	}
+
+	// const addNewUser = (newUser) => {
+	//     userServices.addNewUser(newUser)
+	//     .then((response) => {
+	//         console.log(response)
+	//         //setUsers([...users, response.data])
+	//     })}
 	const followUser = (userToFollow, user) => {
-		userServices.followUser.then((response) => {
+		userServices.followUser(userToFollow, user).then((response) => {
 			setUser(response.data)
 			setUsers(users.map((u) => (u.id !== user.id ? u : response.data)))
 		})
 	}
 	const unfollowUser = (userToFollow, user) => {
-		userServices.unfollowUser.then((response) => {
+		userServices.unfollowUser(userToFollow, user).then((response) => {
 			setUser(response.data)
 			setUsers(users.map((u) => (u.id !== user.id ? u : response.data)))
 		})
 	}
 	const addWatched = (titleid, user) => {
-		userServices.addWatched.then((response) => {
+		userServices.addWatched(titleid, user).then((response) => {
 			setUser(response.data)
 			setUsers(users.map((u) => (u.id !== user.id ? u : response.data)))
 		})
 	}
 	const addToWatch = (titleid, user) => {
-		userServices.addToWatch.then((response) => {
+		userServices.addToWatch(titleid, user).then((response) => {
 			setUser(response.data)
 			setUsers(users.map((u) => (u.id !== user.id ? u : response.data)))
 		})
 	}
 
 	const addNewReview = (newReview) => {
-		reviewServices.addNewReview.then((response) => {
+		reviewServices.addNewReview(newReview).then((response) => {
 			console.log(response)
 			setReviews([...reviews, response.data])
 		})
 	}
 	const deleteReview = (review) => {
-		reviewServices.deleteReview.then((response) => {
+		reviewServices.deleteReview(review).then((response) => {
 			console.log("delete succeeded")
 			const newReviews = reviews.filter((r) => r.id !== review.id)
 			setReviews(newReviews)
 		})
 	}
 	const likeReview = (review, user) => {
-		reviewServices.likeReview.then((response) => {
+		reviewServices.likeReview(review, user).then((response) => {
 			setReviews(
 				reviews.map((r) => (r.id !== review.id ? r : response.data))
 			)
 		})
 	}
 	const unlikeReview = (review, user) => {
-		reviewServices.unlikeReview.then((response) => {
+		reviewServices.unlikeReview(review, user).then((response) => {
 			setReviews(
 				reviews.map((r) => (r.id !== review.id ? r : response.data))
 			)
 		})
 	}
 	const addComment = (review, comment) => {
-		reviewServices.addComment.then((response) => {
+		reviewServices.addComment(review, comment).then((response) => {
 			setReviews(
 				reviews.map((r) => (r.id !== review.id ? r : response.data))
 			)
 		})
 	}
 	const editStars = (stars, review) => {
-		reviewServices.editStars.then((response) => {
+		reviewServices.editStars(stars, review).then((response) => {
 			setReviews(
 				reviews.map((r) => (r.id !== review.id ? r : response.data))
 			)
 		})
 	}
 	const editContent = (content, review) => {
-		reviewServices.editContent.then((response) => {
+		reviewServices.editContent(content, review).then((response) => {
 			setReviews(
 				reviews.map((r) => (r.id !== review.id ? r : response.data))
 			)
@@ -124,15 +133,16 @@ function App() {
 	}
 
 	const baseURL = "/api/"
+	//Not working, response with 404 not found hence hardcoded url in useEffects
 
 	useEffect(() => {
-		axios.get(baseURL + "users").then((response) => {
+		axios.get("http://localhost:3001/api/users").then((response) => {
 			setUsers(response.data)
 		})
 	}, [])
 
 	useEffect(() => {
-		axios.get(baseURL + "reviews").then((response) => {
+		axios.get("http://localhost:3001/api/reviews").then((response) => {
 			setReviews(response.data)
 		})
 	}, [])
@@ -149,7 +159,7 @@ function App() {
 					<Login user={user} setUser={FsetUser} />
 				</Route>
 				<Route path="/register">
-					<Register />
+					<Register setUser={FsetUser} addNewUser={addNewUser} />
 				</Route>
 				<Route path="/myprofile">
 					<NavBar user={user} setUser={FsetUser} />
@@ -162,7 +172,7 @@ function App() {
 				</Route>
 				<Route path="/myMovies">
 					<NavBar />
-					<MovieCard />
+					<CardList user={user} />
 				</Route>
 				<Route path="/reviews">
 					<NavBar />
