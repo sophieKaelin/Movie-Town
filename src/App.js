@@ -25,7 +25,7 @@ const userURL = "http://localhost:3001/api/users/"
 
 function App() {
 	const [users, setUsers] = useState([]) //all users
-	const [user, setUser] = useState(null) //Logged In User
+	const [user, setUser] = useState("") //Logged In User
 	const [reviews, setReviews] = useState([]) //all reviews
 
 	const FsetUser = (user) => {
@@ -33,14 +33,15 @@ function App() {
 	}
 
 	//TODO: Remove this because we shouldn't be using local storage
-	useEffect(() => {
+	useEffect(async () => {
 		const localUser = JSON.parse(localStorage.getItem("user"))
 		if (localUser) {
-			axios.get(userURL + localUser.username).then((response) => {
+			await axios.get(userURL + localUser.username).then((response) => {
 				setUser(response.data)
 			})
 		}
 	}, [])
+
 
 	const addNewUser = (newUser) => {
 		axios
@@ -160,9 +161,14 @@ function App() {
 				<Route path="/register">
 					<Register setUser={FsetUser} addNewUser={addNewUser} />
 				</Route>
-				<Route path="/profile">
+				<Route path="/myprofile">
 					<NavBar user={user} setUser={FsetUser} />
-					<Profile />
+					<Profile user={user} />
+				</Route>
+				<Route path="/profile/:username">
+					<NavBar user={user} setUser={FsetUser} />
+					{/* TODO: Fix this so it's not dodgy. If no user input, then check useParams. Had null check issues */}
+					<Profile user="**NO_USER**" />
 				</Route>
 				<Route path="/myMovies">
 					<NavBar />
