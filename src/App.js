@@ -42,7 +42,6 @@ function App() {
 		}
 	}, [])
 
-
 	const addNewUser = (newUser) => {
 		axios
 			.post("http://localhost:3001/api/users", newUser)
@@ -171,11 +170,11 @@ function App() {
 					<Profile user="**NO_USER**" />
 				</Route>
 				<Route path="/myMovies">
-					<NavBar />
+					<NavBar user={user} setUser={FsetUser} />
 					<CardList user={user} />
 				</Route>
 				<Route path="/reviews">
-					<NavBar />
+					<NavBar user={user} setUser={FsetUser} />
 					<ReviewCard />
 				</Route>
 				{/* ALWAYS LEAVE LAST */}
