@@ -69,6 +69,10 @@ const ReviewCard = ({ props }) => {
 		}
 	}
 
+	const handleAddToList = () => {
+		alert("TODO: Movie added to your movie list")
+	}
+
 	const handleComment = () => {
 		console.log(newComment)
 		setComments([
@@ -155,7 +159,11 @@ const ReviewCard = ({ props }) => {
 										</h3>
 										<ListGroup className="list-group-flush">
 											<ListGroupItem>
-												<Button>Add to list</Button>
+												<Button
+													onClick={handleAddToList}
+												>
+													Add to list
+												</Button>
 											</ListGroupItem>
 											<ListGroupItem>
 												{synopsis}
