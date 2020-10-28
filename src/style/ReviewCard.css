@@ -6,3 +6,13 @@ input[type="radio"] {
 	cursor: pointer;
 	transition: color 200ms;
 }
+
+.moviePoster {
+	float: left;
+	height: 250px !important;
+	width: auto !important;
+}
+
+body {
+	padding-bottom: 50px !important;
+}
