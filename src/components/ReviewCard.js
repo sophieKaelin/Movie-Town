@@ -178,7 +178,7 @@ const ReviewCard = ({ props }) => {
 			</Row>
 
 			<Card.Footer>
-				<Accordion defaultActiveKey="0">
+				<Accordion>
 					<Card.Link onClick={handleLike}>
 						{like ? "Unlike" : "Like"}
 					</Card.Link>
