@@ -206,7 +206,7 @@ function App() {
 						movie={movie}
 						setMovie={FsetMovie}
 					/>
-					<ReviewCard />
+					<ReviewCard user={user} />
 				</Route>
 				<Route path="/movie/:id">
 					<NavBar
