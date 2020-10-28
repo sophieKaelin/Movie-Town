@@ -10,6 +10,7 @@ import {
 	InputGroup,
 	FormControl,
 	Image,
+	Accordion,
 } from "react-bootstrap"
 import "../style/ReviewCard.css"
 import samProfile from "../profilepictures/samProf.png"
@@ -169,28 +170,34 @@ const ReviewCard = ({ props }) => {
 			</Row>
 
 			<Card.Footer>
-				<Card.Link onClick={handleLike}>
-					{like ? "Unlike" : "Like"}
-				</Card.Link>
-				<Card.Link>View Comments</Card.Link>
-				<ListGroup className="mt-2">
-					{comments.map((comment) => (
-						<ListGroupItem className="mt-2">
-							<Image
-								style={{
-									height: "50px",
-									width: "50px",
-								}}
-								className="mr-3"
-								alt="Avatar"
-								src={avatar}
-								roundedCircle
-							/>
-							<b>{comment.author}: </b>
-							{comment.comment}
-						</ListGroupItem>
-					))}
-				</ListGroup>
+				<Accordion defaultActiveKey="0">
+					<Card.Link onClick={handleLike}>
+						{like ? "Unlike" : "Like"}
+					</Card.Link>
+					<Accordion.Toggle as={Card.Link} eventKey="0">
+						View/Hide Comments
+					</Accordion.Toggle>
+					<Accordion.Collapse eventKey="0">
+						<ListGroup className="mt-2">
+							{comments.map((comment) => (
+								<ListGroupItem className="mt-2">
+									<Image
+										style={{
+											height: "50px",
+											width: "50px",
+										}}
+										className="mr-3"
+										alt="Avatar"
+										src={avatar}
+										roundedCircle
+									/>
+									<b>{comment.author}: </b>
+									{comment.comment}
+								</ListGroupItem>
+							))}
+						</ListGroup>
+					</Accordion.Collapse>
+				</Accordion>
 				<InputGroup className="mb-3 mt-3">
 					<FormControl
 						placeholder="Write comment"
