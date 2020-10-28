@@ -16,6 +16,7 @@ import samProfile from "../profilepictures/samProf.png"
 
 const ReviewCard = ({ props }) => {
 	const [newComment, setNewComment] = useState("")
+	const [like, setLike] = useState(false)
 	const [comments, setComments] = useState([
 		{
 			author: "Dwight Schrute",
@@ -59,7 +60,13 @@ const ReviewCard = ({ props }) => {
 		setNewComment(value)
 	}
 
-	const handleLike = () => {}
+	const handleLike = () => {
+		if (!like) {
+			setLike(true)
+		} else {
+			setLike(false)
+		}
+	}
 
 	const handleComment = () => {
 		console.log(newComment)
@@ -162,7 +169,9 @@ const ReviewCard = ({ props }) => {
 			</Row>
 
 			<Card.Footer>
-				<Card.Link>Like</Card.Link>
+				<Card.Link onClick={handleLike}>
+					{like ? "Unlike" : "Like"}
+				</Card.Link>
 				<Card.Link>View Comments</Card.Link>
 				<ListGroup className="mt-2">
 					{comments.map((comment) => (
