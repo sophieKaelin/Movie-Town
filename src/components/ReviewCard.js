@@ -15,14 +15,15 @@ import "../style/ReviewCard.css"
 import samProfile from "../profilepictures/samProf.png"
 
 const ReviewCard = ({ props }) => {
+	const [newComment, setNewComment] = useState("")
+	const [comments, setComments] = useState([
+		{
+			author: "Dwight Schrute",
+			comment: "beetroots",
+			timestamp: "28/10/20",
+		},
+	])
 	console.log("props ", props)
-	const username = "b_radkenny"
-	const titleid = "tt0317219"
-	const timestamp = "2020-07-15 07:25:28"
-	const stars = 5
-	const content = "Broom Broom, I like Cards"
-	const likes = ["b_radkenny", "george_summerglue"]
-	const comments = []
 
 	// const {
 	// 	username,
@@ -49,6 +50,28 @@ const ReviewCard = ({ props }) => {
 	const poster =
 		"https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_SX300.jpg"
 	const avatar = samProfile
+	const stars = 5
+	const content = "Broom Broom, I like Cards"
+
+	const handleChange = (e) => {
+		e.preventDefault()
+		const { name, value } = e.target
+		setNewComment(value)
+	}
+
+	const handleLike = () => {}
+
+	const handleComment = () => {
+		console.log(newComment)
+		setComments([
+			...comments,
+			{
+				author: "Dwight Schrute",
+				comment: newComment,
+				timestamp: "28/10/20",
+			},
+		])
+	}
 	return (
 		<Card className="mt-5" style={{ width: "56rem", margin: "auto auto" }}>
 			<Row className="no-gutters">
@@ -142,25 +165,35 @@ const ReviewCard = ({ props }) => {
 				<Card.Link>Like</Card.Link>
 				<Card.Link>View Comments</Card.Link>
 				<ListGroup className="mt-2">
-					<ListGroupItem>
-						<Image
-							style={{
-								height: "50px",
-								width: "50px",
-							}}
-							className="mr-3"
-							alt="Avatar"
-							src={avatar}
-							roundedCircle
-						/>
-						<b>AnonymousAdmirer: </b>Woww i can comment on your
-						review, this website is bananas
-					</ListGroupItem>
+					{comments.map((comment) => (
+						<ListGroupItem className="mt-2">
+							<Image
+								style={{
+									height: "50px",
+									width: "50px",
+								}}
+								className="mr-3"
+								alt="Avatar"
+								src={avatar}
+								roundedCircle
+							/>
+							<b>{comment.author}: </b>
+							{comment.comment}
+						</ListGroupItem>
+					))}
 				</ListGroup>
 				<InputGroup className="mb-3 mt-3">
-					<FormControl placeholder="Write comment" />
+					<FormControl
+						placeholder="Write comment"
+						onChange={handleChange}
+					/>
 					<InputGroup.Append>
-						<Button variant="outline-secondary">Comment</Button>
+						<Button
+							variant="outline-secondary"
+							onClick={handleComment}
+						>
+							Comment
+						</Button>
 					</InputGroup.Append>
 				</InputGroup>
 			</Card.Footer>
