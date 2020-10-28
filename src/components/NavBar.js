@@ -104,6 +104,9 @@ const NavBar = ({ user, setUser, movie, setMovie }) => {
 					setMovie={setMovie}
 				/>
 				<NavDropdown
+					alignRight
+					id="dropdown-menu-align-right"
+					flip
 					title={
 						<Image
 							style={{
@@ -115,7 +118,6 @@ const NavBar = ({ user, setUser, movie, setMovie }) => {
 							roundedCircle
 						/>
 					}
-					id="basic-nav-dropdown"
 				>
 					<NavDropdown.Item href="/myProfile">
 						<svg
