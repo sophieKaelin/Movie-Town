@@ -49,92 +49,41 @@ function App() {
 	}, [])
 
 	const addNewUser = (newUser) => {
-		axios
-			.post("http://localhost:3001/api/users", newUser)
-			.then((response) => {
-				console.log(response)
-				setUsers([...users, response.data])
-			})
+	    userServices.addNewUser(newUser, users, setUsers)
+    }
+	const followUser = (userToFollow) => { //pass a user to the function or grab state variable user???
+		userServices.followUser(userToFollow, user, users, setUser, setUsers)
 	}
-
-	// const addNewUser = (newUser) => {
-	//     userServices.addNewUser(newUser)
-	//     .then((response) => {
-	//         console.log(response)
-	//         //setUsers([...users, response.data])
-	//     })}
-	const followUser = (userToFollow, user) => {
-		userServices.followUser(userToFollow, user).then((response) => {
-			setUser(response.data)
-			setUsers(users.map((u) => (u.id !== user.id ? u : response.data)))
-		})
+	const unfollowUser = (userToFollow) => { //pass a user to the function or grab state variable user???
+		userServices.unfollowUser(userToFollow, user, users, setUser, setUsers)
 	}
-	const unfollowUser = (userToFollow, user) => {
-		userServices.unfollowUser(userToFollow, user).then((response) => {
-			setUser(response.data)
-			setUsers(users.map((u) => (u.id !== user.id ? u : response.data)))
-		})
+	const addWatched = (titleid) => { //pass a user to the function or grab state variable user???
+		userServices.addWatched(titleid, user, users, setUser, setUsers)
 	}
-	const addWatched = (titleid, user) => {
-		userServices.addWatched(titleid, user).then((response) => {
-			setUser(response.data)
-			setUsers(users.map((u) => (u.id !== user.id ? u : response.data)))
-		})
-	}
-	const addToWatch = (titleid, user) => {
-		userServices.addToWatch(titleid, user).then((response) => {
-			setUser(response.data)
-			setUsers(users.map((u) => (u.id !== user.id ? u : response.data)))
-		})
+	const addToWatch = (titleid) => { //pass a user to the function or grab state variable user???
+		userServices.addToWatch(titleid, user, users, setUser, setUsers)
 	}
 
 	const addNewReview = (newReview) => {
-		reviewServices.addNewReview(newReview).then((response) => {
-			console.log(response)
-			setReviews([...reviews, response.data])
-		})
+		reviewServices.addNewReview(newReview, reviews, setReviews)
 	}
 	const deleteReview = (review) => {
-		reviewServices.deleteReview(review).then((response) => {
-			console.log("delete succeeded")
-			const newReviews = reviews.filter((r) => r.id !== review.id)
-			setReviews(newReviews)
-		})
+		reviewServices.deleteReview(review, reviews, setReviews)
 	}
-	const likeReview = (review, user) => {
-		reviewServices.likeReview(review, user).then((response) => {
-			setReviews(
-				reviews.map((r) => (r.id !== review.id ? r : response.data))
-			)
-		})
+	const likeReview = (review) => { //pass a user to the function or grab state variable user???
+		reviewServices.likeReview(review, user, reviews, setReviews)
 	}
-	const unlikeReview = (review, user) => {
-		reviewServices.unlikeReview(review, user).then((response) => {
-			setReviews(
-				reviews.map((r) => (r.id !== review.id ? r : response.data))
-			)
-		})
+	const unlikeReview = (review) => { //pass a user to the function or grab state variable user???
+		reviewServices.unlikeReview(review, user, reviews, setReviews)
 	}
 	const addComment = (review, comment) => {
-		reviewServices.addComment(review, comment).then((response) => {
-			setReviews(
-				reviews.map((r) => (r.id !== review.id ? r : response.data))
-			)
-		})
+		reviewServices.addComment(review, comment, reviews, setReviews)
 	}
 	const editStars = (stars, review) => {
-		reviewServices.editStars(stars, review).then((response) => {
-			setReviews(
-				reviews.map((r) => (r.id !== review.id ? r : response.data))
-			)
-		})
+		reviewServices.editStars(stars, review, reviews, setReviews)
 	}
 	const editContent = (content, review) => {
-		reviewServices.editContent(content, review).then((response) => {
-			setReviews(
-				reviews.map((r) => (r.id !== review.id ? r : response.data))
-			)
-		})
+		reviewServices.editContent(content, review, reviews, setReviews)
 	}
 
 	const baseURL = "/api/"
