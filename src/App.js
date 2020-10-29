@@ -118,7 +118,7 @@ function App() {
 					<Login user={user} setUser={FsetUser} />
 				</Route>
 				<Route path="/register">
-					<Register setUser={FsetUser} addNewUser={addNewUser} />
+					<Register users={users} setUser={FsetUser} addNewUser={addNewUser} />
 				</Route>
 				<Route path="/myprofile">
 					<NavBar

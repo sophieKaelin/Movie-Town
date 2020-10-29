@@ -12,7 +12,7 @@ const validateForm = (errors) => {
 	return valid
 }
 
-const Register = ({FsetUser, addNewUser}) => {
+const Register = ({users, FsetUser, addNewUser}) => {
 	const [registerInfo, setRegisterInfo] = useState({
 		username: "",
 		avatar: "",
@@ -38,7 +38,13 @@ const Register = ({FsetUser, addNewUser}) => {
 						username: "Username cannot be blank!",
 					})
 					setRegisterInfo({ ...registerInfo, username: "" })
-				} else {
+				} else if (users.map(u => u.username).includes(value) === true) {
+					setErrors({
+						...errors,
+						username: "Sorry! This username is already taken :(",
+					})
+				}
+				else {
 					errors.username = ""
 					setErrors({ ...errors, username: "" })
 					setRegisterInfo({ ...registerInfo, username: value })
