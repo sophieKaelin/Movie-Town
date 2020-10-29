@@ -5,7 +5,7 @@ import "../style/Profile.css"
 import { useParams } from "react-router-dom"
 import axios from "axios"
 
-const Profile = ({ user }) => {
+const Profile = ({ user, followUser, unfollowUser }) => {
 	//TODO: change this to relative path when pushed to heroku
 	const userURL = "http://localhost:3001/api/users/"
 	const [userProfile, setUser] = useState(user)
@@ -21,6 +21,16 @@ const Profile = ({ user }) => {
 		await axios.get(userURL + username).then((response) => {
 			setUser(response.data)
 		})
+	}
+
+	const followButtonFn = (username) => {
+		console.log(username)
+		console.log(user)
+		if (user.follows.includes(username)) { //check user.follows, not sure if this is correct because of **no user*** stuff
+            unfollowUser(username)
+        } else {
+			followUser(username)
+		}
 	}
 
 	return (
@@ -50,7 +60,7 @@ const Profile = ({ user }) => {
 						</svg>
 					</Button>
 				) : (
-					<Button variant="primary" className="followBtn">
+					<Button variant="primary" className="followBtn" onClick={followButtonFn(userProfile.username)}>
 						Follow
 					</Button>
 				)}
