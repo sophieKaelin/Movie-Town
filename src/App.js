@@ -127,7 +127,7 @@ function App() {
 						movie={movie}
 						setMovie={FsetMovie}
 					/>
-					<Profile user={user} />
+					<Profile user={user} followUser={null} unfollowUser={null}/>
 				</Route>
 				<Route path="/profile/:username">
 					<NavBar
@@ -137,7 +137,7 @@ function App() {
 						setMovie={FsetMovie}
 					/>
 					{/* TODO: Fix this so it's not dodgy. If no user input, then check useParams. Had null check issues */}
-					<Profile user="**NO_USER**" />
+					<Profile user={"**NO_USER**"} followUser={followUser} unfollowUser={unfollowUser}/>
 				</Route>
 				<Route path="/myMovies">
 					<NavBar
