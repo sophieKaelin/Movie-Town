@@ -1,0 +1,13 @@
+.reviewCard {
+	margin-top: 6em;
+	margin-bottom: 6em;
+}
+
+.movie-button {
+	display: inline;
+	float: right;
+}
+
+#notYourMovie:hover {
+	font-weight: bold;
+}
