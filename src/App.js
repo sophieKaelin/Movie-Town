@@ -18,6 +18,7 @@ import {
 	Redirect,
 } from "react-router-dom"
 import MovieCard from "./components/MovieCard"
+import ReviewForm from "./components/ReviewForm"
 
 //TODO: Reroute to login page if there is no user logged in (set this on all pages)
 
@@ -28,7 +29,7 @@ function App() {
 	const [users, setUsers] = useState([]) //all users
 	const [user, setUser] = useState("") //Logged In User
 	const [reviews, setReviews] = useState([]) //all reviews
-	const [movie, setMovie] = useState([]) //movie currently being searched
+	const [movie, setMovie] = useState("") //movie currently being searched
 
 	const FsetUser = (user) => {
 		setUser(user)
@@ -49,18 +50,22 @@ function App() {
 	}, [])
 
 	const addNewUser = (newUser) => {
-	    userServices.addNewUser(newUser, users, setUsers)
-    }
-	const followUser = (userToFollow) => { //pass a user to the function or grab state variable user???
+		userServices.addNewUser(newUser, users, setUsers)
+	}
+	const followUser = (userToFollow) => {
+		//pass a user to the function or grab state variable user???
 		userServices.followUser(userToFollow, user, users, setUser, setUsers)
 	}
-	const unfollowUser = (userToFollow) => { //pass a user to the function or grab state variable user???
+	const unfollowUser = (userToFollow) => {
+		//pass a user to the function or grab state variable user???
 		userServices.unfollowUser(userToFollow, user, users, setUser, setUsers)
 	}
-	const addWatched = (titleid) => { //pass a user to the function or grab state variable user???
+	const addWatched = (titleid) => {
+		//pass a user to the function or grab state variable user???
 		userServices.addWatched(titleid, user, users, setUser, setUsers)
 	}
-	const addToWatch = (titleid) => { //pass a user to the function or grab state variable user???
+	const addToWatch = (titleid) => {
+		//pass a user to the function or grab state variable user???
 		userServices.addToWatch(titleid, user, users, setUser, setUsers)
 	}
 
@@ -70,10 +75,12 @@ function App() {
 	const deleteReview = (review) => {
 		reviewServices.deleteReview(review, reviews, setReviews)
 	}
-	const likeReview = (review) => { //pass a user to the function or grab state variable user???
+	const likeReview = (review) => {
+		//pass a user to the function or grab state variable user???
 		reviewServices.likeReview(review, user, reviews, setReviews)
 	}
-	const unlikeReview = (review) => { //pass a user to the function or grab state variable user???
+	const unlikeReview = (review) => {
+		//pass a user to the function or grab state variable user???
 		reviewServices.unlikeReview(review, user, reviews, setReviews)
 	}
 	const addComment = (review, comment) => {
@@ -118,7 +125,11 @@ function App() {
 					<Login user={user} setUser={FsetUser} />
 				</Route>
 				<Route path="/register">
-					<Register users={users} setUser={FsetUser} addNewUser={addNewUser} />
+					<Register
+						users={users}
+						setUser={FsetUser}
+						addNewUser={addNewUser}
+					/>
 				</Route>
 				<Route path="/myprofile">
 					<NavBar
@@ -127,7 +138,11 @@ function App() {
 						movie={movie}
 						setMovie={FsetMovie}
 					/>
-					<Profile user={user} followUser={null} unfollowUser={null}/>
+					<Profile
+						user={user}
+						followUser={null}
+						unfollowUser={null}
+					/>
 				</Route>
 				<Route path="/profile/:username">
 					<NavBar
@@ -137,7 +152,11 @@ function App() {
 						setMovie={FsetMovie}
 					/>
 					{/* TODO: Fix this so it's not dodgy. If no user input, then check useParams. Had null check issues */}
-					<Profile user={"**NO_USER**"} followUser={followUser} unfollowUser={unfollowUser}/>
+					<Profile
+						user={"**NO_USER**"}
+						followUser={followUser}
+						unfollowUser={unfollowUser}
+					/>
 				</Route>
 				<Route path="/myMovies">
 					<NavBar
