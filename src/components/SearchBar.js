@@ -7,7 +7,6 @@ import { useHistory } from "react-router-dom"
 
 const SearchBar = ({ history, movie, setMovie }) => {
 	const [searched, setSearch] = useState([])
-	// const history = useHistory()
 
 	const search = () => {
 		console.log("searched: ", searched)
