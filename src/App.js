@@ -18,6 +18,7 @@ import {
 	Redirect,
 } from "react-router-dom"
 import MovieCard from "./components/MovieCard"
+import ReviewForm from "./components/ReviewForm"
 
 //TODO: Reroute to login page if there is no user logged in (set this on all pages)
 
@@ -28,7 +29,7 @@ function App() {
 	const [users, setUsers] = useState([]) //all users
 	const [user, setUser] = useState("") //Logged In User
 	const [reviews, setReviews] = useState([]) //all reviews
-	const [movie, setMovie] = useState([]) //movie currently being searched
+	const [movie, setMovie] = useState("") //movie currently being searched
 
 	const FsetUser = (user) => {
 		setUser(user)
@@ -49,92 +50,47 @@ function App() {
 	}, [])
 
 	const addNewUser = (newUser) => {
-		axios
-			.post("http://localhost:3001/api/users", newUser)
-			.then((response) => {
-				console.log(response)
-				setUsers([...users, response.data])
-			})
+		userServices.addNewUser(newUser, users, setUsers)
 	}
-
-	// const addNewUser = (newUser) => {
-	//     userServices.addNewUser(newUser)
-	//     .then((response) => {
-	//         console.log(response)
-	//         //setUsers([...users, response.data])
-	//     })}
-	const followUser = (userToFollow, user) => {
-		userServices.followUser(userToFollow, user).then((response) => {
-			setUser(response.data)
-			setUsers(users.map((u) => (u.id !== user.id ? u : response.data)))
-		})
+	const followUser = (userToFollow) => {
+		//pass a user to the function or grab state variable user???
+		userServices.followUser(userToFollow, user, users, setUser, setUsers)
 	}
-	const unfollowUser = (userToFollow, user) => {
-		userServices.unfollowUser(userToFollow, user).then((response) => {
-			setUser(response.data)
-			setUsers(users.map((u) => (u.id !== user.id ? u : response.data)))
-		})
+	const unfollowUser = (userToFollow) => {
+		//pass a user to the function or grab state variable user???
+		userServices.unfollowUser(userToFollow, user, users, setUser, setUsers)
 	}
-	const addWatched = (titleid, user) => {
-		userServices.addWatched(titleid, user).then((response) => {
-			setUser(response.data)
-			setUsers(users.map((u) => (u.id !== user.id ? u : response.data)))
-		})
+	const addWatched = (titleid) => {
+		//pass a user to the function or grab state variable user???
+		userServices.addWatched(titleid, user, users, setUser, setUsers)
 	}
-	const addToWatch = (titleid, user) => {
-		userServices.addToWatch(titleid, user).then((response) => {
-			setUser(response.data)
-			setUsers(users.map((u) => (u.id !== user.id ? u : response.data)))
-		})
+	const addToWatch = (titleid) => {
+		//pass a user to the function or grab state variable user???
+		userServices.addToWatch(titleid, user, users, setUser, setUsers)
 	}
 
 	const addNewReview = (newReview) => {
-		reviewServices.addNewReview(newReview).then((response) => {
-			console.log(response)
-			setReviews([...reviews, response.data])
-		})
+		reviewServices.addNewReview(newReview, reviews, setReviews)
 	}
 	const deleteReview = (review) => {
-		reviewServices.deleteReview(review).then((response) => {
-			console.log("delete succeeded")
-			const newReviews = reviews.filter((r) => r.id !== review.id)
-			setReviews(newReviews)
-		})
+		reviewServices.deleteReview(review, reviews, setReviews)
 	}
-	const likeReview = (review, user) => {
-		reviewServices.likeReview(review, user).then((response) => {
-			setReviews(
-				reviews.map((r) => (r.id !== review.id ? r : response.data))
-			)
-		})
+	const likeReview = (review) => {
+		//pass a user to the function or grab state variable user???
+		reviewServices.likeReview(review, user, reviews, setReviews)
 	}
-	const unlikeReview = (review, user) => {
-		reviewServices.unlikeReview(review, user).then((response) => {
-			setReviews(
-				reviews.map((r) => (r.id !== review.id ? r : response.data))
-			)
-		})
+	const unlikeReview = (review) => {
+		//pass a user to the function or grab state variable user???
+		reviewServices.unlikeReview(review, user, reviews, setReviews)
 	}
 	const addComment = (review, comment) => {
-		reviewServices.addComment(review, comment).then((response) => {
-			setReviews(
-				reviews.map((r) => (r.id !== review.id ? r : response.data))
-			)
-		})
+		reviewServices.addComment(review, comment, reviews, setReviews)
 	}
 	const editStars = (stars, review) => {
-		reviewServices.editStars(stars, review).then((response) => {
-			setReviews(
-				reviews.map((r) => (r.id !== review.id ? r : response.data))
-			)
-		})
+		reviewServices.editStars(stars, review, reviews, setReviews)
 	}
 	const editContent = (content, review) => {
-		reviewServices.editContent(content, review).then((response) => {
-			setReviews(
-				reviews.map((r) => (r.id !== review.id ? r : response.data))
-			)
-		})
+		reviewServices.editContent(content, review, reviews, setReviews)
 	}
 
 	const baseURL = "/api/"
@@ -169,7 +125,11 @@ function App() {
 					<Login user={user} setUser={FsetUser} />
 				</Route>
 				<Route path="/register">
-					<Register setUser={FsetUser} addNewUser={addNewUser} />
+					<Register
+						users={users}
+						setUser={FsetUser}
+						addNewUser={addNewUser}
+					/>
 				</Route>
 				<Route path="/myprofile">
 					<NavBar
@@ -178,7 +138,11 @@ function App() {
 						movie={movie}
 						setMovie={FsetMovie}
 					/>
-					<Profile user={user} />
+					<Profile
+						user={user}
+						followUser={null}
+						unfollowUser={null}
+					/>
 				</Route>
 				<Route path="/profile/:username">
 					<NavBar
@@ -188,7 +152,11 @@ function App() {
 						setMovie={FsetMovie}
 					/>
 					{/* TODO: Fix this so it's not dodgy. If no user input, then check useParams. Had null check issues */}
-					<Profile user="**NO_USER**" />
+					<Profile
+						user={"**NO_USER**"}
+						followUser={followUser}
+						unfollowUser={unfollowUser}
+					/>
 				</Route>
 				<Route path="/myMovies">
 					<NavBar
@@ -206,7 +174,7 @@ function App() {
 						movie={movie}
 						setMovie={FsetMovie}
 					/>
-					<ReviewCard />
+					<ReviewCard user={user} />
 				</Route>
 				<Route path="/movie/:id">
 					<NavBar
