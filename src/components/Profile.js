@@ -5,44 +5,39 @@ import "../style/Profile.css"
 import { useParams } from "react-router-dom"
 import axios from "axios"
 
-const Profile = ({ user, followUser, unfollowUser }) => {
+const Profile = ({ loggedInUser, followUser, unfollowUser }) => {
 	//TODO: change this to relative path when pushed to heroku
 	const userURL = "http://localhost:3001/api/users/"
-	const [userProfile, setUser] = useState(user)
+	const [user, setUser] = useState({})
 
-	let otherUser = useParams()
+	let { username } = useParams()
 	useEffect(() => {
-		{
-			user != "**NO_USER**" ? setUser(user) : getUser(otherUser.username)
-		}
-	}, [user])
-
-	const getUser = async (username) => {
-		await axios.get(userURL + username).then((response) => {
+		axios.get(userURL + username).then((response) => {
 			setUser(response.data)
 		})
-	}
+	}, [user])
 
 	const followButtonFn = (username) => {
 		console.log(username)
 		console.log(user)
-		if (user.follows.includes(username)) { //check user.follows, not sure if this is correct because of **no user*** stuff
-            unfollowUser(username)
-        } else {
-			followUser(username)
-		}
+		// if (user.follows.includes(username)) {
+		// 	//check user.follows, not sure if this is correct because of **no user*** stuff
+		// 	unfollowUser(username)
+		// } else {
+		// 	followUser(username)
+		// }
 	}
 
 	return (
 		<div>
 			<Jumbotron>
 				<Image
-					src={userProfile.avatar}
+					src={user.avatar}
 					roundedCircle
 					className="profileImage"
 				/>
-				<h3>{userProfile.username}</h3>
-				{user != "**NO_USER**" ? (
+				<h3>{user.username}</h3>
+				{user.username === loggedInUser.username ? (
 					<Button variant="primary" className="editBtn">
 						Edit
 						<svg
@@ -60,7 +55,11 @@ const Profile = ({ user, followUser, unfollowUser }) => {
 						</svg>
 					</Button>
 				) : (
-					<Button variant="primary" className="followBtn" onClick={followButtonFn(userProfile.username)}>
+					<Button
+						variant="primary"
+						className="followBtn"
+						onClick={followButtonFn(user.username)}
+					>
 						Follow
 					</Button>
 				)}
