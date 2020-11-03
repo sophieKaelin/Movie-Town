@@ -17,3 +17,12 @@ input[type="radio"] {
 body {
 	padding-bottom: 50px !important;
 }
+
+#movieListRow {
+	margin-top: 40px !important;
+}
+
+.custom-switch {
+	margin-left: 20px;
+	margin-bottom: 20px;
+}
