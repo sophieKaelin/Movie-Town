@@ -1,2 +1,19 @@
-[![Work in Repl.it](https://classroom.github.com/assets/work-in-replit-14baed9a392b3a25080506f3b7b6d57f295ec2978f6f33ec97e36a161684cbe9.svg)](https://classroom.github.com/online_ide?assignment_repo_id=297361&assignment_repo_type=GroupAssignmentRepo)
-# Group Z Project
+# Group Z Project - Movie Town
+
+<!--Feel free to change the headings around, not sure what they should be set to.-->
+
+## Outline	
+An outline of the application you were aiming to build, target users, data sources etc (similar to the proposal). Include link to Github
+
+## What We've Achieved
+Addressing milestones	A description of what you have been able to implement in this MVP, use your milestones to highlight what you've achieved
+
+## Source Code
+A guide to the project source code - where should we look for what you have done. 
+<!-- Refer to screenshots in screenshot folder -->
+
+## Future work	
+A summary of what your next steps would be if you were to continue the project
+
+##Roles/Contributions	
+A summary of the main roles and contributions of each team member and how you managed interaction and communication through the project
