@@ -1,21 +1,31 @@
 import React, { useState, useEffect } from "react"
 import "bootstrap/dist/css/bootstrap.css"
-import { Jumbotron, Image, Button } from "react-bootstrap"
+import { Jumbotron, Image, Button, Container, Row, Col } from "react-bootstrap"
 import "../style/Profile.css"
 import { useParams } from "react-router-dom"
 import axios from "axios"
+import MoviePoster from "./MoviePoster"
 
 const Profile = ({ loggedInUser, followUser, unfollowUser }) => {
 	//TODO: change this to relative path when pushed to heroku
 	const userURL = "http://localhost:3001/api/users/"
 	const [user, setUser] = useState({})
+	const [movies, setMovies] = useState([])
 
 	let { username } = useParams()
 	useEffect(() => {
 		axios.get(userURL + username).then((response) => {
 			setUser(response.data)
+			axios
+				.get("http://localhost:3001/api/movies", {
+					params: { id: response.data.watched },
+				})
+				.then((res) => {
+					setMovies(res.data)
+				})
+				.catch((err) => console.log(err))
 		})
-	}, [user])
+	}, [])
 
 	const followButtonFn = (username) => {
 		console.log(username)
@@ -64,6 +74,16 @@ const Profile = ({ loggedInUser, followUser, unfollowUser }) => {
 					</Button>
 				)}
 			</Jumbotron>
+			<Container>
+				<Row>
+					<Col className="myMoviesImages">
+						<h3>My Movies</h3>
+						{movies.map((m) => (
+							<MoviePoster movie={m} />
+						))}
+					</Col>
+				</Row>
+			</Container>
 		</div>
 	)
 }

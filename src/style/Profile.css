@@ -4,11 +4,15 @@
 	background-position: 50% 50%;
 	height: 150px;
 	width: 150px;
-	float: left;
+	display: inline-block;
 	margin-left: 50px;
 	margin-right: 25px;
 	background-color: white;
 	border: 3px solid rgba(0, 0, 0, 0.3);
+}
+
+.jumbotron > h3 {
+	display: inline-block;
 }
 
 .editBtn {
@@ -19,4 +23,10 @@
 
 .followBtn {
 	margin-top: 1em;
+}
+
+.myMoviesImages > h3 {
+	margin-top: 30px;
+	margin-left: 30px;
+	margin-bottom: 40px;
 }
