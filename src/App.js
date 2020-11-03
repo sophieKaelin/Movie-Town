@@ -40,13 +40,21 @@ function App() {
 	}
 
 	//TODO: Remove this because we shouldn't be using local storage
-	useEffect(async () => {
+	useEffect(() => {
 		const localUser = JSON.parse(localStorage.getItem("user"))
 		if (localUser) {
-			await axios.get(userURL + localUser.username).then((response) => {
+			axios.get(userURL + localUser.username).then((response) => {
 				setUser(response.data)
 			})
 		}
+
+		axios.get("http://localhost:3001/api/users").then((response) => {
+			setUsers(response.data)
+		})
+
+		axios.get("http://localhost:3001/api/reviews").then((response) => {
+			setReviews(response.data)
+		})
 	}, [])
 
 	const addNewUser = (newUser) => {
@@ -95,18 +103,6 @@ function App() {
 
 	const baseURL = "/api/"
 	//Not working, response with 404 not found hence hardcoded url in useEffects
-
-	useEffect(() => {
-		axios.get("http://localhost:3001/api/users").then((response) => {
-			setUsers(response.data)
-		})
-	}, [])
-
-	useEffect(() => {
-		axios.get("http://localhost:3001/api/reviews").then((response) => {
-			setReviews(response.data)
-		})
-	}, [])
 
 	return (
 		<Router>
