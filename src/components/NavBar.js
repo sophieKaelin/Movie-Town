@@ -1,11 +1,17 @@
-import React from "react"
+import React, { useState } from "react"
 import "bootstrap/dist/css/bootstrap.css"
-import { Nav, Navbar, NavDropdown, Image } from "react-bootstrap"
+import { Nav, Navbar, NavDropdown, Image, Modal } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
 import SearchBar from "./SearchBar.js"
+import ReviewForm from "./ReviewForm.js"
 
-const NavBar = ({ user, setUser, movie, setMovie }) => {
+const NavBar = ({ user, setUser, movie, setMovie, addNewReview }) => {
 	const history = useHistory()
+
+	//Review Form Modal features
+	const [show, setShow] = useState(false)
+	const handleClose = () => setShow(false)
+	const handleShow = () => setShow(true)
 
 	//TODO: Fix this so that it doesn't use localstorage
 	const saveAndLogout = () => {
@@ -140,7 +146,7 @@ const NavBar = ({ user, setUser, movie, setMovie }) => {
 						</svg>
 						Profile
 					</NavDropdown.Item>
-					<NavDropdown.Item href="/reviews">
+					<NavDropdown.Item onClick={handleShow}>
 						<svg
 							width="1em"
 							height="1em"
@@ -164,6 +170,18 @@ const NavBar = ({ user, setUser, movie, setMovie }) => {
 					</NavDropdown.Item>
 				</NavDropdown>
 			</Navbar.Collapse>
+			{/* MODAL for the review */}
+			<Modal show={show} onHide={handleClose} animation={false} size="lg">
+				<Modal.Header closeButton></Modal.Header>
+				<Modal.Body>
+					<ReviewForm
+						user={user}
+						addNewReview={addNewReview}
+						movie={movie}
+						setMovie={setMovie}
+					/>
+				</Modal.Body>
+			</Modal>
 		</Navbar>
 	)
 }
