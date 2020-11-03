@@ -15,5 +15,5 @@ A guide to the project source code - where should we look for what you have done
 ## Future work	
 A summary of what your next steps would be if you were to continue the project
 
-##Roles/Contributions	
+## Roles/Contributions	
 A summary of the main roles and contributions of each team member and how you managed interaction and communication through the project
