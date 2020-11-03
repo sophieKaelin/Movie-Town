@@ -31,6 +31,11 @@ function App() {
 	const [reviews, setReviews] = useState([]) //all reviews
 	const [movie, setMovie] = useState("") //movie currently being searched
 
+	//REVIEW MODAL STATE VARIABLES & FUNCTIONS
+	const [show, setShow] = useState(false)
+	const handleClose = () => setShow(false)
+	const handleShow = () => setShow(true)
+
 	const FsetUser = (user) => {
 		setUser(user)
 	}
@@ -119,6 +124,9 @@ function App() {
 						movie={movie}
 						setMovie={FsetMovie}
 						addNewReview={addNewReview}
+						show={show}
+						handleClose={handleClose}
+						handleShow={handleShow}
 					/>
 					<Home />
 				</Route>
@@ -139,6 +147,9 @@ function App() {
 						movie={movie}
 						setMovie={FsetMovie}
 						addNewReview={addNewReview}
+						show={show}
+						handleClose={handleClose}
+						handleShow={handleShow}
 					/>
 					<Profile
 						user={user}
@@ -153,6 +164,9 @@ function App() {
 						movie={movie}
 						setMovie={FsetMovie}
 						addNewReview={addNewReview}
+						show={show}
+						handleClose={handleClose}
+						handleShow={handleShow}
 					/>
 					{/* TODO: Fix this so it's not dodgy. If no user input, then check useParams. Had null check issues */}
 					<Profile
@@ -168,6 +182,9 @@ function App() {
 						movie={movie}
 						setMovie={FsetMovie}
 						addNewReview={addNewReview}
+						show={show}
+						handleClose={handleClose}
+						handleShow={handleShow}
 					/>
 					<CardList user={user} />
 				</Route>
@@ -178,6 +195,9 @@ function App() {
 						movie={movie}
 						setMovie={FsetMovie}
 						addNewReview={addNewReview}
+						show={show}
+						handleClose={handleClose}
+						handleShow={handleShow}
 					/>
 					<ReviewCard user={user} />
 				</Route>
@@ -188,6 +208,9 @@ function App() {
 						movie={movie}
 						setMovie={FsetMovie}
 						addNewReview={addNewReview}
+						show={show}
+						handleClose={handleClose}
+						handleShow={handleShow}
 					/>
 					<MovieCard movie={movie} />
 				</Route>
