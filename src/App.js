@@ -118,6 +118,7 @@ function App() {
 						setUser={FsetUser}
 						movie={movie}
 						setMovie={FsetMovie}
+						addNewReview={addNewReview}
 					/>
 					<Home />
 				</Route>
@@ -137,6 +138,7 @@ function App() {
 						setUser={FsetUser}
 						movie={movie}
 						setMovie={FsetMovie}
+						addNewReview={addNewReview}
 					/>
 					<Profile
 						user={user}
@@ -150,6 +152,7 @@ function App() {
 						setUser={FsetUser}
 						movie={movie}
 						setMovie={FsetMovie}
+						addNewReview={addNewReview}
 					/>
 					{/* TODO: Fix this so it's not dodgy. If no user input, then check useParams. Had null check issues */}
 					<Profile
@@ -164,6 +167,7 @@ function App() {
 						setUser={FsetUser}
 						movie={movie}
 						setMovie={FsetMovie}
+						addNewReview={addNewReview}
 					/>
 					<CardList user={user} />
 				</Route>
@@ -173,6 +177,7 @@ function App() {
 						setUser={FsetUser}
 						movie={movie}
 						setMovie={FsetMovie}
+						addNewReview={addNewReview}
 					/>
 					<ReviewCard user={user} />
 				</Route>
@@ -182,6 +187,7 @@ function App() {
 						setUser={FsetUser}
 						movie={movie}
 						setMovie={FsetMovie}
+						addNewReview={addNewReview}
 					/>
 					<MovieCard movie={movie} />
 				</Route>
