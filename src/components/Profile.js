@@ -48,7 +48,7 @@ const Profile = ({ loggedInUser, followUser, unfollowUser }) => {
 				/>
 				<h3>{user.username}</h3>
 				{user.username === loggedInUser.username ? (
-					<Button variant="primary" className="editBtn">
+					<Button variant="primary" className="editBtn" size="sm">
 						Edit
 						<svg
 							width="1em"
@@ -77,10 +77,11 @@ const Profile = ({ loggedInUser, followUser, unfollowUser }) => {
 			<Container>
 				<Row>
 					<Col className="myMoviesImages">
-						<h3>My Movies</h3>
-						{movies.map((m) => (
-							<MoviePoster movie={m} />
-						))}
+						<h3>Watched Movies</h3>
+						{movies.map((m) => {
+							console.log(m)
+							return <MoviePoster movie={m} />
+						})}
 					</Col>
 				</Row>
 			</Container>

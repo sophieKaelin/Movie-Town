@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import "bootstrap/dist/css/bootstrap.css"
 import { Nav, Navbar, NavDropdown, Image } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
@@ -40,7 +40,7 @@ const NavBar = ({ user, setUser, movie, setMovie }) => {
 						</svg>
 						Feed
 					</Nav.Link>
-					<Nav.Link href={"/profile/" + user}>
+					<Nav.Link href={"/profile/" + user.username}>
 						<svg
 							width="1em"
 							height="1em"
@@ -61,7 +61,7 @@ const NavBar = ({ user, setUser, movie, setMovie }) => {
 						</svg>
 						Profile
 					</Nav.Link>
-					<Nav.Link href="/myMovies">
+					<Nav.Link href="/my/movies">
 						<svg
 							width="1em"
 							height="1em"

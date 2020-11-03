@@ -15,7 +15,7 @@ const MoviePoster = ({ movie }) => {
 	const {
 		Title,
 		Year,
-		Rating,
+		imdbRating,
 		Runtime,
 		Genre,
 		Released,
@@ -41,23 +41,17 @@ const MoviePoster = ({ movie }) => {
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<ListGroup>
-						<ListGroupItem>
-							<Card.Text>
-								{Rating} | {Runtime} | {Genre} | {Released}
-							</Card.Text>
-							<Card.Text>{Plot}</Card.Text>
-						</ListGroupItem>
-						<ListGroupItem>
-							<h6>Directors:</h6> {Director}
-						</ListGroupItem>
-						<ListGroupItem>
-							<h6>Writers:</h6> {Writer}
-						</ListGroupItem>
-						<ListGroupItem>
-							<h6>Cast:</h6> {Actors}
-						</ListGroupItem>
-					</ListGroup>
+					<Card.Text>
+						{imdbRating}/10 | {Runtime} | {Genre} | {Released}
+					</Card.Text>
+					<hr />
+					<Card.Text>{Plot}</Card.Text>
+					<hr />
+					<h6>Directors:</h6> {Director}
+					<hr />
+					<h6>Writers:</h6> {Writer}
+					<hr />
+					<h6>Cast:</h6> {Actors}
 				</Modal.Body>
 				<Modal.Footer>
 					<Button variant="secondary" onClick={handleClose}>
