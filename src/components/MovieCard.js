@@ -24,10 +24,7 @@ const MovieCard = ({ movie }) => {
 	const [hover, setHover] = useState(null)
 
 	return (
-		<Card
-			className="mt-5"
-			style={{ maxWidth: "56rem", margin: "auto auto" }}
-		>
+		<Card style={{ maxWidth: "56rem", marginBottom: "25px" }}>
 			<Row className="no-gutters">
 				<Col>
 					<Card.Header>
