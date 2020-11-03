@@ -17,6 +17,8 @@ const validateForm = (errors) => {
 	return valid
 }
 
+const userURL = "http://localhost:3001/api/users/"
+
 const Login = ({ user, setUser }) => {
 	const [loginInfo, setLoginInfo] = useState({ username: "", password: "" })
 	const [errors, setErrors] = useState({ username: "", password: "" })
@@ -75,7 +77,9 @@ const Login = ({ user, setUser }) => {
 			console.info("Valid Form")
 			login()
 				.then((data) => {
-					setUser(data.username)
+					axios.get(userURL + data.username).then((response) => {
+						setUser(response.data)
+					})
 					//TODO: Don't set things in local storage, that's naughty. We should hash the login.
 					localStorage.setItem("user", JSON.stringify(data))
 				})

@@ -42,6 +42,7 @@ function App() {
 	//TODO: Remove this because we shouldn't be using local storage
 	useEffect(() => {
 		const localUser = JSON.parse(localStorage.getItem("user"))
+
 		if (localUser) {
 			axios.get(userURL + localUser.username).then((response) => {
 				setUser(response.data)
@@ -141,7 +142,7 @@ function App() {
 						unfollowUser={unfollowUser}
 					/>
 				</Route>
-				<Route path="/myMovies">
+				<Route path="/my/movies">
 					<NavBar
 						user={user}
 						setUser={FsetUser}
