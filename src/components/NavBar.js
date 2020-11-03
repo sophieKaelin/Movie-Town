@@ -40,7 +40,7 @@ const NavBar = ({ user, setUser, movie, setMovie }) => {
 						</svg>
 						Feed
 					</Nav.Link>
-					<Nav.Link href="/myprofile">
+					<Nav.Link href={"/profile/" + user}>
 						<svg
 							width="1em"
 							height="1em"

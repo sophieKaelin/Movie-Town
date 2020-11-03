@@ -131,19 +131,6 @@ function App() {
 						addNewUser={addNewUser}
 					/>
 				</Route>
-				<Route path="/myprofile">
-					<NavBar
-						user={user}
-						setUser={FsetUser}
-						movie={movie}
-						setMovie={FsetMovie}
-					/>
-					<Profile
-						user={user}
-						followUser={null}
-						unfollowUser={null}
-					/>
-				</Route>
 				<Route path="/profile/:username">
 					<NavBar
 						user={user}
@@ -153,7 +140,7 @@ function App() {
 					/>
 					{/* TODO: Fix this so it's not dodgy. If no user input, then check useParams. Had null check issues */}
 					<Profile
-						user={"**NO_USER**"}
+						loggedInUser={user}
 						followUser={followUser}
 						unfollowUser={unfollowUser}
 					/>
