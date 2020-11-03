@@ -40,13 +40,22 @@ function App() {
 	}
 
 	//TODO: Remove this because we shouldn't be using local storage
-	useEffect(async () => {
+	useEffect(() => {
 		const localUser = JSON.parse(localStorage.getItem("user"))
+
 		if (localUser) {
-			await axios.get(userURL + localUser.username).then((response) => {
+			axios.get(userURL + localUser.username).then((response) => {
 				setUser(response.data)
 			})
 		}
+
+		axios.get("http://localhost:3001/api/users").then((response) => {
+			setUsers(response.data)
+		})
+
+		axios.get("http://localhost:3001/api/reviews").then((response) => {
+			setReviews(response.data)
+		})
 	}, [])
 
 	const addNewUser = (newUser) => {
@@ -96,18 +105,6 @@ function App() {
 	const baseURL = "/api/"
 	//Not working, response with 404 not found hence hardcoded url in useEffects
 
-	useEffect(() => {
-		axios.get("http://localhost:3001/api/users").then((response) => {
-			setUsers(response.data)
-		})
-	}, [])
-
-	useEffect(() => {
-		axios.get("http://localhost:3001/api/reviews").then((response) => {
-			setReviews(response.data)
-		})
-	}, [])
-
 	return (
 		<Router>
 			<Switch>
@@ -131,19 +128,6 @@ function App() {
 						addNewUser={addNewUser}
 					/>
 				</Route>
-				<Route path="/myprofile">
-					<NavBar
-						user={user}
-						setUser={FsetUser}
-						movie={movie}
-						setMovie={FsetMovie}
-					/>
-					<Profile
-						user={user}
-						followUser={null}
-						unfollowUser={null}
-					/>
-				</Route>
 				<Route path="/profile/:username">
 					<NavBar
 						user={user}
@@ -153,12 +137,12 @@ function App() {
 					/>
 					{/* TODO: Fix this so it's not dodgy. If no user input, then check useParams. Had null check issues */}
 					<Profile
-						user={"**NO_USER**"}
+						loggedInUser={user}
 						followUser={followUser}
 						unfollowUser={unfollowUser}
 					/>
 				</Route>
-				<Route path="/myMovies">
+				<Route path="/my/movies">
 					<NavBar
 						user={user}
 						setUser={FsetUser}
