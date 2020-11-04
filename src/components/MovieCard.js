@@ -149,6 +149,7 @@ const MovieCard = ({
 									id="dropdown-basic-button"
 									// Alternate between title "Add to: ", "WATCHED", and "TO WATCH"
 									title={status}
+									drop="right"
 								>
 									<Dropdown.Item onClick={addToWatched}>
 										Watched
