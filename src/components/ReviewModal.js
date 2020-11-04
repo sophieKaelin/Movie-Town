@@ -1,6 +1,6 @@
-import React, { useState } from "react"
+import React from "react"
 import "bootstrap/dist/css/bootstrap.css"
-import { Button, Modal } from "react-bootstrap"
+import { Modal } from "react-bootstrap"
 import ReviewForm from "./ReviewForm.js"
 
 const ReviewModal = ({
