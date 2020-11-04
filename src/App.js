@@ -71,11 +71,9 @@ function App() {
 		userServices.addNewUser(newUser, users, setUsers)
 	}
 	const followUser = (userToFollow, user) => {
-		//pass a user to the function or grab state variable user???
 		userServices.followUser(userToFollow, user, users, setUser, setUsers)
 	}
 	const unfollowUser = (userToFollow, user) => {
-		//pass a user to the function or grab state variable user???
 		userServices.unfollowUser(userToFollow, user, users, setUser, setUsers)
 	}
 
@@ -86,11 +84,9 @@ function App() {
 		reviewServices.deleteReview(review, reviews, setReviews)
 	}
 	const likeReview = (review) => {
-		//pass a user to the function or grab state variable user???
 		reviewServices.likeReview(review, user, reviews, setReviews)
 	}
 	const unlikeReview = (review) => {
-		//pass a user to the function or grab state variable user???
 		reviewServices.unlikeReview(review, user, reviews, setReviews)
 	}
 	const addComment = (review, comment) => {
