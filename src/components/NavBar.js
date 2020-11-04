@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import "bootstrap/dist/css/bootstrap.css"
 import { Nav, Navbar, NavDropdown, Image } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
@@ -50,7 +50,7 @@ const NavBar = ({
 						</svg>
 						Feed
 					</Nav.Link>
-					<Nav.Link href="/myprofile">
+					<Nav.Link href={"/profile/" + user.username}>
 						<svg
 							width="1em"
 							height="1em"
@@ -71,7 +71,7 @@ const NavBar = ({
 						</svg>
 						Profile
 					</Nav.Link>
-					<Nav.Link href="/myMovies">
+					<Nav.Link href="/my/movies">
 						<svg
 							width="1em"
 							height="1em"

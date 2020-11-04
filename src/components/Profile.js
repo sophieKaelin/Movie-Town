@@ -1,49 +1,54 @@
 import React, { useState, useEffect } from "react"
 import "bootstrap/dist/css/bootstrap.css"
-import { Jumbotron, Image, Button } from "react-bootstrap"
+import { Jumbotron, Image, Button, Container, Row, Col } from "react-bootstrap"
 import "../style/Profile.css"
 import { useParams } from "react-router-dom"
 import axios from "axios"
+import MoviePoster from "./MoviePoster"
 
-const Profile = ({ user, followUser, unfollowUser }) => {
+const Profile = ({ loggedInUser, followUser, unfollowUser }) => {
 	//TODO: change this to relative path when pushed to heroku
 	const userURL = "http://localhost:3001/api/users/"
-	const [userProfile, setUser] = useState(user)
+	const [user, setUser] = useState({})
+	const [movies, setMovies] = useState([])
 
-	let otherUser = useParams()
+	let { username } = useParams()
 	useEffect(() => {
-		{
-			user != "**NO_USER**" ? setUser(user) : getUser(otherUser.username)
-		}
-	}, [user])
-
-	const getUser = async (username) => {
-		await axios.get(userURL + username).then((response) => {
+		axios.get(userURL + username).then((response) => {
 			setUser(response.data)
+			axios
+				.get("http://localhost:3001/api/movies", {
+					params: { id: response.data.watched },
+				})
+				.then((res) => {
+					setMovies(res.data)
+				})
+				.catch((err) => console.log(err))
 		})
-	}
+	}, [])
 
 	const followButtonFn = (username) => {
 		console.log(username)
 		console.log(user)
-		if (user.follows.includes(username)) { //check user.follows, not sure if this is correct because of **no user*** stuff
-            unfollowUser(username)
-        } else {
-			followUser(username)
-		}
+		// if (user.follows.includes(username)) {
+		// 	//check user.follows, not sure if this is correct because of **no user*** stuff
+		// 	unfollowUser(username)
+		// } else {
+		// 	followUser(username)
+		// }
 	}
 
 	return (
 		<div>
 			<Jumbotron>
 				<Image
-					src={userProfile.avatar}
+					src={user.avatar}
 					roundedCircle
 					className="profileImage"
 				/>
-				<h3>{userProfile.username}</h3>
-				{user != "**NO_USER**" ? (
-					<Button variant="primary" className="editBtn">
+				<h3>{user.username}</h3>
+				{user.username === loggedInUser.username ? (
+					<Button variant="primary" className="editBtn" size="sm">
 						Edit
 						<svg
 							width="1em"
@@ -60,11 +65,26 @@ const Profile = ({ user, followUser, unfollowUser }) => {
 						</svg>
 					</Button>
 				) : (
-					<Button variant="primary" className="followBtn" onClick={followButtonFn(userProfile.username)}>
+					<Button
+						variant="primary"
+						className="followBtn"
+						onClick={followButtonFn(user.username)}
+					>
 						Follow
 					</Button>
 				)}
 			</Jumbotron>
+			<Container>
+				<Row>
+					<Col className="myMoviesImages">
+						<h3>Watched Movies</h3>
+						{movies.map((m) => {
+							console.log(m)
+							return <MoviePoster movie={m} />
+						})}
+					</Col>
+				</Row>
+			</Container>
 		</div>
 	)
 }
