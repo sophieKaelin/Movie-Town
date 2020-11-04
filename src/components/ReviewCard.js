@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import "bootstrap/dist/css/bootstrap.css"
 import {
 	Card,
@@ -12,6 +12,7 @@ import {
 	Image,
 	Accordion,
 } from "react-bootstrap"
+import axios from "axios"
 import "../style/ReviewCard.css"
 import samProfile from "../profilepictures/samProf.png"
 
@@ -26,6 +27,7 @@ const ReviewCard = ({ reviews, user }) => {
 		likes,
 		comments,
 	} = reviews
+	const [movie, setMovie] = useState()
 	const [newComment, setNewComment] = useState("")
 	const [like, setLike] = useState(false)
 	// const [comments, setComments] = useState([
@@ -40,8 +42,6 @@ const ReviewCard = ({ reviews, user }) => {
 	const [starRating, setStarRating] = useState()
 	const [hover, setHover] = useState(null)
 
-	// review data
-	// const user = "Professor Sam"
 	const title = "Avengers Endgame"
 	const watchDate = "21/10/20"
 	const year = "2019"
@@ -50,7 +50,25 @@ const ReviewCard = ({ reviews, user }) => {
 	const link = "https://www.imdb.com/title/tt4154796/"
 	const poster =
 		"https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_SX300.jpg"
-	const avatar = samProfile // const content = "Broom Broom, I like Cards"
+	const avatar = samProfile
+
+	useEffect(() => {
+		if (user) {
+			console.log("USE EFFECT")
+			console.log(titleid)
+			axios
+				.get("http://localhost:3001/api/movie/id", {
+					params: { imdbID: titleid },
+				})
+				.then((res) => {
+					console.log(res.data)
+					setMovie(res.data)
+				})
+				.catch((err) => {
+					console.log(err)
+				})
+		}
+	}, [titleid, user])
 
 	const handleChange = (e) => {
 		e.preventDefault()
@@ -72,6 +90,8 @@ const ReviewCard = ({ reviews, user }) => {
 
 	const handleComment = () => {
 		console.log(newComment)
+		// TODO: Comments working with back-end
+
 		// setComments([
 		// 	...comments,
 		// 	{
@@ -185,7 +205,7 @@ const ReviewCard = ({ reviews, user }) => {
 					</Accordion.Toggle>
 					<Accordion.Collapse eventKey="0">
 						<ListGroup className="mt-2">
-							{/* {comments.map((comment) => (
+							{comments.map((comment) => (
 								<ListGroupItem className="mt-2">
 									<Image
 										style={{
@@ -200,7 +220,7 @@ const ReviewCard = ({ reviews, user }) => {
 									<b>{comment.author}: </b>
 									{comment.comment}
 								</ListGroupItem>
-							))} */}
+							))}
 						</ListGroup>
 					</Accordion.Collapse>
 				</Accordion>
