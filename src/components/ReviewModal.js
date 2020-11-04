@@ -21,6 +21,7 @@ const ReviewModal = ({
 						addNewReview={addNewReview}
 						movie={movie}
 						setMovie={setMovie}
+						handleClose={handleClose}
 					/>
 				</Modal.Body>
 			</Modal>

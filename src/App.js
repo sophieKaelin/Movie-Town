@@ -18,7 +18,6 @@ import {
 	Redirect,
 } from "react-router-dom"
 import MovieCard from "./components/MovieCard"
-import ReviewForm from "./components/ReviewForm"
 
 //TODO: Reroute to login page if there is no user logged in (set this on all pages)
 
@@ -186,7 +185,16 @@ function App() {
 						handleClose={handleClose}
 						handleShow={handleShow}
 					/>
-					<CardList user={user} />
+					<CardList
+						user={user}
+						setUser={FsetUser}
+						movie={movie}
+						setMovie={FsetMovie}
+						addNewReview={addNewReview}
+						show={show}
+						handleClose={handleClose}
+						handleShow={handleShow}
+					/>
 				</Route>
 				<Route path="/reviews">
 					<NavBar
