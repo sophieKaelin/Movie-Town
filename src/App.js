@@ -120,27 +120,23 @@ function App() {
 							addNewUser={addNewUser}
 						/>
 					</Route>
-					{/* ALWAYS LEAVE LAST */}
-					<Route path="/">
-						{user ? (
-							<Redirect to="/home" />
-						) : (
-							<Redirect to="/login" />
-						)}
-					</Route>
 				</Switch>
 			</Router>
 			<Router>
-				<NavBar
-					user={user}
-					setUser={FsetUser}
-					movie={movie}
-					setMovie={FsetMovie}
-					addNewReview={addNewReview}
-					show={show}
-					handleClose={handleClose}
-					handleShow={handleShow}
-				/>
+				{user ? (
+					<NavBar
+						user={user}
+						setUser={FsetUser}
+						movie={movie}
+						setMovie={FsetMovie}
+						addNewReview={addNewReview}
+						show={show}
+						handleClose={handleClose}
+						handleShow={handleShow}
+					/>
+				) : (
+					<br></br>
+				)}
 				<Switch>
 					<Route path="/home">
 						{user ? (
