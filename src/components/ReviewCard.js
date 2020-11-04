@@ -21,7 +21,7 @@ const ReviewCard = ({ reviews, user }) => {
 		username,
 		titleid,
 		timestamp,
-		starts,
+		stars,
 		content,
 		likes,
 		comments,
@@ -50,9 +50,7 @@ const ReviewCard = ({ reviews, user }) => {
 	const link = "https://www.imdb.com/title/tt4154796/"
 	const poster =
 		"https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_SX300.jpg"
-	const avatar = samProfile
-	const stars = 5
-	// const content = "Broom Broom, I like Cards"
+	const avatar = samProfile // const content = "Broom Broom, I like Cards"
 
 	const handleChange = (e) => {
 		e.preventDefault()
@@ -135,7 +133,7 @@ const ReviewCard = ({ reviews, user }) => {
 									)
 								})}
 								<p className="text-muted ml-3">
-									<em>{""} Date Watched: </em> {watchDate}
+									<em>{""} Date Reviewed: </em> {timestamp}
 								</p>
 							</ListGroupItem>
 							<ListGroupItem>{content}</ListGroupItem>
