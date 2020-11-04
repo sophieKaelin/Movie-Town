@@ -141,6 +141,12 @@ apiRouter.get("/api/reviews", (req, res) => {
 	})
 })
 
+apiRouter.get("/api/reviews/by/:username", (req, res) => {
+	Review.find({ username: req.params.username }).then((reviews) => {
+		res.json(reviews)
+	})
+})
+
 apiRouter.get("/api/reviews/:id", (req, res) => {
 	Review.findById(req.params.id).then((review) => {
 		res.json(review)
