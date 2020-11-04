@@ -11,24 +11,24 @@ const addNewUser = (newUser, users, setUsers) => {
 }
 
 const followUser = (userToFollow, user, users, setUser, setUsers) => {
-	user.follows.push(userToFollow.username)
-	axios
-		.put(baseURL + "users/" + user.id + "follows", user)
-		.then((response) => {
-			setUser(response.data)
-			setUsers(users.map((u) => (u.id !== user.id ? u : response.data)))
-		})
+    user.follows.push(userToFollow.username)
+    axios.put(baseURL + "users/" + user.username + "/follows", user)
+    .then((response) => {
+        setUser(response.data)
+        setUsers(users.map((u) => (u.id !== user.id ? u : response.data)))
+        console.log("followed")
+    })
 }
 
 const unfollowUser = (userToFollow, user, users, setUser, setUsers) => {
-	const index = user.follows.indexOf(userToFollow.username)
-	user.follows.splice(index, 1)
-	axios
-		.put(baseURL + "users/" + user.id + "follows", user)
-		.then((response) => {
-			setUser(response.data)
-			setUsers(users.map((u) => (u.id !== user.id ? u : response.data)))
-		})
+    const index = user.follows.indexOf(userToFollow.username)
+    user.follows.splice(index, 1)
+    axios.put(baseURL + "users/" + user.username + "/follows", user)
+    .then((response) => {
+        setUser(response.data)
+        setUsers(users.map((u) => (u.id !== user.id ? u : response.data)))
+        console.log("unfollowed")
+    })
 }
 
 const addWatched = (titleid, user, users, setUser, setUsers) => {

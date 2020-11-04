@@ -149,6 +149,7 @@ const MovieCard = ({
 									id="dropdown-basic-button"
 									// Alternate between title "Add to: ", "WATCHED", and "TO WATCH"
 									title={status}
+									drop="right"
 								>
 									<Dropdown.Item onClick={addToWatched}>
 										Watched
@@ -157,7 +158,9 @@ const MovieCard = ({
 										To Watch
 									</Dropdown.Item>
 								</DropdownButton>
-								<Button onClick={handleShow}>Review</Button>
+								<Button onClick={handleShow} className="mt-1">
+									Review
+								</Button>
 
 								<ReviewModal
 									user={user}

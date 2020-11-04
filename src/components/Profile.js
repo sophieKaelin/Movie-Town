@@ -27,15 +27,14 @@ const Profile = ({ loggedInUser, followUser, unfollowUser }) => {
 		})
 	}, [])
 
-	const followButtonFn = (username) => {
+	const followButtonFn = () => {
+		console.log(loggedInUser)
 		console.log(username)
-		console.log(user)
-		// if (user.follows.includes(username)) {
-		// 	//check user.follows, not sure if this is correct because of **no user*** stuff
-		// 	unfollowUser(username)
-		// } else {
-		// 	followUser(username)
-		// }
+		if (loggedInUser.follows.includes(username)) {
+			unfollowUser(username, loggedInUser)
+		} else {
+			followUser(username, loggedInUser)
+		}
 	}
 
 	return (
@@ -68,7 +67,7 @@ const Profile = ({ loggedInUser, followUser, unfollowUser }) => {
 					<Button
 						variant="primary"
 						className="followBtn"
-						onClick={followButtonFn(user.username)}
+						onClick={followButtonFn}
 					>
 						Follow
 					</Button>
