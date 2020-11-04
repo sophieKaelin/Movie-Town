@@ -68,19 +68,21 @@ const MovieCard = ({
 		}
 	}, [status, watched, movie])
 
-	//TODO: IF YOU ADD TO ONE LIST YOU MUST CHECK IF IT"S IN THE OTHER FIRST AND REMOVE IT.
-	//TODO: RERENDER THE SCREEN WHENEVER A MOVIE IS ADDED TO WATCHED OR TO TOWATCH
-	//TODO: axios post to watched list, update the button so that it says "WATCHED" or "TO WATCH"
 	const addToToWatch = () => {
+		if (status === "Watched") {
+			//REMOVE from watched -> TODO: Need an axios to do this.
+		}
 		userServices.addToWatch(imdbID, user, users, setUser, setUsers)
-		setStatus("Watched")
-		console.log("MOVIE ADDED TO WATCHED")
+		setStatus("To Watched")
+		//TODO: Rerender the screen when a movie is added to the list
 	}
 	const addToWatched = () => {
-		console.log("ID: ", imdbID)
+		if (status === "To Watch") {
+			//REMOVE FROM TO WATCH -> TODO: Need an axios to do this.
+		}
 		userServices.addWatched(imdbID, user, users, setUser, setUsers)
-		setStatus("To Watch")
-		console.log("MOVIE ADDED TO TOWATCH")
+		setStatus("Watched")
+		//TODO: Rerender the screen when a movie is added to the list
 	}
 
 	return (
