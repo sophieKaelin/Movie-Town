@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import "bootstrap/dist/css/bootstrap.css"
 import { Nav, Navbar, NavDropdown, Image } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
