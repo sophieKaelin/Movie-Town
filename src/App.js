@@ -113,121 +113,93 @@ function App() {
 	}, [])
 
 	return (
-		<Router>
-			<Switch>
-				<Route path="/home">
-					{user ? <Redirect to="/home" /> : <Redirect to="/login" />}
-					<NavBar
-						user={user}
-						setUser={FsetUser}
-						movie={movie}
-						setMovie={FsetMovie}
-						addNewReview={addNewReview}
-						show={show}
-						handleClose={handleClose}
-						handleShow={handleShow}
-					/>
-					<Home />
-				</Route>
-				<Route path="/login">
-					<Login user={user} setUser={FsetUser} />
-				</Route>
-				<Route path="/register">
-					<Register
-						users={users}
-						setUser={FsetUser}
-						addNewUser={addNewUser}
-					/>
-				</Route>
-				<Route path="/myprofile">
-					<NavBar
-						user={user}
-						setUser={FsetUser}
-						movie={movie}
-						setMovie={FsetMovie}
-						addNewReview={addNewReview}
-						show={show}
-						handleClose={handleClose}
-						handleShow={handleShow}
-					/>
-					<Profile
-						user={user}
-						followUser={null}
-						unfollowUser={null}
-					/>
-				</Route>
-				<Route path="/profile/:username">
-					<NavBar
-						user={user}
-						setUser={FsetUser}
-						movie={movie}
-						setMovie={FsetMovie}
-						addNewReview={addNewReview}
-						show={show}
-						handleClose={handleClose}
-						handleShow={handleShow}
-					/>
-					{/* TODO: Fix this so it's not dodgy. If no user input, then check useParams. Had null check issues */}
-					<Profile
-						user={"**NO_USER**"}
-						followUser={followUser}
-						unfollowUser={unfollowUser}
-					/>
-				</Route>
-				<Route path="/myMovies">
-					<NavBar
-						user={user}
-						setUser={FsetUser}
-						movie={movie}
-						setMovie={FsetMovie}
-						addNewReview={addNewReview}
-						show={show}
-						handleClose={handleClose}
-						handleShow={handleShow}
-					/>
-					<CardList
-						user={user}
-						setUser={FsetUser}
-						movie={movie}
-						setMovie={FsetMovie}
-						addNewReview={addNewReview}
-						show={show}
-						handleClose={handleClose}
-						handleShow={handleShow}
-					/>
-				</Route>
-				<Route path="/reviews">
-					<NavBar
-						user={user}
-						setUser={FsetUser}
-						movie={movie}
-						setMovie={FsetMovie}
-						addNewReview={addNewReview}
-						show={show}
-						handleClose={handleClose}
-						handleShow={handleShow}
-					/>
-					<ReviewCard user={user} />
-				</Route>
-				<Route path="/movie/:id">
-					<NavBar
-						user={user}
-						setUser={FsetUser}
-						movie={movie}
-						setMovie={FsetMovie}
-						addNewReview={addNewReview}
-						show={show}
-						handleClose={handleClose}
-						handleShow={handleShow}
-					/>
-					<MovieCard movie={movie} />
-				</Route>
-				{/* ALWAYS LEAVE LAST */}
-				<Route path="/">
-					{user ? <Redirect to="/home" /> : <Redirect to="/login" />}
-				</Route>
-			</Switch>
-		</Router>
+		<div>
+			<Router>
+				<Switch>
+					<Route path="/login">
+						<Login user={user} setUser={FsetUser} />
+					</Route>
+					<Route path="/register">
+						<Register
+							users={users}
+							setUser={FsetUser}
+							addNewUser={addNewUser}
+						/>
+					</Route>
+					{/* ALWAYS LEAVE LAST */}
+					<Route path="/">
+						{user ? (
+							<Redirect to="/home" />
+						) : (
+							<Redirect to="/login" />
+						)}
+					</Route>
+				</Switch>
+			</Router>
+			<Router>
+				<NavBar
+					user={user}
+					setUser={FsetUser}
+					movie={movie}
+					setMovie={FsetMovie}
+					addNewReview={addNewReview}
+					show={show}
+					handleClose={handleClose}
+					handleShow={handleShow}
+				/>
+				<Switch>
+					<Route path="/home">
+						{user ? (
+							<Redirect to="/home" />
+						) : (
+							<Redirect to="/login" />
+						)}
+						<Home />
+					</Route>
+					<Route path="/myprofile">
+						<Profile
+							user={user}
+							followUser={null}
+							unfollowUser={null}
+						/>
+					</Route>
+					<Route path="/profile/:username">
+						{/* TODO: Fix this so it's not dodgy. If no user input, then check useParams. Had null check issues */}
+						<Profile
+							user={"**NO_USER**"}
+							followUser={followUser}
+							unfollowUser={unfollowUser}
+						/>
+					</Route>
+					<Route path="/myMovies">
+						<CardList
+							user={user}
+							setUser={FsetUser}
+							movie={movie}
+							setMovie={FsetMovie}
+							addNewReview={addNewReview}
+							show={show}
+							handleClose={handleClose}
+							handleShow={handleShow}
+						/>
+					</Route>
+					<Route path="/reviews">
+						<ReviewCard user={user} />
+					</Route>
+					<Route path="/movie/:id">
+						<MovieCard movie={movie} />
+					</Route>
+					{/* ALWAYS LEAVE LAST */}
+					<Route path="/">
+						{user ? (
+							<Redirect to="/home" />
+						) : (
+							<Redirect to="/login" />
+						)}
+					</Route>
+				</Switch>
+			</Router>
+		</div>
 	)
 }
 
