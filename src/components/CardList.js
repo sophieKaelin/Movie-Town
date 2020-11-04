@@ -1,14 +1,28 @@
 import React, { useEffect, useState } from "react"
 import "bootstrap/dist/css/bootstrap.css"
-import { Form, Container, Row, Col } from "react-bootstrap"
+import { Button, Container, Form, Row, Col } from "react-bootstrap"
 import "../style/MovieCard.css"
 
 import MovieCard from "./MovieCard"
+import ReviewModal from "./ReviewModal.js"
 import axios from "axios"
 
-export const CardList = ({ user }) => {
+export const CardList = ({
+	user,
+	addNewReview,
+	movie,
+	setMovie,
+	show,
+	handleClose,
+	handleShow,
+}) => {
 	const [movies, setMovies] = useState([])
 	const [watched, setWatched] = useState(true)
+
+	const reviewButtonStyle = {
+		marginTop: "50px",
+		padding: "15px",
+	}
 
 	useEffect(() => {
 		console.log(user)
@@ -43,6 +57,14 @@ export const CardList = ({ user }) => {
 			<Row id="movieListRow">
 				<Col xs={2}></Col>
 				<Col>
+          <Button
+					className="btn-block"
+					size="lg"
+					style={reviewButtonStyle}
+					onClick={handleShow}
+				  >
+					Write Review
+				</Button>
 					<Form.Check
 						type="switch"
 						id="custom-switch"
@@ -53,6 +75,14 @@ export const CardList = ({ user }) => {
 						console.log(m)
 						return <MovieCard movie={m} />
 					})}
+          <ReviewModal
+				    user={user}
+				    addNewReview={addNewReview}
+				    movie={movie}
+				    setMovie={setMovie}
+				    show={show}
+				    handleClose={handleClose}
+			  />
 				</Col>
 				<Col xs={2}></Col>
 			</Row>
