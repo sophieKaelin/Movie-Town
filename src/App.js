@@ -9,6 +9,7 @@ import Register from "./components/Register.js"
 import NavBar from "./components/NavBar.js"
 import Profile from "./components/Profile.js"
 import Home from "./components/Home.js"
+import About from "./components/About.js"
 import { CardList } from "./components/CardList.js"
 import ReviewCard from "./components/ReviewCard.js"
 import {
@@ -168,6 +169,15 @@ function App() {
 						setMovie={FsetMovie}
 					/>
 					<MovieCard movie={movie} />
+				</Route>
+				<Route path="/about">
+					<NavBar
+						user={user}
+						setUser={FsetUser}
+						movie={movie}
+						setMovie={FsetMovie}
+					/>
+					<About />
 				</Route>
 				{/* ALWAYS LEAVE LAST */}
 				<Route path="/">
