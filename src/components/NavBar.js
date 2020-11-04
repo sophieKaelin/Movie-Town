@@ -104,7 +104,7 @@ const NavBar = ({
 						</svg>
 						My Reviews
 					</Nav.Link>
-					<Nav.Link href="#about">About</Nav.Link>
+					<Nav.Link href="/about">About</Nav.Link>
 				</Nav>
 			</Navbar.Collapse>
 			<Navbar.Collapse className="justify-content-end">
