@@ -157,7 +157,9 @@ const MovieCard = ({
 										To Watch
 									</Dropdown.Item>
 								</DropdownButton>
-								<Button onClick={handleShow}>Review</Button>
+								<Button onClick={handleShow} className="mt-1">
+									Review
+								</Button>
 
 								<ReviewModal
 									user={user}
