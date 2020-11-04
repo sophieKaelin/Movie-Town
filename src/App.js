@@ -19,7 +19,6 @@ import {
 	Redirect,
 } from "react-router-dom"
 import MovieCard from "./components/MovieCard"
-import ReviewForm from "./components/ReviewForm"
 
 //TODO: Reroute to login page if there is no user logged in (set this on all pages)
 
@@ -31,6 +30,11 @@ function App() {
 	const [user, setUser] = useState("") //Logged In User
 	const [reviews, setReviews] = useState([]) //all reviews
 	const [movie, setMovie] = useState("") //movie currently being searched
+
+	//REVIEW MODAL STATE VARIABLES & FUNCTIONS
+	const [show, setShow] = useState(false)
+	const handleClose = () => setShow(false)
+	const handleShow = () => setShow(true)
 
 	const FsetUser = (user) => {
 		setUser(user)
@@ -107,84 +111,88 @@ function App() {
 	//Not working, response with 404 not found hence hardcoded url in useEffects
 
 	return (
-		<Router>
-			<Switch>
-				<Route path="/home">
-					{user ? <Redirect to="/home" /> : <Redirect to="/login" />}
-					<NavBar
-						user={user}
-						setUser={FsetUser}
-						movie={movie}
-						setMovie={FsetMovie}
-					/>
-					<Home />
-				</Route>
-				<Route path="/login">
-					<Login user={user} setUser={FsetUser} />
-				</Route>
-				<Route path="/register">
-					<Register
-						users={users}
-						setUser={FsetUser}
-						addNewUser={addNewUser}
-					/>
-				</Route>
-				<Route path="/profile/:username">
-					<NavBar
-						user={user}
-						setUser={FsetUser}
-						movie={movie}
-						setMovie={FsetMovie}
-					/>
-					{/* TODO: Fix this so it's not dodgy. If no user input, then check useParams. Had null check issues */}
-					<Profile
-						loggedInUser={user}
-						followUser={followUser}
-						unfollowUser={unfollowUser}
-					/>
-				</Route>
-				<Route path="/my/movies">
-					<NavBar
-						user={user}
-						setUser={FsetUser}
-						movie={movie}
-						setMovie={FsetMovie}
-					/>
-					<CardList user={user} />
-				</Route>
-				<Route path="/reviews">
-					<NavBar
-						user={user}
-						setUser={FsetUser}
-						movie={movie}
-						setMovie={FsetMovie}
-					/>
-					<ReviewCard user={user} />
-				</Route>
-				<Route path="/movie/:id">
-					<NavBar
-						user={user}
-						setUser={FsetUser}
-						movie={movie}
-						setMovie={FsetMovie}
-					/>
-					<MovieCard movie={movie} />
-				</Route>
-				<Route path="/about">
-					<NavBar
-						user={user}
-						setUser={FsetUser}
-						movie={movie}
-						setMovie={FsetMovie}
-					/>
-					<About />
-				</Route>
-				{/* ALWAYS LEAVE LAST */}
-				<Route path="/">
-					{user ? <Redirect to="/home" /> : <Redirect to="/login" />}
-				</Route>
-			</Switch>
-		</Router>
+		<div>
+			<Router>
+				<Switch>
+					<Route path="/login">
+						<Login user={user} setUser={FsetUser} />
+					</Route>
+					<Route path="/register">
+						<Register
+							users={users}
+							setUser={FsetUser}
+							addNewUser={addNewUser}
+						/>
+					</Route>
+					{/* ALWAYS LEAVE LAST */}
+					<Route path="/">
+						{user ? (
+							<Redirect to="/home" />
+						) : (
+							<Redirect to="/login" />
+						)}
+					</Route>
+				</Switch>
+			</Router>
+			<Router>
+				<NavBar
+					user={user}
+					setUser={FsetUser}
+					movie={movie}
+					setMovie={FsetMovie}
+					addNewReview={addNewReview}
+					show={show}
+					handleClose={handleClose}
+					handleShow={handleShow}
+				/>
+				<Switch>
+					<Route path="/home">
+						{user ? (
+							<Redirect to="/home" />
+						) : (
+							<Redirect to="/login" />
+						)}
+						<Home />
+					</Route>
+					<Route path="/profile/:username">
+						<Profile
+              loggedInUser={user}
+              followUser={followUser}
+              unfollowUser={unfollowUser}
+					  />
+					</Route>
+					<Route path="/my/movies">
+						<CardList
+							user={user}
+							setUser={FsetUser}
+							movie={movie}
+							setMovie={FsetMovie}
+							addNewReview={addNewReview}
+							show={show}
+							handleClose={handleClose}
+							handleShow={handleShow}
+						/>
+					</Route>
+					<Route path="/reviews">
+						<ReviewCard user={user} />
+					</Route>
+					<Route path="/movie/:id">
+						<MovieCard movie={movie} />
+					</Route>
+          <Route path="/about">
+            <About />
+          </Route>
+					{/* ALWAYS LEAVE LAST */}
+					<Route path="/">
+						{user ? (
+							<Redirect to="/home" />
+						) : (
+							<Redirect to="/login" />
+						)}
+					</Route>
+				</Switch>
+			</Router>
+		</div>
 	)
 }
 
