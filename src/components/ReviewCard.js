@@ -15,7 +15,7 @@ import {
 import "../style/ReviewCard.css"
 import samProfile from "../profilepictures/samProf.png"
 
-const ReviewCard = ({ props }) => {
+const ReviewCard = ({ reviews, user }) => {
 	const [newComment, setNewComment] = useState("")
 	const [like, setLike] = useState(false)
 	const [comments, setComments] = useState([
@@ -25,7 +25,6 @@ const ReviewCard = ({ props }) => {
 			timestamp: "28/10/20",
 		},
 	])
-	console.log("props ", props)
 
 	// const {
 	// 	username,
@@ -34,7 +33,7 @@ const ReviewCard = ({ props }) => {
 	// 	starts,
 	// 	content,
 	// 	likes,
-	// 	comments
+	// 	comments,
 	// } = reviews
 
 	// store state for star rating
@@ -42,7 +41,7 @@ const ReviewCard = ({ props }) => {
 	const [hover, setHover] = useState(null)
 
 	// review data
-	const user = "Professor Sam"
+	const thisUser = "Professor Sam"
 	const title = "Avengers Endgame"
 	const watchDate = "21/10/20"
 	const year = "2019"
@@ -54,6 +53,31 @@ const ReviewCard = ({ props }) => {
 	const avatar = samProfile
 	const stars = 5
 	const content = "Broom Broom, I like Cards"
+
+	//TODO: FIX THIS, COPIED IT OVER FROM REVIEWFORM DOESN"T WORK, BUT WILL GIVE YOU MOVIES FROM AN ID
+	// const getMovie = async (e) => {
+	// 	e.preventDefault()
+	// 	await axios
+	// 		.get("http://localhost:3001/api/movie/id", {
+	// 			params: { id: movieSearch },
+	// 		})
+	// 		.then((res) => {
+	// 			console.log(res.data)
+	// 			if (res.data.Error === "Movie not found!") {
+	// 				clearMovie()
+	// 			} else {
+	// 				setMovie(res.data)
+	// 				setReviewInfo({
+	// 					...reviewInfo,
+	// 					titleid: res.data.imdbID,
+	// 					username: user.username,
+	// 				})
+	// 			}
+	// 		})
+	// 		.catch((err) => {
+	// 			console.log(err)
+	// 		})
+	// }
 
 	const handleChange = (e) => {
 		e.preventDefault()
@@ -99,7 +123,7 @@ const ReviewCard = ({ props }) => {
 							src={avatar}
 							roundedCircle
 						/>
-						<b>{user}</b> reviewed <b>{title}</b>
+						<b>{thisUser}</b> reviewed <b>{title}</b>
 					</Card.Header>
 					<Card.Body>
 						<ListGroup className="list-group-flush">
