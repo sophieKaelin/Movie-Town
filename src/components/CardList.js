@@ -15,6 +15,9 @@ export const CardList = ({
 	show,
 	handleClose,
 	handleShow,
+	users,
+	setUser,
+	setUsers,
 }) => {
 	const [movies, setMovies] = useState([])
 	const [watched, setWatched] = useState(true)
@@ -77,7 +80,21 @@ export const CardList = ({
 					/>
 					{movies.map((m) => {
 						console.log(m)
-						return <MovieCard movie={m} />
+						return (
+							<MovieCard
+								movie={m}
+								user={user}
+								addNewReview={addNewReview}
+								setMovie={setMovie}
+								show={show}
+								handleShow={handleShow}
+								handleClose={handleClose}
+								watched={watched}
+								users={users}
+								setUser={setUser}
+								setUsers={setUsers}
+							/>
+						)
 					})}
 					<ReviewModal
 						user={user}
