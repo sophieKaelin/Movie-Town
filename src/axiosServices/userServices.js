@@ -33,28 +33,34 @@ const unfollowUser = (userToFollow, user, users, setUser, setUsers) => {
 
 //TODO: if movie already exists in list, don't add it
 const addWatched = (titleid, user, users, setUser, setUsers) => {
-	user.watched.push(titleid)
-	axios
-		.put(baseURL + "users/" + user._id + "/watched", user)
-		.then((response) => {
-			setUser(response.data)
-			setUsers(
-				users.map((u) =>
-					u.username !== user.username ? u : response.data
+	if (!user.watched.includes(titleid)) {
+		user.watched.push(titleid)
+		axios
+			.put(baseURL + "users/" + user._id + "/watched", user)
+			.then((response) => {
+				setUser(response.data)
+				setUsers(
+					users.map((u) =>
+						u.username !== user.username ? u : response.data
+					)
 				)
-			)
-		})
+			})
+	}
 }
 
 //TODO: if movie already exists in list, don't add it
 const addToWatch = (titleid, user, users, setUser, setUsers) => {
-	user.toWatch.push(titleid)
-	axios
-		.put(baseURL + "users/" + user._id + "/toWatch", user)
-		.then((response) => {
-			setUser(response.data)
-			setUsers(users.map((u) => (u.id !== user.id ? u : response.data)))
-		})
+	if (!user.toWatch.includes(titleid)) {
+		user.toWatch.push(titleid)
+		axios
+			.put(baseURL + "users/" + user._id + "/toWatch", user)
+			.then((response) => {
+				setUser(response.data)
+				setUsers(
+					users.map((u) => (u.id !== user.id ? u : response.data))
+				)
+			})
+	}
 }
 
 export default { addNewUser, followUser, unfollowUser, addWatched, addToWatch }
