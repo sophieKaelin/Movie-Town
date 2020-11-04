@@ -56,9 +56,9 @@ export const ReviewCardList = ({
 			<Row id="movieListRow">
 				<Col xs={2}></Col>
 				<Col>
-					{reviews.map((m) => {
-						console.log(m)
-						return <ReviewCard reviews={reviews} user={user} />
+					{reviews.map((r) => {
+						console.log(r)
+						return <ReviewCard reviews={r} user={user} />
 					})}
 					<ReviewModal
 						user={user}
