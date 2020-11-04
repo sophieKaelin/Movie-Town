@@ -11,7 +11,7 @@ import Profile from "./components/Profile.js"
 import Home from "./components/Home.js"
 import About from "./components/About.js"
 import { CardList } from "./components/CardList.js"
-import ReviewCard from "./components/ReviewCard.js"
+import ReviewCardList from "./components/ReviewCardList.js"
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -116,27 +116,23 @@ function App() {
 							addNewUser={addNewUser}
 						/>
 					</Route>
-					{/* ALWAYS LEAVE LAST */}
-					<Route path="/">
-						{user ? (
-							<Redirect to="/home" />
-						) : (
-							<Redirect to="/login" />
-						)}
-					</Route>
 				</Switch>
 			</Router>
 			<Router>
-				<NavBar
-					user={user}
-					setUser={FsetUser}
-					movie={movie}
-					setMovie={FsetMovie}
-					addNewReview={addNewReview}
-					show={show}
-					handleClose={handleClose}
-					handleShow={handleShow}
-				/>
+				{user ? (
+					<NavBar
+						user={user}
+						setUser={FsetUser}
+						movie={movie}
+						setMovie={FsetMovie}
+						addNewReview={addNewReview}
+						show={show}
+						handleClose={handleClose}
+						handleShow={handleShow}
+					/>
+				) : (
+					<br></br>
+				)}
 				<Switch>
 					<Route path="/home">
 						{user ? (
@@ -169,7 +165,19 @@ function App() {
 						/>
 					</Route>
 					<Route path="/reviews">
-						<ReviewCard user={user} />
+						<ReviewCardList
+							user={user}
+							setUser={FsetUser}
+							movie={movie}
+							setMovie={FsetMovie}
+							addNewReview={addNewReview}
+							show={show}
+							handleClose={handleClose}
+							handleShow={handleShow}
+							users={users}
+							setUser={setUser}
+							setUsers={setUsers}
+						/>
 					</Route>
 					<Route path="/movie/:id">
 						<MovieCard

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import "bootstrap/dist/css/bootstrap.css"
 import {
 	Card,
@@ -12,48 +12,48 @@ import {
 	Image,
 	Accordion,
 } from "react-bootstrap"
+import axios from "axios"
 import "../style/ReviewCard.css"
-import samProfile from "../profilepictures/samProf.png"
 
-const ReviewCard = ({ props }) => {
+const ReviewCard = ({ reviews, user }) => {
+	const {
+		username,
+		titleid,
+		timestamp,
+		stars,
+		content,
+		likes,
+		comments,
+	} = reviews
 	const [newComment, setNewComment] = useState("")
 	const [like, setLike] = useState(false)
-	const [comments, setComments] = useState([
-		{
-			author: "Dwight Schrute",
-			comment: "beetroots",
-			timestamp: "28/10/20",
-		},
-	])
-	console.log("props ", props)
-
-	// const {
-	// 	username,
-	// 	titleid,
-	// 	timestamp,
-	// 	starts,
-	// 	content,
-	// 	likes,
-	// 	comments
-	// } = reviews
-
 	// store state for star rating
 	const [starRating, setStarRating] = useState()
 	const [hover, setHover] = useState(null)
-
-	// review data
-	const user = "Professor Sam"
-	const title = "Avengers Endgame"
-	const watchDate = "21/10/20"
-	const year = "2019"
-	const synopsis =
-		"After the devastating events of Avengers: Infinity War (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe."
-	const link = "https://www.imdb.com/title/tt4154796/"
-	const poster =
-		"https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_SX300.jpg"
-	const avatar = samProfile
-	const stars = 5
-	const content = "Broom Broom, I like Cards"
+	const [movie, setMovie] = useState({
+		Title: "",
+		imdbID: "",
+		Year: "",
+		Plot: "",
+		Poster: "",
+	})
+	useEffect(() => {
+		if (user) {
+			console.log("USE EFFECT")
+			console.log(titleid)
+			axios
+				.get("http://localhost:3001/api/movie/id", {
+					params: { id: titleid },
+				})
+				.then((res) => {
+					console.log(res.data)
+					setMovie(res.data)
+				})
+				.catch((err) => {
+					console.log(err)
+				})
+		}
+	}, [titleid, user])
 
 	const handleChange = (e) => {
 		e.preventDefault()
@@ -73,12 +73,23 @@ const ReviewCard = ({ props }) => {
 		alert("TODO: Movie added to your movie list")
 	}
 
+	// TODO: send comments to back-end..below is old code just testing comments on the front-end
+	const [commentsList, setCommentsList] = useState([
+		{
+			author: "Dwight Schrute",
+			comment: "beetroots",
+			timestamp: "28/10/20",
+		},
+	])
+
 	const handleComment = () => {
 		console.log(newComment)
-		setComments([
-			...comments,
+		// TODO: Get comments working with back-end
+
+		setCommentsList([
+			...commentsList,
 			{
-				author: "Dwight Schrute",
+				author: username,
 				comment: newComment,
 				timestamp: "28/10/20",
 			},
@@ -96,10 +107,10 @@ const ReviewCard = ({ props }) => {
 							}}
 							className="mr-3"
 							alt="Avatar"
-							src={avatar}
+							src={user.avatar}
 							roundedCircle
 						/>
-						<b>{user}</b> reviewed <b>{title}</b>
+						<b>{username}</b> reviewed <b>{movie.Title}</b>
 					</Card.Header>
 					<Card.Body>
 						<ListGroup className="list-group-flush">
@@ -136,7 +147,7 @@ const ReviewCard = ({ props }) => {
 									)
 								})}
 								<p className="text-muted ml-3">
-									<em>{""} Date Watched: </em> {watchDate}
+									<em>{""} Date Reviewed: </em> {timestamp}
 								</p>
 							</ListGroupItem>
 							<ListGroupItem>{content}</ListGroupItem>
@@ -152,11 +163,11 @@ const ReviewCard = ({ props }) => {
 									<Card.Body>
 										<Card.Img
 											className="moviePoster col-auto img-fluid"
-											src={poster}
-											alt={title + " poster"}
+											src={movie.Poster}
+											alt={movie.Title + " poster"}
 										/>
 										<h3>
-											{title} ({year})
+											{movie.Title} ({movie.Year})
 										</h3>
 										<ListGroup className="list-group-flush">
 											<ListGroupItem>
@@ -167,7 +178,7 @@ const ReviewCard = ({ props }) => {
 												</Button>
 											</ListGroupItem>
 											<ListGroupItem>
-												{synopsis}
+												{movie.Plot}
 											</ListGroupItem>
 										</ListGroup>
 									</Card.Body>
@@ -197,7 +208,7 @@ const ReviewCard = ({ props }) => {
 										}}
 										className="mr-3"
 										alt="Avatar"
-										src={avatar}
+										src={user.avatar}
 										roundedCircle
 									/>
 									<b>{comment.author}: </b>
