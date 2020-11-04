@@ -1,11 +1,35 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import "bootstrap/dist/css/bootstrap.css"
-import { Card, Row, Col, ListGroup, ListGroupItem } from "react-bootstrap"
+import {
+	Card,
+	Row,
+	Col,
+	ListGroup,
+	ListGroupItem,
+	Button,
+	DropdownButton,
+	Dropdown,
+} from "react-bootstrap"
 import "../style/MovieCard.css"
+import ReviewModal from "./ReviewModal.js"
+import userServices from "../axiosServices/userServices"
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({
+	movie,
+	user,
+	addNewReview,
+	setMovie,
+	show,
+	handleShow,
+	handleClose,
+	watched,
+	users,
+	setUser,
+	setUsers,
+}) => {
 	const {
 		Title,
+		imdbID,
 		Year,
 		Rating,
 		Runtime,
@@ -20,8 +44,46 @@ const MovieCard = ({ movie }) => {
 
 	const Link = "https://www.imdb.com/title/" + movie.imdbID
 	// store state for star rating
+	//TODO: Change this so that it reflects your current rating, if you want to change, you can edit in the form
 	const [starRating, setStarRating] = useState(null)
 	const [hover, setHover] = useState(null)
+	const [status, setStatus] = useState(null)
+
+	useEffect(() => {
+		if (watched === null) {
+			if (user.watched.includes(imdbID)) {
+				setStatus("Watched")
+			} else if (user.toWatch.includes(imdbID)) {
+				setStatus("To Watch")
+			} else {
+				setStatus("Add to: ")
+			}
+		} else {
+			console.log("I'm here")
+			if (watched) {
+				setStatus("Watched")
+			} else {
+				setStatus("To Watch")
+			}
+		}
+	}, [status, watched, movie])
+
+	const addToToWatch = () => {
+		if (status === "Watched") {
+			//REMOVE from watched -> TODO: Need an axios to do this.
+		}
+		userServices.addToWatch(imdbID, user, users, setUser, setUsers)
+		setStatus("To Watched")
+		//TODO: Rerender the screen when a movie is added to the list
+	}
+	const addToWatched = () => {
+		if (status === "To Watch") {
+			//REMOVE FROM TO WATCH -> TODO: Need an axios to do this.
+		}
+		userServices.addWatched(imdbID, user, users, setUser, setUsers)
+		setStatus("Watched")
+		//TODO: Rerender the screen when a movie is added to the list
+	}
 
 	return (
 		<Card style={{ maxWidth: "56rem", marginBottom: "25px" }}>
@@ -83,6 +145,31 @@ const MovieCard = ({ movie }) => {
 										Your rating is: {starRating}
 									</i>
 								</div>
+								<DropdownButton
+									id="dropdown-basic-button"
+									// Alternate between title "Add to: ", "WATCHED", and "TO WATCH"
+									title={status}
+									drop="right"
+								>
+									<Dropdown.Item onClick={addToWatched}>
+										Watched
+									</Dropdown.Item>
+									<Dropdown.Item onClick={addToToWatch}>
+										To Watch
+									</Dropdown.Item>
+								</DropdownButton>
+								<Button onClick={handleShow} className="mt-1">
+									Review
+								</Button>
+
+								<ReviewModal
+									user={user}
+									addNewReview={addNewReview}
+									movie={movie}
+									setMovie={setMovie}
+									show={show}
+									handleClose={handleClose}
+								/>
 							</ListGroupItem>
 							<ListGroupItem>
 								<Card.Text>

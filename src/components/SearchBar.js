@@ -2,10 +2,8 @@ import React, { useState } from "react"
 import "bootstrap/dist/css/bootstrap.css"
 import { Button, Form, FormControl } from "react-bootstrap"
 import axios from "axios"
-import MovieCard from "./MovieCard.js"
-import { useHistory } from "react-router-dom"
 
-const SearchBar = ({ history, movie, setMovie }) => {
+const SearchBar = ({ history, setMovie }) => {
 	const [searched, setSearch] = useState([])
 
 	const search = () => {
