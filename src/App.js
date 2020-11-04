@@ -11,7 +11,7 @@ import Profile from "./components/Profile.js"
 import Home from "./components/Home.js"
 import About from "./components/About.js"
 import { CardList } from "./components/CardList.js"
-import ReviewCard from "./components/ReviewCard.js"
+import ReviewCardList from "./components/ReviewCardList.js"
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -173,7 +173,19 @@ function App() {
 						/>
 					</Route>
 					<Route path="/reviews">
-						<ReviewCard user={user} />
+						<ReviewCardList
+							user={user}
+							setUser={FsetUser}
+							movie={movie}
+							setMovie={FsetMovie}
+							addNewReview={addNewReview}
+							show={show}
+							handleClose={handleClose}
+							handleShow={handleShow}
+							users={users}
+							setUser={setUser}
+							setUsers={setUsers}
+						/>
 					</Route>
 					<Route path="/movie/:id">
 						<MovieCard
