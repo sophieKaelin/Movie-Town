@@ -9,6 +9,7 @@ import Register from "./components/Register.js"
 import NavBar from "./components/NavBar.js"
 import Profile from "./components/Profile.js"
 import Home from "./components/Home.js"
+import About from "./components/About.js"
 import { CardList } from "./components/CardList.js"
 import ReviewCard from "./components/ReviewCard.js"
 import {
@@ -153,22 +154,14 @@ function App() {
 						)}
 						<Home />
 					</Route>
-					<Route path="/myprofile">
-						<Profile
-							user={user}
-							followUser={null}
-							unfollowUser={null}
-						/>
-					</Route>
 					<Route path="/profile/:username">
-						{/* TODO: Fix this so it's not dodgy. If no user input, then check useParams. Had null check issues */}
 						<Profile
-							user={"**NO_USER**"}
-							followUser={followUser}
-							unfollowUser={unfollowUser}
-						/>
+              loggedInUser={user}
+              followUser={followUser}
+              unfollowUser={unfollowUser}
+					  />
 					</Route>
-					<Route path="/myMovies">
+					<Route path="/my/movies">
 						<CardList
 							user={user}
 							setUser={FsetUser}
@@ -186,6 +179,9 @@ function App() {
 					<Route path="/movie/:id">
 						<MovieCard movie={movie} />
 					</Route>
+          <Route path="/about">
+            <About />
+          </Route>
 					{/* ALWAYS LEAVE LAST */}
 					<Route path="/">
 						{user ? (
