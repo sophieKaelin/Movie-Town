@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import "bootstrap/dist/css/bootstrap.css"
-import { Button, Container, Form, Row, Col } from "react-bootstrap"
+import { Container, Form, Row, Col } from "react-bootstrap"
 import "../style/MovieCard.css"
 
 import MovieCard from "./MovieCard"
@@ -9,7 +9,6 @@ import axios from "axios"
 export const CardList = ({
 	user,
 	addNewReview,
-	movie,
 	setMovie,
 	show,
 	handleClose,
