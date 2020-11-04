@@ -31,7 +31,6 @@ const unfollowUser = (userToFollow, user, users, setUser, setUsers) => {
 		})
 }
 
-//TODO: if movie already exists in list, don't add it
 const addWatched = (titleid, user, users, setUser, setUsers) => {
 	if (!user.watched.includes(titleid)) {
 		user.watched.push(titleid)
@@ -48,7 +47,6 @@ const addWatched = (titleid, user, users, setUser, setUsers) => {
 	}
 }
 
-//TODO: if movie already exists in list, don't add it
 const addToWatch = (titleid, user, users, setUser, setUsers) => {
 	if (!user.toWatch.includes(titleid)) {
 		user.toWatch.push(titleid)
