@@ -61,11 +61,11 @@ function App() {
 	const addNewUser = (newUser) => {
 		userServices.addNewUser(newUser, users, setUsers)
 	}
-	const followUser = (userToFollow) => {
+	const followUser = (userToFollow, user) => {
 		//pass a user to the function or grab state variable user???
 		userServices.followUser(userToFollow, user, users, setUser, setUsers)
 	}
-	const unfollowUser = (userToFollow) => {
+	const unfollowUser = (userToFollow, user) => {
 		//pass a user to the function or grab state variable user???
 		userServices.unfollowUser(userToFollow, user, users, setUser, setUsers)
 	}
