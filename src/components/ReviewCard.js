@@ -16,32 +16,32 @@ import "../style/ReviewCard.css"
 import samProfile from "../profilepictures/samProf.png"
 
 const ReviewCard = ({ reviews, user }) => {
+	console.log("reviews", reviews)
+	const {
+		username,
+		titleid,
+		timestamp,
+		starts,
+		content,
+		likes,
+		comments,
+	} = reviews
 	const [newComment, setNewComment] = useState("")
 	const [like, setLike] = useState(false)
-	const [comments, setComments] = useState([
-		{
-			author: "Dwight Schrute",
-			comment: "beetroots",
-			timestamp: "28/10/20",
-		},
-	])
-
-	// const {
-	// 	username,
-	// 	titleid,
-	// 	timestamp,
-	// 	starts,
-	// 	content,
-	// 	likes,
-	// 	comments,
-	// } = reviews
+	// const [comments, setComments] = useState([
+	// 	{
+	// 		author: "Dwight Schrute",
+	// 		comment: "beetroots",
+	// 		timestamp: "28/10/20",
+	// 	},
+	// ])
 
 	// store state for star rating
 	const [starRating, setStarRating] = useState()
 	const [hover, setHover] = useState(null)
 
 	// review data
-	const thisUser = "Professor Sam"
+	// const user = "Professor Sam"
 	const title = "Avengers Endgame"
 	const watchDate = "21/10/20"
 	const year = "2019"
@@ -52,32 +52,7 @@ const ReviewCard = ({ reviews, user }) => {
 		"https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_SX300.jpg"
 	const avatar = samProfile
 	const stars = 5
-	const content = "Broom Broom, I like Cards"
-
-	//TODO: FIX THIS, COPIED IT OVER FROM REVIEWFORM DOESN"T WORK, BUT WILL GIVE YOU MOVIES FROM AN ID
-	// const getMovie = async (e) => {
-	// 	e.preventDefault()
-	// 	await axios
-	// 		.get("http://localhost:3001/api/movie/id", {
-	// 			params: { id: movieSearch },
-	// 		})
-	// 		.then((res) => {
-	// 			console.log(res.data)
-	// 			if (res.data.Error === "Movie not found!") {
-	// 				clearMovie()
-	// 			} else {
-	// 				setMovie(res.data)
-	// 				setReviewInfo({
-	// 					...reviewInfo,
-	// 					titleid: res.data.imdbID,
-	// 					username: user.username,
-	// 				})
-	// 			}
-	// 		})
-	// 		.catch((err) => {
-	// 			console.log(err)
-	// 		})
-	// }
+	// const content = "Broom Broom, I like Cards"
 
 	const handleChange = (e) => {
 		e.preventDefault()
@@ -99,14 +74,14 @@ const ReviewCard = ({ reviews, user }) => {
 
 	const handleComment = () => {
 		console.log(newComment)
-		setComments([
-			...comments,
-			{
-				author: "Dwight Schrute",
-				comment: newComment,
-				timestamp: "28/10/20",
-			},
-		])
+		// setComments([
+		// 	...comments,
+		// 	{
+		// 		author: "Dwight Schrute",
+		// 		comment: newComment,
+		// 		timestamp: "28/10/20",
+		// 	},
+		// ])
 	}
 	return (
 		<Card className="mt-5" style={{ width: "56rem", margin: "auto auto" }}>
@@ -123,7 +98,7 @@ const ReviewCard = ({ reviews, user }) => {
 							src={avatar}
 							roundedCircle
 						/>
-						<b>{thisUser}</b> reviewed <b>{title}</b>
+						<b>{username}</b> reviewed <b>{title}</b>
 					</Card.Header>
 					<Card.Body>
 						<ListGroup className="list-group-flush">
@@ -212,7 +187,7 @@ const ReviewCard = ({ reviews, user }) => {
 					</Accordion.Toggle>
 					<Accordion.Collapse eventKey="0">
 						<ListGroup className="mt-2">
-							{comments.map((comment) => (
+							{/* {comments.map((comment) => (
 								<ListGroupItem className="mt-2">
 									<Image
 										style={{
@@ -227,7 +202,7 @@ const ReviewCard = ({ reviews, user }) => {
 									<b>{comment.author}: </b>
 									{comment.comment}
 								</ListGroupItem>
-							))}
+							))} */}
 						</ListGroup>
 					</Accordion.Collapse>
 				</Accordion>
