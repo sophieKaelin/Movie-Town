@@ -13,6 +13,7 @@ const Profile = ({ loggedInUser, followUser, unfollowUser }) => {
 	const [movies, setMovies] = useState([])
 
 	let { username } = useParams()
+
 	useEffect(() => {
 		axios.get(userURL + username).then((response) => {
 			setUser(response.data)
@@ -28,13 +29,11 @@ const Profile = ({ loggedInUser, followUser, unfollowUser }) => {
 	}, [])
 
 	const followButtonFn = () => {
-		console.log(loggedInUser)
-		console.log(username)
-		if (loggedInUser.follows.includes(username)) {
-			unfollowUser(username, loggedInUser)
-		} else {
-			followUser(username, loggedInUser)
-		}
+		followUser(username, loggedInUser)
+	}
+
+	const unfollowButtonFn = () => {
+		unfollowUser(username, loggedInUser)
 	}
 
 	return (
@@ -63,14 +62,24 @@ const Profile = ({ loggedInUser, followUser, unfollowUser }) => {
 							/>
 						</svg>
 					</Button>
-				) : (
-					<Button
-						variant="primary"
-						className="followBtn"
-						onClick={followButtonFn}
-					>
-						Follow
-					</Button>
+				) : (loggedInUser.follows.includes(username) ? (
+						<Button
+							variant="primary"
+							className="followBtn"
+							onClick={unfollowButtonFn}
+						>
+							Unfollow
+						</Button>
+					) : (
+						<Button
+							variant="primary"
+							className="followBtn"
+							onClick={followButtonFn}
+						>
+							Follow
+						</Button>
+					)
+
 				)}
 			</Jumbotron>
 			<Container>
