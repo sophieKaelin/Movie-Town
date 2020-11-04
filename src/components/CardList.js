@@ -54,17 +54,21 @@ export const CardList = ({
 
 	return (
 		<Container>
+			<Row>
+				<Col>
+					<Button
+						className="btn-block"
+						size="lg"
+						style={reviewButtonStyle}
+						onClick={handleShow}
+					>
+						Write Review
+					</Button>
+				</Col>
+			</Row>
 			<Row id="movieListRow">
 				<Col xs={2}></Col>
 				<Col>
-          <Button
-					className="btn-block"
-					size="lg"
-					style={reviewButtonStyle}
-					onClick={handleShow}
-				  >
-					Write Review
-				</Button>
 					<Form.Check
 						type="switch"
 						id="custom-switch"
@@ -75,14 +79,14 @@ export const CardList = ({
 						console.log(m)
 						return <MovieCard movie={m} />
 					})}
-          <ReviewModal
-				    user={user}
-				    addNewReview={addNewReview}
-				    movie={movie}
-				    setMovie={setMovie}
-				    show={show}
-				    handleClose={handleClose}
-			  />
+					<ReviewModal
+						user={user}
+						addNewReview={addNewReview}
+						movie={movie}
+						setMovie={setMovie}
+						show={show}
+						handleClose={handleClose}
+					/>
 				</Col>
 				<Col xs={2}></Col>
 			</Row>
