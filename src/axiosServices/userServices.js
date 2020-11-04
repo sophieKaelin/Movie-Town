@@ -1,14 +1,13 @@
-import axios from 'axios'
+import axios from "axios"
 
 //const baseURL = "/api/" **not working
 const baseURL = "http://localhost:3001/api/"
 
 const addNewUser = (newUser, users, setUsers) => {
-    axios.post(baseURL + "users", newUser)
-    .then(response => {
-        console.log(response)
-        setUsers([...users, response.data])
-    })
+	axios.post(baseURL + "users", newUser).then((response) => {
+		console.log(response)
+		setUsers([...users, response.data])
+	})
 }
 
 const followUser = (userToFollow, user, users, setUser, setUsers) => {
@@ -33,21 +32,33 @@ const unfollowUser = (userToFollow, user, users, setUser, setUsers) => {
 }
 
 const addWatched = (titleid, user, users, setUser, setUsers) => {
-    user.watched.push(titleid)
-    axios.put(baseURL + "users/" + user.id + "watched", user)
-    .then((response) => {
-        setUser(response.data)
-        setUsers(users.map((u) => (u.id !== user.id ? u : response.data)))
-    })
+	if (!user.watched.includes(titleid)) {
+		user.watched.push(titleid)
+		axios
+			.put(baseURL + "users/" + user._id + "/watched", user)
+			.then((response) => {
+				setUser(response.data)
+				setUsers(
+					users.map((u) =>
+						u.username !== user.username ? u : response.data
+					)
+				)
+			})
+	}
 }
 
 const addToWatch = (titleid, user, users, setUser, setUsers) => {
-    user.toWatch.push(titleid)
-    axios.put(baseURL + "users/" + user.id + "toWatch", user)
-    .then((response) => {
-        setUser(response.data)
-        setUsers(users.map((u) => (u.id !== user.id ? u : response.data)))
-    })
+	if (!user.toWatch.includes(titleid)) {
+		user.toWatch.push(titleid)
+		axios
+			.put(baseURL + "users/" + user._id + "/toWatch", user)
+			.then((response) => {
+				setUser(response.data)
+				setUsers(
+					users.map((u) => (u.id !== user.id ? u : response.data))
+				)
+			})
+	}
 }
 
-export default {addNewUser, followUser, unfollowUser, addWatched, addToWatch}
+export default { addNewUser, followUser, unfollowUser, addWatched, addToWatch }

@@ -6,7 +6,7 @@ import axios from "axios"
 import { useHistory } from "react-router-dom"
 import blank from "../moviePosters/blankPoster.png"
 
-const ReviewForm = ({ user, addNewReview, movie, setMovie }) => {
+const ReviewForm = ({ user, addNewReview, movie, setMovie, handleClose }) => {
 	const history = useHistory()
 	const [movieSearch, setMovieSearch] = useState("")
 	const [hover, setHover] = useState(null)
@@ -47,8 +47,9 @@ const ReviewForm = ({ user, addNewReview, movie, setMovie }) => {
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		addNewReview(reviewInfo)
-		history.push("/myprofile")
+		history.push("/reviews")
 		clearMovie()
+		handleClose()
 	}
 
 	const clearMovie = () => {
