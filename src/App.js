@@ -40,6 +40,10 @@ function App() {
 		setUser(user)
 	}
 
+	const FsetUsers = (users) => {
+		setUsers(users)
+	}
+
 	const FsetMovie = (movie) => {
 		setMovie(movie)
 	}
@@ -73,14 +77,6 @@ function App() {
 	const unfollowUser = (userToFollow) => {
 		//pass a user to the function or grab state variable user???
 		userServices.unfollowUser(userToFollow, user, users, setUser, setUsers)
-	}
-	const addWatched = (titleid) => {
-		//pass a user to the function or grab state variable user???
-		userServices.addWatched(titleid, user, users, setUser, setUsers)
-	}
-	const addToWatch = (titleid) => {
-		//pass a user to the function or grab state variable user???
-		userServices.addToWatch(titleid, user, users, setUser, setUsers)
 	}
 
 	const addNewReview = (newReview) => {
@@ -156,10 +152,10 @@ function App() {
 					</Route>
 					<Route path="/profile/:username">
 						<Profile
-              loggedInUser={user}
-              followUser={followUser}
-              unfollowUser={unfollowUser}
-					  />
+							loggedInUser={user}
+							followUser={followUser}
+							unfollowUser={unfollowUser}
+						/>
 					</Route>
 					<Route path="/my/movies">
 						<CardList
@@ -171,17 +167,32 @@ function App() {
 							show={show}
 							handleClose={handleClose}
 							handleShow={handleShow}
+							users={users}
+							setUser={setUser}
+							setUsers={setUsers}
 						/>
 					</Route>
 					<Route path="/reviews">
 						<ReviewCard user={user} />
 					</Route>
 					<Route path="/movie/:id">
-						<MovieCard movie={movie} />
+						<MovieCard
+							movie={movie}
+							user={user}
+							addNewReview={addNewReview}
+							setMovie={setMovie}
+							show={show}
+							handleShow={handleShow}
+							handleClose={handleClose}
+							watched={null}
+							users={users}
+							setUser={FsetUser}
+							setUsers={FsetUsers}
+						/>
 					</Route>
-          <Route path="/about">
-            <About />
-          </Route>
+					<Route path="/about">
+						<About />
+					</Route>
 					{/* ALWAYS LEAVE LAST */}
 					<Route path="/">
 						{user ? (
