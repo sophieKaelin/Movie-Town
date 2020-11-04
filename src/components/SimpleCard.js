@@ -24,7 +24,10 @@ const MovieCard = ({ movie }) => {
 	const [hover, setHover] = useState(null)
 
 	return (
-		<Card style={{ maxWidth: "56rem", marginBottom: "25px" }}>
+		<Card
+			className="mt-5"
+			style={{ maxWidth: "56rem", margin: "auto auto" }}
+		>
 			<Row className="no-gutters">
 				<Col>
 					<Card.Header>
@@ -89,15 +92,6 @@ const MovieCard = ({ movie }) => {
 									{Rating} | {Runtime} | {Genre} | {Released}
 								</Card.Text>
 								<Card.Text>{Plot}</Card.Text>
-							</ListGroupItem>
-							<ListGroupItem>
-								<h6>Directors:</h6> {Director}
-							</ListGroupItem>
-							<ListGroupItem>
-								<h6>Writers:</h6> {Writer}
-							</ListGroupItem>
-							<ListGroupItem>
-								<h6>Cast:</h6> {Actors}
 							</ListGroupItem>
 						</ListGroup>
 					</Card.Body>
