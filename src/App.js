@@ -12,6 +12,7 @@ import Home from "./components/Home.js"
 import About from "./components/About.js"
 import { CardList } from "./components/CardList.js"
 import ReviewCardList from "./components/ReviewCardList.js"
+import Feed from "./components/Feed.js"
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -64,6 +65,7 @@ function App() {
 
 		axios.get("http://localhost:3001/api/reviews").then((response) => {
 			setReviews(response.data)
+			console.log("reviews set")
 		})
 	}, [])
 
@@ -102,6 +104,7 @@ function App() {
 	const baseURL = "/api/"
 	//Not working, response with 404 not found hence hardcoded url in useEffects
 
+	console.log(reviews.length)
 	return (
 		<div>
 			<Router>
@@ -141,6 +144,7 @@ function App() {
 							<Redirect to="/login" />
 						)}
 						<Home />
+						{reviews.length !== 0 ? (reviews.map((r) => (<Feed review={r} reviews={reviews} user={user}/>))) : null}
 					</Route>
 					<Route path="/profile/:username">
 						<Profile
