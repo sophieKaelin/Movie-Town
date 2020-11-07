@@ -11,11 +11,15 @@ import {
 	FormControl,
 	Image,
 	Accordion,
+	Popover,
+	OverlayTrigger,
 } from "react-bootstrap"
 import axios from "axios"
 import "../style/ReviewCard.css"
+import reviewServices from "../axiosServices/reviewServices.js"
+import userServices from "../axiosServices/userServices"
 
-const ReviewCard = ({ reviews, user }) => {
+const ReviewCard = ({ review, user, reviews, setReviews }) => {
 	const {
 		username,
 		titleid,
@@ -24,7 +28,7 @@ const ReviewCard = ({ reviews, user }) => {
 		content,
 		likes,
 		comments,
-	} = reviews
+	} = review
 	const [newComment, setNewComment] = useState("")
 	const [like, setLike] = useState(false)
 	// store state for star rating
@@ -61,8 +65,10 @@ const ReviewCard = ({ reviews, user }) => {
 	const handleLike = () => {
 		if (!like) {
 			setLike(true)
+			reviewServices.likeReview(review, user, reviews, setReviews)
 		} else {
 			setLike(false)
+			reviewServices.unlikeReview(review, user, reviews, setReviews)
 		}
 	}
 
@@ -92,6 +98,13 @@ const ReviewCard = ({ reviews, user }) => {
 			},
 		])
 	}
+
+	const popover = (
+		<Popover id="popover-basic">
+			<Popover.Title as="h3">Likes</Popover.Title>
+			<Popover.Content>{likes}</Popover.Content>
+		</Popover>
+	)
 	return (
 		<Card className="mt-5" style={{ width: "56rem", margin: "auto auto" }}>
 			<Row className="no-gutters">
@@ -188,30 +201,38 @@ const ReviewCard = ({ reviews, user }) => {
 
 			<Card.Footer>
 				<Accordion>
-					<Card.Link onClick={handleLike}>
-						{like ? "Unlike" : "Like"}
-					</Card.Link>
+					<OverlayTrigger
+						trigger="hover"
+						placement="right"
+						overlay={popover}
+					>
+						<Card.Link onClick={handleLike}>
+							{like ? "Unlike" : "Like"}
+						</Card.Link>
+					</OverlayTrigger>
 					<Accordion.Toggle as={Card.Link} eventKey="0">
 						View/Hide Comments
 					</Accordion.Toggle>
 					<Accordion.Collapse eventKey="0">
 						<ListGroup className="mt-2">
-							{comments !== undefined ? comments.map((comment) => (
-								<ListGroupItem className="mt-2">
-									<Image
-										style={{
-											height: "50px",
-											width: "50px",
-										}}
-										className="mr-3"
-										alt="Avatar"
-										src={user.avatar}
-										roundedCircle
-									/>
-									<b>{comment.author}: </b>
-									{comment.comment}
-								</ListGroupItem>
-							)) : null}
+							{comments !== undefined
+								? comments.map((comment) => (
+										<ListGroupItem className="mt-2">
+											<Image
+												style={{
+													height: "50px",
+													width: "50px",
+												}}
+												className="mr-3"
+												alt="Avatar"
+												src={user.avatar}
+												roundedCircle
+											/>
+											<b>{comment.author}: </b>
+											{comment.comment}
+										</ListGroupItem>
+								  ))
+								: null}
 						</ListGroup>
 					</Accordion.Collapse>
 				</Accordion>

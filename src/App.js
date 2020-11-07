@@ -143,7 +143,18 @@ function App() {
 							<Redirect to="/login" />
 						)}
 						<Home />
-						{reviews.length !== 0 ? (reviews.slice(0).reverse().map((r) => (<Feed review={r} user={user} users={users}/>))):null}
+						{reviews.length !== 0
+							? reviews
+									.slice(0)
+									.reverse()
+									.map((r) => (
+										<Feed
+											review={r}
+											user={user}
+											users={users}
+										/>
+									))
+							: null}
 					</Route>
 					<Route path="/profile/:username">
 						<Profile
