@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import {Link} from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.css"
 import {
 	Card,
@@ -92,6 +93,27 @@ const ReviewCard = ({ reviews, user }) => {
 			},
 		])
 	}
+
+	//@mentions and links to profiles
+	const contentLinks = (content) => {
+		var newContent = []
+		while (content.indexOf("@") !== -1) {
+			const firstIndex = content.indexOf("@")
+			const str = content.substr(0, firstIndex)
+			newContent.push(str)
+			content = content.slice(firstIndex)
+			const lastIndex = content.indexOf(" ")
+			const name = content.substr(0, lastIndex)
+			const nameURL = content.substr(1, lastIndex - 1)
+			const newLink = <Link to={"/profile/" + nameURL}> {name} </Link>
+			newContent.push(newLink)
+			content = content.slice(lastIndex)
+		}
+		newContent.push(content)
+		return newContent
+	}
+
+
 	return (
 		<Card className="mt-5" style={{ width: "56rem", margin: "auto auto" }}>
 			<Row className="no-gutters">
@@ -107,7 +129,7 @@ const ReviewCard = ({ reviews, user }) => {
 							src={user.avatar}
 							roundedCircle
 						/>
-						<b>{username}</b> reviewed <b>{movie.Title}</b>
+						<b><Link to={"/profile/" + username}> {username} </Link></b> reviewed <b>{movie.Title}</b>
 					</Card.Header>
 					<Card.Body>
 						<ListGroup className="list-group-flush">
@@ -147,7 +169,7 @@ const ReviewCard = ({ reviews, user }) => {
 									<em>{""} Date Reviewed: </em> {timestamp}
 								</p>
 							</ListGroupItem>
-							<ListGroupItem>{content}</ListGroupItem>
+							<ListGroupItem>{contentLinks(content)}</ListGroupItem>
 						</ListGroup>
 						<Card
 							style={{
