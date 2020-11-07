@@ -100,7 +100,7 @@ apiRouter.put("/api/users/:id/follows", (req, res, next) => {
 		follows: body.follows,
 	}
 
-	User.findByIdAndUpdate(req.params.id, user, { new: true })
+	User.findByIdAndUpdate(req.body._id, user, { new: true })
 		.then((updatedUser) => {
 			res.json(updatedUser)
 		})
