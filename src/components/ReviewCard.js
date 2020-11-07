@@ -39,14 +39,11 @@ const ReviewCard = ({ reviews, user }) => {
 	})
 	useEffect(() => {
 		if (user) {
-			console.log("USE EFFECT")
-			console.log(titleid)
 			axios
 				.get("http://localhost:3001/api/movie/id", {
 					params: { id: titleid },
 				})
 				.then((res) => {
-					console.log(res.data)
 					setMovie(res.data)
 				})
 				.catch((err) => {
