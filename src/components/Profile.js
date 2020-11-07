@@ -11,7 +11,6 @@ const Profile = ({ loggedInUser, followUser, unfollowUser }) => {
 	const userURL = "http://localhost:3001/api/users/"
 	const [user, setUser] = useState({})
 	const [movies, setMovies] = useState([])
-	const [followBtnTxt, setFollowBtnTxt] = useState("")
 
 	let { username } = useParams()
 
@@ -30,19 +29,14 @@ const Profile = ({ loggedInUser, followUser, unfollowUser }) => {
 		})
 	}, [])
 
-	//THIS IS BROKEN AND GUESS THE FUCK WHAT, I CANT FIGURE OUT WHY IF MY FUCKING LIFE DEPENDEDED ON IT
-	// if (loggedInUser !== undefined) {
-	// 	console.log(loggedInUser === null)
-	// 	console.log(loggedInUser)
-	// 	if (loggedInUser.follows.includes(username)) {
-	// 		setFollowBtnTxt("Unfollow")
-	// 	} else {
-	// 		setFollowBtnTxt("Follow")
-	// 	}
-	// }
-
 	const followButtonFn = () => {
-		followBtnTxt === "Follow" ? followUser(username, loggedInUser) : unfollowUser(username, loggedInUser)
+		followUser(username, loggedInUser) 
+		//console.log(loggedInUser.follows)
+	}
+
+	const unfollowButtonFn = () => {
+		unfollowUser(username, loggedInUser)
+		//console.log(loggedInUser.follows)
 	}
 
 	return (
@@ -54,8 +48,6 @@ const Profile = ({ loggedInUser, followUser, unfollowUser }) => {
 					className="profileImage"
 				/>
 				<h3>{user.username}</h3>
-				{/* WHAT THE HONEST TO GOD FUCKERY IS THIS SOMEONE FIX THIS FOR ME GOD FUCKING DAMN */}
-	
 				{user.username === loggedInUser.username
 					? ( <Button variant="primary" className="editBtn" size="sm">
 							Edit
@@ -72,19 +64,30 @@ const Profile = ({ loggedInUser, followUser, unfollowUser }) => {
 								/>
 							</svg>
 						</Button>
-					) : (<Button
-							variant="primary"
-							className="followBtn"
-							onClick={followButtonFn}>
-							{followBtnTxt}
-						</Button>)}
+					) : ( loggedInUser !== ""
+							? ( loggedInUser.follows.includes(user.username) 
+									? (<Button
+										variant="primary"
+										className="followBtn"
+										onClick={unfollowButtonFn}>
+										Unfollow
+									</Button>)
+									: (<Button
+											variant="primary"
+											className="followBtn"
+											onClick={followButtonFn}>
+											Follow
+										</Button>)
+									)
+							: (null)
+					)}
 			</Jumbotron>
 			<Container>
 				<Row>
 					<Col className="myMoviesImages">
 						<h3>Watched Movies</h3>
 						{movies.map((m) => {
-							console.log(m)
+							//console.log(m)
 							return <MoviePoster movie={m} />
 						})}
 					</Col>
