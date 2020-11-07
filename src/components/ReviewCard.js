@@ -19,7 +19,15 @@ import "../style/ReviewCard.css"
 import reviewServices from "../axiosServices/reviewServices.js"
 import userServices from "../axiosServices/userServices"
 
-const ReviewCard = ({ review, user, reviews, setReviews }) => {
+const ReviewCard = ({
+	review,
+	user,
+	reviews,
+	setReviews,
+	users,
+	setUser,
+	setUsers,
+}) => {
 	const {
 		username,
 		titleid,
@@ -73,30 +81,13 @@ const ReviewCard = ({ review, user, reviews, setReviews }) => {
 	}
 
 	const handleAddToList = () => {
-		alert("TODO: Movie added to your movie list")
+		userServices.addToWatch(titleid, user, users, setUser, setUsers)
+		alert(movie.Title + " has been added to your to watch list")
 	}
-
-	// TODO: send comments to back-end..below is old code just testing comments on the front-end
-	const [commentsList, setCommentsList] = useState([
-		{
-			author: "Dwight Schrute",
-			comment: "beetroots",
-			timestamp: "28/10/20",
-		},
-	])
 
 	const handleComment = () => {
 		console.log(newComment)
-		// TODO: Get comments working with back-end
-
-		setCommentsList([
-			...commentsList,
-			{
-				author: username,
-				comment: newComment,
-				timestamp: "28/10/20",
-			},
-		])
+		reviewServices.addComment(review, newComment, reviews, setReviews)
 	}
 
 	const popover = (
@@ -202,7 +193,7 @@ const ReviewCard = ({ review, user, reviews, setReviews }) => {
 			<Card.Footer>
 				<Accordion>
 					<OverlayTrigger
-						trigger="hover"
+						trigger={["hover", "focus"]}
 						placement="right"
 						overlay={popover}
 					>
@@ -228,8 +219,8 @@ const ReviewCard = ({ review, user, reviews, setReviews }) => {
 												src={user.avatar}
 												roundedCircle
 											/>
-											<b>{comment.author}: </b>
-											{comment.comment}
+											<b>{user.username}: </b>
+											{comment}
 										</ListGroupItem>
 								  ))
 								: null}
