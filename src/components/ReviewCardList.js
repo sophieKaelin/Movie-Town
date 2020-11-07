@@ -75,6 +75,9 @@ export const ReviewCardList = ({
 									user={user}
 									reviews={reviews}
 									setReviews={setReviews}
+									users={users}
+									setUser={setUser}
+									setUsers={setUsers}
 								/>
 							)
 						})}

@@ -154,6 +154,8 @@ function App() {
 											users={users}
 											reviews={reviews}
 											setReviews={setReviews}
+											setUser={FsetUser}
+											setUsers={setUsers}
 										/>
 									))
 							: null}

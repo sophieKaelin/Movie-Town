@@ -1,7 +1,15 @@
 import React, { useState } from "react"
 import ReviewCard from "./ReviewCard"
 
-const Feed = ({ review, user, users, reviews, setReviews }) => {
+const Feed = ({
+	review,
+	user,
+	users,
+	reviews,
+	setReviews,
+	setUser,
+	setUsers,
+}) => {
 	let reviewUser = ""
 	if (users !== undefined) {
 		users.map((u) =>
@@ -20,6 +28,9 @@ const Feed = ({ review, user, users, reviews, setReviews }) => {
 				user={user}
 				reviews={reviews}
 				setReviews={setReviews}
+				users={users}
+				setUser={setUser}
+				setUsers={setUsers}
 			/>
 		)
 	} else {
