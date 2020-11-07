@@ -199,7 +199,7 @@ const ReviewCard = ({ reviews, user }) => {
 					</Accordion.Toggle>
 					<Accordion.Collapse eventKey="0">
 						<ListGroup className="mt-2">
-							{comments.map((comment) => (
+							{comments !== undefined ? comments.map((comment) => (
 								<ListGroupItem className="mt-2">
 									<Image
 										style={{
@@ -214,7 +214,7 @@ const ReviewCard = ({ reviews, user }) => {
 									<b>{comment.author}: </b>
 									{comment.comment}
 								</ListGroupItem>
-							))}
+							)) : null}
 						</ListGroup>
 					</Accordion.Collapse>
 				</Accordion>
