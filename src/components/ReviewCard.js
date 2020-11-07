@@ -16,7 +16,7 @@ import {
 import axios from "axios"
 import "../style/ReviewCard.css"
 
-const ReviewCard = ({ reviews, user }) => {
+const ReviewCard = ({ reviews, user, loggedInUser, deleteFn }) => {
 	const {
 		username,
 		titleid,
@@ -94,6 +94,11 @@ const ReviewCard = ({ reviews, user }) => {
 		])
 	}
 
+	//*****TODO fix re-rendering after deleting a review*******
+	const handleDelete = () => {
+		deleteFn(reviews)
+	}
+
 	//@mentions and links to profiles
 	const contentLinks = (content) => {
 		var newContent = []
@@ -112,7 +117,6 @@ const ReviewCard = ({ reviews, user }) => {
 		newContent.push(content)
 		return newContent
 	}
-
 
 	return (
 		<Card className="mt-5" style={{ width: "56rem", margin: "auto auto" }}>
@@ -216,6 +220,16 @@ const ReviewCard = ({ reviews, user }) => {
 					<Accordion.Toggle as={Card.Link} eventKey="0">
 						View/Hide Comments
 					</Accordion.Toggle>
+					{reviews.username === loggedInUser.username 
+							? (
+								<Button
+									variant="outline-secondary"
+									onClick={handleDelete}
+									>
+								Delete
+								</Button>
+							) : null
+					}
 					<Accordion.Collapse eventKey="0">
 						<ListGroup className="mt-2">
 							{comments !== undefined ? comments.map((comment) => (
