@@ -152,6 +152,8 @@ function App() {
 											review={r}
 											user={user}
 											users={users}
+											reviews={reviews}
+											setReviews={setReviews}
 										/>
 									))
 							: null}
