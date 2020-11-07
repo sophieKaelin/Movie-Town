@@ -17,7 +17,7 @@ const deleteReview = (review, reviews, setReviews) => {
     axios.delete(baseURL + "reviews/" + review._id)
     .then((response) => {
         console.log("delete succeeded")
-        const newReviews = reviews.filter((r) => r.id !== review.id)
+        const newReviews = reviews.filter((r) => r.id !== review._id)
         setReviews(newReviews)
     })
 }

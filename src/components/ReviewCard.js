@@ -225,6 +225,7 @@ const ReviewCard = ({ reviews, user, loggedInUser, deleteFn }) => {
 								<Button
 									variant="outline-secondary"
 									onClick={handleDelete}
+									className="ml-3"
 									>
 								Delete
 								</Button>
