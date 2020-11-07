@@ -104,7 +104,6 @@ function App() {
 	const baseURL = "/api/"
 	//Not working, response with 404 not found hence hardcoded url in useEffects
 
-	console.log(reviews.length)
 	return (
 		<div>
 			<Router>
@@ -144,7 +143,7 @@ function App() {
 							<Redirect to="/login" />
 						)}
 						<Home />
-						{reviews.length !== 0 ? (reviews.map((r) => (<Feed review={r} reviews={reviews} user={user}/>))) : null}
+						{reviews.length !== 0 ? (reviews.slice(0).reverse().map((r) => (<Feed review={r} user={user} users={users}/>))):null}
 					</Route>
 					<Route path="/profile/:username">
 						<Profile
