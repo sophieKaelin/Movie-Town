@@ -8,6 +8,7 @@ import ReviewModal from "./ReviewModal.js"
 import axios from "axios"
 
 export const ReviewCardList = ({
+	review,
 	user,
 	addNewReview,
 	movie,
@@ -39,6 +40,13 @@ export const ReviewCardList = ({
 		}
 	}, [user])
 
+	let reviewUser = ""
+	if (users !== undefined) {
+		users.map((u) =>
+			u.username === review.username ? (reviewUser = u) : null
+		)
+	}
+
 	return (
 		<Container>
 			<Row>
@@ -63,6 +71,7 @@ export const ReviewCardList = ({
 							return (
 								<ReviewCard
 									review={r}
+									reviewUser={reviewUser}
 									user={user}
 									reviews={reviews}
 									setReviews={setReviews}
