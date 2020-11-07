@@ -30,6 +30,7 @@ function App() {
 	const [users, setUsers] = useState([]) //all users
 	const [user, setUser] = useState("") //Logged In User
 	const [reviews, setReviews] = useState([]) //all reviews
+	const [review, setReview] = useState([])
 	const [movie, setMovie] = useState("") //movie currently being searched
 
 	//REVIEW MODAL STATE VARIABLES & FUNCTIONS
@@ -99,6 +100,15 @@ function App() {
 	}
 	const editContent = (content, review) => {
 		reviewServices.editContent(content, review, reviews, setReviews)
+	}
+
+	const getReview = () => {
+		reviews
+			.slice(0)
+			.reverse()
+			.map((r) => {
+				setReview(r)
+			})
 	}
 
 	const baseURL = "/api/"
@@ -183,27 +193,21 @@ function App() {
 						/>
 					</Route>
 					<Route path="/reviews">
-						{reviews.length !== 0
-							? reviews
-									.slice(0)
-									.reverse()
-									.map((r) => (
-										<ReviewCardList
-											review={r}
-											user={user}
-											setUser={FsetUser}
-											movie={movie}
-											setMovie={FsetMovie}
-											addNewReview={addNewReview}
-											show={show}
-											handleClose={handleClose}
-											handleShow={handleShow}
-											users={users}
-											setUser={setUser}
-											setUsers={setUsers}
-										/>
-									))
-							: null}
+						{getReview}
+						<ReviewCardList
+							review={review}
+							user={user}
+							setUser={FsetUser}
+							movie={movie}
+							setMovie={FsetMovie}
+							addNewReview={addNewReview}
+							show={show}
+							handleClose={handleClose}
+							handleShow={handleShow}
+							users={users}
+							setUser={setUser}
+							setUsers={setUsers}
+						/>
 					</Route>
 					<Route path="/movie/:id">
 						<MovieCard
