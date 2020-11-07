@@ -143,7 +143,11 @@ function App() {
 							<Redirect to="/login" />
 						)}
 						<Home />
-						{reviews.length !== 0 ? (reviews.slice(0).reverse().map((r) => (<Feed review={r} user={user} users={users}/>))):null}
+						{reviews.length !== 0 ? (reviews.slice(0).reverse().map((r) => (<Feed 
+																							review={r} 
+																							user={user} 
+																							users={users}
+																							deleteFn={deleteReview}/>))):null}
 					</Route>
 					<Route path="/profile/:username">
 						<Profile
@@ -177,6 +181,7 @@ function App() {
 							show={show}
 							handleClose={handleClose}
 							handleShow={handleShow}
+							deleteFn = {deleteReview}
 							users={users}
 							setUser={setUser}
 							setUsers={setUsers}

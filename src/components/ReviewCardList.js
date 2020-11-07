@@ -15,6 +15,7 @@ export const ReviewCardList = ({
 	show,
 	handleClose,
 	handleShow,
+	deleteFn,
 	users,
 	setUser,
 	setUsers,
@@ -57,7 +58,7 @@ export const ReviewCardList = ({
 				<Col xs={2}></Col>
 				<Col>
 					{reviews.slice(0).reverse().map((r) => {
-						return <ReviewCard reviews={r} user={user} />
+						return <ReviewCard reviews={r} user={user} loggedInUser={user} deleteFn={deleteFn}/>
 					})}
 					<ReviewModal
 						user={user}

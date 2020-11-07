@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { useEffect } from "react"
 
 //const baseURL = "/api/" **not working
 const baseURL = "http://localhost:3001/api/"
@@ -13,7 +14,7 @@ const addNewReview = (newReview, reviews, setReviews) => {
 
 const deleteReview = (review, reviews, setReviews) => {
     console.log("delete", review)
-    axios.delete(baseURL + "reviews/" + review.id)
+    axios.delete(baseURL + "reviews/" + review._id)
     .then((response) => {
         console.log("delete succeeded")
         const newReviews = reviews.filter((r) => r.id !== review.id)
