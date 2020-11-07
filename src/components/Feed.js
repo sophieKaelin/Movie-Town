@@ -16,7 +16,8 @@ const Feed = ({ review, user, users, reviews, setReviews }) => {
 		return (
 			<ReviewCard
 				review={review}
-				user={reviewUser}
+				reviewUser={reviewUser}
+				user={user}
 				reviews={reviews}
 				setReviews={setReviews}
 			/>

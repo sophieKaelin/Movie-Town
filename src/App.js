@@ -181,19 +181,27 @@ function App() {
 						/>
 					</Route>
 					<Route path="/reviews">
-						<ReviewCardList
-							user={user}
-							setUser={FsetUser}
-							movie={movie}
-							setMovie={FsetMovie}
-							addNewReview={addNewReview}
-							show={show}
-							handleClose={handleClose}
-							handleShow={handleShow}
-							users={users}
-							setUser={setUser}
-							setUsers={setUsers}
-						/>
+						{reviews.length !== 0
+							? reviews
+									.slice(0)
+									.reverse()
+									.map((r) => (
+										<ReviewCardList
+											review={r}
+											user={user}
+											setUser={FsetUser}
+											movie={movie}
+											setMovie={FsetMovie}
+											addNewReview={addNewReview}
+											show={show}
+											handleClose={handleClose}
+											handleShow={handleShow}
+											users={users}
+											setUser={setUser}
+											setUsers={setUsers}
+										/>
+									))
+							: null}
 					</Route>
 					<Route path="/movie/:id">
 						<MovieCard
