@@ -21,7 +21,6 @@ const deleteReview = (review, reviews, setReviews) => {
 
 const likeReview = (review, user, reviews, setReviews) => {
 	review.likes.push(user.username)
-	console.log("review ", review)
 	axios
 		.put(baseURL + "reviews/" + review._id + "/likes", review)
 		.then((response) => {
@@ -44,9 +43,10 @@ const unlikeReview = (review, user, reviews, setReviews) => {
 }
 
 const addComment = (review, comment, reviews, setReviews) => {
+	console.log(review)
 	review.comments.push(comment)
 	axios
-		.put(baseURL + "reviews/" + review._id + "/comments", comment)
+		.put(baseURL + "reviews/" + review._id + "/comments", review)
 		.then((response) => {
 			setReviews(
 				reviews.map((r) => (r._id !== review._id ? r : response.data))

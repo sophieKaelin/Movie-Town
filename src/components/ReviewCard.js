@@ -70,7 +70,6 @@ const ReviewCard = ({
 			.get("http://localhost:3001/api/users/" + username)
 			.then((response) => {
 				setReviewUser(response.data)
-				console.log(reviewUser)
 			})
 			.catch((err) => {
 				console.log(err)
@@ -97,7 +96,6 @@ const ReviewCard = ({
 	}
 
 	const handleComment = () => {
-		console.log(newComment)
 		reviewServices.addComment(review, newComment, reviews, setReviews)
 	}
 
@@ -223,7 +221,7 @@ const ReviewCard = ({
 					</Accordion.Toggle>
 					<Accordion.Collapse eventKey="0">
 						<ListGroup className="mt-2">
-							{comments !== undefined
+							{comments !== null
 								? comments.map((comment) => (
 										<ListGroupItem className="mt-2">
 											<Image
