@@ -226,6 +226,7 @@ apiRouter.put("/api/reviews/:id/comments", (req, res, next) => {
 		comments: body.comments,
 	}
 
+	console.log(review)
 	Review.findByIdAndUpdate(req.params.id, review, { new: true })
 		.then((updatedReview) => {
 			res.json(updatedReview)
