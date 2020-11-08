@@ -42,6 +42,7 @@ const ReviewCard = ({
 	// store state for star rating
 	const [starRating, setStarRating] = useState()
 	const [hover, setHover] = useState(null)
+	const [reviewUser, setReviewUser] = useState(user)
 	const [movie, setMovie] = useState({
 		Title: "",
 		imdbID: "",
@@ -63,6 +64,18 @@ const ReviewCard = ({
 				})
 		}
 	}, [titleid, user])
+
+	useEffect(() => {
+		axios
+			.get("http://localhost:3001/api/users/" + username)
+			.then((response) => {
+				setReviewUser(response.data)
+				console.log(reviewUser)
+			})
+			.catch((err) => {
+				console.log(err)
+			})
+	}, [])
 
 	const handleChange = (e) => {
 		e.preventDefault()
@@ -108,7 +121,7 @@ const ReviewCard = ({
 							}}
 							className="mr-3"
 							alt="Avatar"
-							src={user.avatar}
+							src={reviewUser.avatar}
 							roundedCircle
 						/>
 						<b>{username}</b> reviewed <b>{movie.Title}</b>
