@@ -186,9 +186,10 @@ The home feed contains review cards of all the reviews by users that you follow.
 
 ![profile](screenshots/profile.png "Profile Page")
 ![otherProfile](screenshots/otherProfile.png "Other Profile Page")
-![profileMovieDetail](screenshots/profileMovieDetail.png "Clicked Movie on Profile")
 
 There are two modes for the profile page. First mode is reviewing your own profile. On this page you can view your profile information, and view a collage of movie posters from a users `watched` list. When you select any of these movie posters, a Modal will appear containing further information about that movie. This functionality comes from the `MoviePoster.js` file.
+
+![profileMovieDetail](screenshots/profileMovieDetail.png "Clicked Movie on Profile")
 
 The profile page also has an `edit` feature that was going to reveal a Modal form for updating a users avatar and bio. Unfortunately, due to time constraints thie feature was not included. The second mode is reviewing another users profile. The setup of the page is mostly the same, except instead of an `edit` button, users will see either a `follow` or `unfollow` button, depending on whether you currently follow that user. This button makes a PUT request that adds the users name to the list of follower on the profile users entry in the database. All code for this page is in the `Profile.js` file, and various conditionals are used for displaying either your data, or the data of the users profile you are viewing.
 
