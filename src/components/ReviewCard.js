@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.css"
 import {
 	Card,
@@ -27,7 +27,9 @@ const ReviewCard = ({
 	setReviews,
 	users,
 	setUser,
-	setUsers, loggedInUser, deleteFn
+	setUsers,
+	loggedInUser,
+	deleteFn,
 }) => {
 	const {
 		username,
@@ -123,7 +125,7 @@ const ReviewCard = ({
 		newContent.push(content)
 		return newContent
 	}
-  
+
 	const popover = (
 		<Popover id="popover-basic">
 			<Popover.Title as="h3">Likes</Popover.Title>
@@ -132,7 +134,7 @@ const ReviewCard = ({
 			</Popover.Content>
 		</Popover>
 	)
-  
+
 	return (
 		<Card className="mt-5" style={{ width: "56rem", margin: "auto auto" }}>
 			<Row className="no-gutters">
@@ -148,7 +150,13 @@ const ReviewCard = ({
 							src={reviewUser.avatar}
 							roundedCircle
 						/>
-						<b><Link to={"/profile/" + username}> {username} </Link></b> reviewed <b>{movie.Title}</b>
+						<b>
+							<Link to={"/profile/" + username}>
+								{" "}
+								{username}{" "}
+							</Link>
+						</b>{" "}
+						reviewed <b>{movie.Title}</b>
 					</Card.Header>
 					<Card.Body>
 						<ListGroup className="list-group-flush">
@@ -188,7 +196,9 @@ const ReviewCard = ({
 									<em>{""} Date Reviewed: </em> {timestamp}
 								</p>
 							</ListGroupItem>
-							<ListGroupItem>{contentLinks(content)}</ListGroupItem>
+							<ListGroupItem>
+								{contentLinks(content)}
+							</ListGroupItem>
 						</ListGroup>
 						<Card
 							style={{
@@ -234,28 +244,24 @@ const ReviewCard = ({
 						placement="right"
 						overlay={popover}
 					>
-						{review.likes.includes(user.username)
-							? <Card.Link onClick={handleUnlike}>
-									Unlike
-								</Card.Link>
-							: <Card.Link onClick={handleLike}>
-									Like
-								</Card.Link>}
+						{review.likes.includes(user.username) ? (
+							<Card.Link onClick={handleUnlike}>Unlike</Card.Link>
+						) : (
+							<Card.Link onClick={handleLike}>Like</Card.Link>
+						)}
 					</OverlayTrigger>
 					<Accordion.Toggle as={Card.Link} eventKey="0">
 						View/Hide Comments
 					</Accordion.Toggle>
-					{reviews.username === loggedInUser.username 
-							? (
-								<Button
-									variant="outline-secondary"
-									onClick={handleDelete}
-									className="ml-3"
-									>
-								Delete
-								</Button>
-							) : null
-					}
+					{reviews && reviews.username === loggedInUser.username ? (
+						<Button
+							variant="outline-secondary"
+							onClick={handleDelete}
+							className="ml-3"
+						>
+							Delete
+						</Button>
+					) : null}
 					<Accordion.Collapse eventKey="0">
 						<ListGroup className="mt-2">
 							{comments !== null

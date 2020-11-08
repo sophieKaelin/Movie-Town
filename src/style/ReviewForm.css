@@ -11,3 +11,8 @@
 #notYourMovie:hover {
 	font-weight: bold;
 }
+
+.writeReviewImg {
+	height: 444px !important;
+	width: 300px !important;
+}
