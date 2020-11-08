@@ -1,7 +1,9 @@
 import React, { useState } from "react"
+import defaultProf from '../profilepictures/defaultProf.png'
 import "bootstrap/dist/css/bootstrap.css"
 import { Button, Form, Container, Row, Col, Card } from "react-bootstrap"
 import "../style/Register.css"
+import { useLocation, useHistory } from "react-router-dom"
 
 const validateForm = (errors) => {
 	let valid = true
@@ -13,9 +15,13 @@ const validateForm = (errors) => {
 }
 
 const Register = ({users, FsetUser, addNewUser}) => {
+	let  {username}  = useLocation()
+	const history = useHistory()
+	console.log(username)
+
 	const [registerInfo, setRegisterInfo] = useState({
 		username: "",
-		avatar: "",
+		avatar: defaultProf,
 		password: "",
 		confirmPassword: "",
 	})
@@ -96,6 +102,7 @@ const Register = ({users, FsetUser, addNewUser}) => {
 		if (validateForm(errors) && passwordsMatch) {
 			console.info("Valid Form")
 			addNewUser(registerInfo)
+			redirectToLogin()
 		} else if (!passwordsMatch) {
 			console.info("Passwords dont match!")
 			setErrors({ ...errors, confirmPassword: "Passwords dont match!" })
@@ -104,6 +111,10 @@ const Register = ({users, FsetUser, addNewUser}) => {
 		}
 		console.log("Submit register info: ", registerInfo)
 		console.log("Submit error: ", errors)
+	}
+
+	const redirectToLogin =  () => {
+		history.push('/login')
 	}
 
 	return (

@@ -3,10 +3,11 @@ import axios from "axios"
 //const baseURL = "/api/" **not working
 const baseURL = "http://localhost:3001/api/"
 
-const addNewUser = (newUser, users, setUsers) => {
+const addNewUser = (newUser, users, setUsers, setUser) => {
 	axios.post(baseURL + "users", newUser).then((response) => {
 		console.log(response)
 		setUsers([...users, response.data])
+		setUser(response.data)
 	})
 }
 
