@@ -1,4 +1,5 @@
-import axios from "axios"
+import axios from 'axios'
+import { useEffect } from "react"
 
 //const baseURL = "/api/" **not working
 const baseURL = "http://localhost:3001/api/"
@@ -11,19 +12,19 @@ const addNewReview = (newReview, reviews, setReviews) => {
 }
 
 const deleteReview = (review, reviews, setReviews) => {
-	console.log("delete", review)
-	axios.delete(baseURL + "reviews/" + review._id).then((response) => {
-		console.log("delete succeeded")
-		const newReviews = reviews.filter((r) => r._id !== review._id)
-		setReviews(newReviews)
-	})
+    console.log("delete", review)
+    axios.delete(baseURL + "reviews/" + review._id)
+    .then((response) => {
+        console.log("delete succeeded")
+        const newReviews = reviews.filter((r) => r.id !== review._id)
+        setReviews(newReviews)
+    })
 }
 
 const likeReview = (review, user, reviews, setReviews) => {
 	review.likes.push(user.username)
-	console.log("review ", review)
 	axios
-		.put(baseURL + "reviews/" + review._id + "likes", review)
+		.put(baseURL + "reviews/" + review._id + "/likes", review)
 		.then((response) => {
 			setReviews(
 				reviews.map((r) => (r._id !== review._id ? r : response.data))
@@ -35,7 +36,7 @@ const unlikeReview = (review, user, reviews, setReviews) => {
 	const index = review.likes.indexOf(user.username)
 	review.likes.splice(index, 1)
 	axios
-		.put(baseURL + "reviews/" + review._id + "reviews", review)
+		.put(baseURL + "reviews/" + review._id + "/likes", review)
 		.then((response) => {
 			setReviews(
 				reviews.map((r) => (r._id !== review._id ? r : response.data))
@@ -44,9 +45,10 @@ const unlikeReview = (review, user, reviews, setReviews) => {
 }
 
 const addComment = (review, comment, reviews, setReviews) => {
+	console.log(review)
 	review.comments.push(comment)
 	axios
-		.put(baseURL + "reviews/" + review._id + "comments", comment)
+		.put(baseURL + "reviews/" + review._id + "/comments", review)
 		.then((response) => {
 			setReviews(
 				reviews.map((r) => (r._id !== review._id ? r : response.data))
@@ -57,7 +59,7 @@ const addComment = (review, comment, reviews, setReviews) => {
 const editStars = (stars, review, reviews, setReviews) => {
 	review.stars = stars
 	axios
-		.put(baseURL + "reviews/" + review._id + "stars", review)
+		.put(baseURL + "reviews/" + review._id + "/stars", review)
 		.then((response) => {
 			setReviews(
 				reviews.map((r) => (r._id !== review._id ? r : response.data))
@@ -68,7 +70,7 @@ const editStars = (stars, review, reviews, setReviews) => {
 const editContent = (content, review, reviews, setReviews) => {
 	review.content = content
 	axios
-		.put(baseURL + "reviews/" + review._id + "content", content)
+		.put(baseURL + "reviews/" + review._id + "/content", content)
 		.then((response) => {
 			setReviews(
 				reviews.map((r) => (r._id !== review._id ? r : response.data))

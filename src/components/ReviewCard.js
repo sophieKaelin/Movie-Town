@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.css"
 import {
 	Card,
@@ -27,6 +28,8 @@ const ReviewCard = ({
 	users,
 	setUser,
 	setUsers,
+	loggedInUser,
+	deleteFn,
 }) => {
 	const {
 		username,
@@ -70,7 +73,6 @@ const ReviewCard = ({
 			.get("http://localhost:3001/api/users/" + username)
 			.then((response) => {
 				setReviewUser(response.data)
-				console.log(reviewUser)
 			})
 			.catch((err) => {
 				console.log(err)
@@ -84,13 +86,11 @@ const ReviewCard = ({
 	}
 
 	const handleLike = () => {
-		if (!like) {
-			setLike(true)
-			reviewServices.likeReview(review, user, reviews, setReviews)
-		} else {
-			setLike(false)
-			reviewServices.unlikeReview(review, user, reviews, setReviews)
-		}
+		reviewServices.likeReview(review, user, reviews, setReviews)
+	}
+
+	const handleUnlike = () => {
+		reviewServices.unlikeReview(review, user, reviews, setReviews)
 	}
 
 	const handleAddToList = () => {
@@ -99,16 +99,42 @@ const ReviewCard = ({
 	}
 
 	const handleComment = () => {
-		console.log(newComment)
 		reviewServices.addComment(review, newComment, reviews, setReviews)
+	}
+
+	//*****TODO fix re-rendering after deleting a review*******
+	const handleDelete = () => {
+		deleteFn(reviews)
+	}
+
+	//@mentions and links to profiles
+	const contentLinks = (content) => {
+		var newContent = []
+		while (content.indexOf("@") !== -1) {
+			const firstIndex = content.indexOf("@")
+			const str = content.substr(0, firstIndex)
+			newContent.push(str)
+			content = content.slice(firstIndex)
+			const lastIndex = content.indexOf(" ")
+			const name = content.substr(0, lastIndex)
+			const nameURL = content.substr(1, lastIndex - 1)
+			const newLink = <Link to={"/profile/" + nameURL}> {name} </Link>
+			newContent.push(newLink)
+			content = content.slice(lastIndex)
+		}
+		newContent.push(content)
+		return newContent
 	}
 
 	const popover = (
 		<Popover id="popover-basic">
 			<Popover.Title as="h3">Likes</Popover.Title>
-			<Popover.Content>{likes}</Popover.Content>
+			<Popover.Content>
+				{likes.length > 0 ? likes : "Be the first to like this review!"}
+			</Popover.Content>
 		</Popover>
 	)
+
 	return (
 		<Card className="mt-5" style={{ width: "56rem", margin: "auto auto" }}>
 			<Row className="no-gutters">
@@ -124,7 +150,13 @@ const ReviewCard = ({
 							src={reviewUser.avatar}
 							roundedCircle
 						/>
-						<b>{username}</b> reviewed <b>{movie.Title}</b>
+						<b>
+							<Link to={"/profile/" + username}>
+								{" "}
+								{username}{" "}
+							</Link>
+						</b>{" "}
+						reviewed <b>{movie.Title}</b>
 					</Card.Header>
 					<Card.Body>
 						<ListGroup className="list-group-flush">
@@ -164,7 +196,9 @@ const ReviewCard = ({
 									<em>{""} Date Reviewed: </em> {timestamp}
 								</p>
 							</ListGroupItem>
-							<ListGroupItem>{content}</ListGroupItem>
+							<ListGroupItem>
+								{contentLinks(content)}
+							</ListGroupItem>
 						</ListGroup>
 						<Card
 							style={{
@@ -210,16 +244,27 @@ const ReviewCard = ({
 						placement="right"
 						overlay={popover}
 					>
-						<Card.Link onClick={handleLike}>
-							{like ? "Unlike" : "Like"}
-						</Card.Link>
+						{review.likes.includes(user.username) ? (
+							<Card.Link onClick={handleUnlike}>Unlike</Card.Link>
+						) : (
+							<Card.Link onClick={handleLike}>Like</Card.Link>
+						)}
 					</OverlayTrigger>
 					<Accordion.Toggle as={Card.Link} eventKey="0">
 						View/Hide Comments
 					</Accordion.Toggle>
+					{reviews && reviews.username === loggedInUser.username ? (
+						<Button
+							variant="outline-secondary"
+							onClick={handleDelete}
+							className="ml-3"
+						>
+							Delete
+						</Button>
+					) : null}
 					<Accordion.Collapse eventKey="0">
 						<ListGroup className="mt-2">
-							{comments !== undefined
+							{comments !== null
 								? comments.map((comment) => (
 										<ListGroupItem className="mt-2">
 											<Image
