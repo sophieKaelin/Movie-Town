@@ -200,7 +200,20 @@ The About page contains a small statement describing our website and a react-boo
 
 ## Future work
 
-A summary of what your next steps would be if you were to continue the project
+<!-- A summary of what your next steps would be if you were to continue the project -->
+
+Since this is a proof of concept application, there are many features that can be added or improved on to continue building the project. Some of these next steps are:
+
+-   `Data encryption`: Important security measure to protect private user data
+-   `Password reset`: Allow users to reset their password
+-   `Forgot password functionality` : Allow users to reset their password via email
+-   `Edit profile functionality`: Allow users to make changes to their profile such as adding a bio, changing their username, uploading a new profile picture / avatar.
+-   `Ability to edit reviews` : Users can make changes to their own reviews
+-   `Create custom movie lists` : Users can curate custom lists of movies
+-   `Integrate TV series into the website` : Users can search, review, list and share TV shows as well as movies
+-   `User @mentions and #hastags`: Functioning mentions and hashtags
+-   `Polish UI`: There are some UI elements in the website that could benefit from additional CSS.
+-   `Code refactoring` : Time to refactor our code was not accounted for in our project plan, the codebase would benefit from refactoring
 
 ## Roles/Contributions
 
