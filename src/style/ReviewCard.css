@@ -19,7 +19,8 @@ body {
 
 .reviewCardPoster {
 	margin-bottom: 20px;
-	margin-left: -10px;
+	margin-left: 0px;
+	margin-right: 20px;
 }
 
 .reviewCardMovie-listItem > .list-group-item {
