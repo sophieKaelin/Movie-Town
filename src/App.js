@@ -160,11 +160,6 @@ function App() {
 							setUser={FsetUser}
 							setUsers={setUsers}
 						/>
-                {reviews.length !== 0 ? (reviews.slice(0).reverse().map((r) => (<Feed 
-																							review={r} 
-																							user={user} 
-																							users={users}
-																							deleteFn={deleteReview}/>))):null}
 					</Route>
 					<Route path="/profile/:username">
 						<Profile
@@ -200,7 +195,7 @@ function App() {
 							show={show}
 							handleClose={handleClose}
 							handleShow={handleShow}
-							deleteFn = {deleteReview}
+							deleteFn={deleteReview}
 							users={users}
 							setUser={setUser}
 							setUsers={setUsers}
