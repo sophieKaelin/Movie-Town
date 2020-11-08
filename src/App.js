@@ -71,7 +71,7 @@ function App() {
 	}, [])
 
 	const addNewUser = (newUser) => {
-		userServices.addNewUser(newUser, users, setUsers)
+		userServices.addNewUser(newUser, users, setUsers, setUser)
 	}
 	const followUser = (userToFollow, user) => {
 		userServices.followUser(userToFollow, user, users, setUser, setUsers)
@@ -160,6 +160,11 @@ function App() {
 							setUser={FsetUser}
 							setUsers={setUsers}
 						/>
+                {reviews.length !== 0 ? (reviews.slice(0).reverse().map((r) => (<Feed 
+																							review={r} 
+																							user={user} 
+																							users={users}
+																							deleteFn={deleteReview}/>))):null}
 					</Route>
 					<Route path="/profile/:username">
 						<Profile
@@ -195,6 +200,7 @@ function App() {
 							show={show}
 							handleClose={handleClose}
 							handleShow={handleShow}
+							deleteFn = {deleteReview}
 							users={users}
 							setUser={setUser}
 							setUsers={setUsers}
