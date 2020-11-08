@@ -51,7 +51,7 @@ The extra features we implemented are as follows:
 -   `Commenting on reviews` : Users can comment on their own or others' reviews
 -   `"Want to watch" movie list` : Users can add movies to their "want to watch" list, full of movies they want to see
 -   `Search validation` : When searching for a movie to review, form validation is implemented to ensure only valid movie titles are searched
--   `Login/Register form validation` : Form validation has been implemented on login and register cards, restricting users to enter credentials that are long enough. If the user enters a username or password that is too short, an error message is shown below the field.
+-   `Login/Register form validation` : Form validation has been implemented on login and register cards, restricting users to enter credentials that are long enough. If the user enters a username or password that is too short, an error message is shown below the field. If a user enters a username that is already taken, they must choose a new username. A user is automatically logged in after registration with a default avatar picture.
 -   `User Logout` : Users can logout of their account
 
 ### Refactoring
@@ -68,10 +68,10 @@ Backend code was completed using axios and http requests to communicate with the
 	Node.js and Express as the web server platform. nodemon was used during development to automatically restart the server when changes were made. This was only used during development, as no changes are being made to server code after publishing. 
 
 -   `Axios via ./src/axiosServices/reviewServices.js && ./src/axiosServices/userServices.js`
-	The axios library provides communication between the browser and the server. Requests for data from the server ares split into requests for the reviews and requests for the users. Requests were written based on data that was needed for the MVP, including post, put, and delete. Requests including post and delete use general URL paths to access and modify data. post requests were split into multiple requests, depending on what was being modified. These can be distinguished by their URL's. These functions are mostly accessed in the main App.js file, but are sometimes accessed directly in a component file. Axios is imported into these files. 
+	The axios library provides communication between the browser and the server. Requests for data from the server ares split into requests for the reviews and requests for the users. Requests were written based on data that was needed for the MVP, including post, put, and delete. Requests including post and delete use general URL paths to access and modify data. post requests were split into multiple requests, depending on what was being modified. These can be distinguished by their URL's. These functions are mostly accessed in the main App.js file, but are sometimes accessed directly in a component file. Axios is imported into these files. Functions are defined in the App.js file to be passed around to components for usage as well. state variables are then passed to axios files so after the axios file has requested for data, it can then set the new state of variables accordingly. Some axios functions are written but are not used, and are outlined for usage in the future work section. 
 
 -   `REST HTTP API requests via ./server/api.js`
-	HTTP requests are grouped based on wether the interact with data pertaining to reviews, users, or user login. The api router uses express to communicate with the database. Most requests that would be needed are accounted for, including GET, POST, DELETE, and PUT based on the data as a group or individual data pieces based on ID. 
+	HTTP requests are grouped based on wether the interact with data pertaining to reviews, users, or user login. The api router uses express to communicate with the database. Most requests that would be needed are accounted for, including GET, POST, DELETE, and PUT based on the data as a group or individual data pieces based on ID. API URL's are split between the three tasks, and are broken down further based on if a specific data object needs to be accessed based on ID or if a specific PUT request it editting a certain piece of data in the object. Some REST HTTP API requests are written but are not used, and are outlined for usage in the future work section. 
 
 #### _Database_
 
@@ -111,10 +111,6 @@ const reviewSchema = {
 -   Username is the user who wrote the review
 -   titleid is the id of the movie from OMDB
 -   stars is the users rating of the movie from 0-5.
-
-#### _User Services_
-
-#### _Review Services_
 
 #### _OMDB Services_
 
@@ -222,7 +218,7 @@ Since this is a proof of concept application, there are many features that can b
 -   `Ability to edit reviews` : Users can make changes to their own reviews
 -   `Create custom movie lists` : Users can curate custom lists of movies
 -   `Integrate TV series into the website` : Users can search, review, list and share TV shows as well as movies
--   `User @mentions and #hastags`: Functioning mentions and hashtags
+-   `User #hastags`: Functioning hashtags
 -   `Polish UI`: There are some UI elements in the website that could benefit from additional CSS.
 -   `Code refactoring` : Time to refactor our code was not accounted for in our project plan, the codebase would benefit from refactoring
 
