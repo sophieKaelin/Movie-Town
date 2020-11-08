@@ -6,7 +6,7 @@
 
 <!--Copy this from project proposal I reckon-->
 
-An outline of the application you were aiming to build, target users, data sources etc (similar to the proposal). Include link to Github
+<!-- An outline of the application you were aiming to build, target users, data sources etc (similar to the proposal). Include link to Github -->
 
 The purpose of our application is to create an intuitive [IMDb](https://www.imdb.com/) style website with a focus on social features. The application will allow users to keep track of what movies they have watched, want to watch and what movies their friends are watching.
 
@@ -21,9 +21,9 @@ The application we are aiming to build is a Minimum Viable Product (MVP) that wi
 #### Target/MVP Features
 
 -   `User login/registration` : This feature is vital, because it will allow users to interact with the website. There will be no unauthorised view of the website.
--   `Marking shows as "Watched"` : A user should be able to mark shows as “watched” or “want-to-watch”, and then review the lists of shows and their ratings.
--   `View which shows they have watched` : A user should be able to review the list of shows they have watched and their ratings.
--   `Add details to shows` : A user should be able to rate a movie (out of 5 starts), leave a review of what they thought, and record the date they watched it.
+-   `Marking movies as "Watched"` : A user should be able to mark movies as “watched” or “want-to-watch”, and then review the lists of movies and their ratings.
+-   `View which movies they have watched` : A user should be able to review the list of shows they have watched and their ratings.
+-   `Add details to movies` : A user should be able to rate a movie (out of 5 starts), leave a review of what they thought, and record the date they watched it.
 -   `Follow friends accounts` : Following another account should allow a user to view all of their friends watchlists and reviews
 -   `Liking reviews` : Users can like their friends reviews
 -   `Searching` : A user can search for movies to read simple data (plot, year, name etc...)
@@ -37,7 +37,30 @@ The application we are aiming to build is a Minimum Viable Product (MVP) that wi
 
 ## What We've Achieved
 
-Addressing milestones A description of what you have been able to implement in this MVP, use your milestones to highlight what you've achieved
+<!-- Addressing milestones A description of what you have been able to implement in this MVP, use your milestones to highlight what you've achieved -->
+
+For our MVP application we were able to complete all of our target features and some of the extra features. The target features we completed are:
+
+-   `User login/registration` : Users can login and register an account
+-   `Marking movies as "Watched"` : Users can add movies to a list of movies they have watched
+-   `View of watched movies` : Users can view a list of movies they have watched
+-   `Review movies` : Users can write a review on a movie of their choice
+-   `Following friends` : Users can follow other users on the users profile page
+-   `Liking reviews` : Users can like/unlike reviews
+-   `Searching for movies` : Users can search for movies to get information about the movie
+
+The extra features we implemented are as follows:
+
+-   `Delete reviews` : Users can delete their own reviews
+-   `Commenting on reviews` : Users can comment on their own or others' reviews
+-   `"Want to watch" movie list` : Users can add movies to their "want to watch" list, full of movies they want to see
+-   `Search validation` : When searching for a movie to review, form validation is implemented to ensure only valid movie titles are searched
+-   `Login/Register form validation` : Form validation has been implemented on login and register cards, restricting users to enter credentials that are long enough. If the user enters a username or password that is too short, an error message is shown below the field.
+-   `User Logout` : Users can logout of their account
+
+### Refactoring
+
+Our original project plan did not account for time to refactor our code during the final sprint. Ideally, we would have planned to finish coding earlier and spent the majority of week 13 refactoring our codebase. This would have resulted in cleaner code with a more efficent use of components.
 
 ## Source Code
 
