@@ -212,8 +212,7 @@ apiRouter.put("/api/reviews/:id/likes", (req, res, next) => {
 	const review = {
 		likes: body.likes,
 	}
-	console.log(req.params)
-	Review.findByIdAndUpdate(req.params._id, review, { new: true })
+	Review.findByIdAndUpdate(req.params.id, review, { new: true })
 		.then((updatedReview) => {
 			res.json(updatedReview)
 		})

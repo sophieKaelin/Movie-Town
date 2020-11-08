@@ -84,13 +84,11 @@ const ReviewCard = ({
 	}
 
 	const handleLike = () => {
-		if (!like) {
-			setLike(true)
-			reviewServices.likeReview(review, user, reviews, setReviews)
-		} else {
-			setLike(false)
-			reviewServices.unlikeReview(review, user, reviews, setReviews)
-		}
+		reviewServices.likeReview(review, user, reviews, setReviews)
+	}
+
+	const handleUnlike = () => {
+		reviewServices.unlikeReview(review, user, reviews, setReviews)
 	}
 
 	const handleAddToList = () => {
@@ -212,9 +210,13 @@ const ReviewCard = ({
 						placement="right"
 						overlay={popover}
 					>
-						<Card.Link onClick={handleLike}>
-							{like ? "Unlike" : "Like"}
-						</Card.Link>
+						{review.likes.includes(user.username)
+							? <Card.Link onClick={handleUnlike}>
+									Unlike
+								</Card.Link>
+							: <Card.Link onClick={handleLike}>
+									Like
+								</Card.Link>}
 					</OverlayTrigger>
 					<Accordion.Toggle as={Card.Link} eventKey="0">
 						View/Hide Comments
