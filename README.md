@@ -3,8 +3,33 @@
 <!--Feel free to change the headings around, not sure what they should be set to.-->
 
 ## Outline	
-<!--Copy this from project proposal I reckon-->
-An outline of the application you were aiming to build, target users, data sources etc (similar to the proposal). Include link to Github
+
+The purpose of our application is to create an intuitive [IMDb](https://www.imdb.com/) style website with a focus on social features. The application will allow users to keep track of what movies they have watched, want to watch and what movies their friends are watching.
+
+The target user group are avid movie watchers, or those who want to keep track of what they have and haven’t seen. They will be able to mark which movies they have seen, what they would rate it, what their thoughts were, and see what other friends have watched.
+
+We will be using the [OMDb API](http://www.omdbapi.com/) as our main data source for our application. We will also store user data in a [MongoDB](https://www.mongodb.com/) database.
+
+### Target MVP Outline	
+
+The application we are aiming to build is a Minimum Viable Product (MVP) that will have enough functionality to show a proof of concept application. We have assigned target features that are planned for the MVP however we have also listed features that will we wish to include once the MVP tasks are completed.	
+
+#### Target/MVP Features	
+
+-   `User login/registration` : This feature is vital, because it will allow users to interact with the website. There will be no unauthorised view of the website.	
+-   `Marking shows as "Watched"` : A user should be able to mark shows as “watched” or “want-to-watch”, and then review the lists of shows and their ratings.	
+-   `View which shows they have watched` : A user should be able to review the list of shows they have watched and their ratings.	
+-   `Add details to shows` : A user should be able to rate a movie (out of 5 starts), leave a review of what they thought, and record the date they watched it.	
+-   `Follow friends accounts` : Following another account should allow a user to view all of their friends watchlists and reviews	
+-   `Liking reviews` : Users can like their friends reviews	
+-   `Searching` : A user can search for movies to read simple data (plot, year, name etc...)	
+
+#### Extra Features	
+
+-   `Sort "Watched" list by fields` : It would be nice for users to be able to sort their watchlist by different fields, including their rating, the IMDB average rating, date they watched it etc. This is more complex than a list of shows, and not a vital piece of functionality the application would be dependent on. Rather, it would be a handy feature. Since it is not vital, it is not part of our mandatory list of features.	
+-   `Creating lists of shows` : A User can create multiple lists of shows (e.g. want to watch, have watched, to watch with kids etc) . This feature will not be included because we are not using a relational database scheme. If we had chosen a different location for our database, this would have been achievable.	
+-   `Recording what episode you are currently on` : A user can record what episode they are up to in a TV show. This is highly complex and introduces a new purpose to the	
+-   `Commenting on a friends review` : This is an extension from liking a friends review, a user could also comment on their review. This could be achieved, but would require us to alter the data structure we had currently planned. This feature is one of our stretch goals - if time permits, we will include this.
 
 ## What We've Achieved
 Addressing milestones	A description of what you have been able to implement in this MVP, use your milestones to highlight what you've achieved
@@ -16,7 +41,7 @@ Addressing milestones	A description of what you have been able to implement in t
 #### _Database_
 We have used a MongoDB database to store all user and review information. The two schemas are as follows:
 
-```
+```javascript
 const usersSchema = ({
 	username: String,
 	password: String,
@@ -32,7 +57,7 @@ const usersSchema = ({
 * Avatar is a user profile image stored in Flickr
 * watched and toWatch are lists of movie ID's from OMDB.
 
-```
+```javascript
 const reviewSchema = ({
 	username: String,
 	titleid: String,
