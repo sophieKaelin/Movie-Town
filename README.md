@@ -95,7 +95,7 @@ The `App.js` component contains various state variables that are passed through 
 The App component contains a router that creates the routes to each of the pages in our application. If the user state variable is empty or null, the user is re-routed to the login page, since only authenticated users can use this application.
 
 #### _Login/Registration_
-![Login](screenshots/Login.png "Login Page")
+![Login](screenshots/login.png "Login Page")
 
 The login page allows users to log into their account before access the page. The code for this exists in `Login.js` Once details are entered and submited, they are cross checked with the database before a user is re-navigated to the home page. A user will be alerted if they have successfully entered the correct or incorrect password and username. 
 
