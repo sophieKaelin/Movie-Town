@@ -106,7 +106,9 @@ const ReviewCard = ({
 	const popover = (
 		<Popover id="popover-basic">
 			<Popover.Title as="h3">Likes</Popover.Title>
-			<Popover.Content>{likes}</Popover.Content>
+			<Popover.Content>
+				{likes.length > 0 ? likes : "Be the first to like this review!"}
+			</Popover.Content>
 		</Popover>
 	)
 	return (
