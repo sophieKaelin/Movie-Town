@@ -47,15 +47,15 @@ Addressing milestones A description of what you have been able to implement in t
 
 We have used a MongoDB database to store all user and review information. The two schemas are as follows:
 
-```
-const usersSchema = ({
+```javascript
+const usersSchema = {
 	username: String,
 	password: String,
 	avatar: String,
 	follows: Array,
 	watched: Array,
 	toWatch: Array,
-})
+}
 ```
 
 **NOTES:**
@@ -64,8 +64,8 @@ const usersSchema = ({
 -   Avatar is a user profile image stored in Flickr
 -   watched and toWatch are lists of movie ID's from OMDB.
 
-```
-const reviewSchema = ({
+```javascript
+const reviewSchema = {
 	username: String,
 	titleid: String,
 	timestamp: String,
@@ -73,7 +73,7 @@ const reviewSchema = ({
 	content: String,
 	likes: Array,
 	comments: Array,
-})
+}
 ```
 
 **Notes**
