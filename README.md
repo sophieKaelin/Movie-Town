@@ -2,15 +2,7 @@
 
 <!--Feel free to change the headings around, not sure what they should be set to.-->
 
-<<<<<<< HEAD
-## Outline
-
-<!--Copy this from project proposal I reckon-->
-
-<!-- An outline of the application you were aiming to build, target users, data sources etc (similar to the proposal). Include link to Github -->
-=======
 ## Outline	
->>>>>>> 2e790531741bddee4c1192488d6ae77a71f0995b
 
 The purpose of our application is to create an intuitive [IMDb](https://www.imdb.com/) style website with a focus on social features. The application will allow users to keep track of what movies they have watched, want to watch and what movies their friends are watching.
 
@@ -24,15 +16,6 @@ The application we are aiming to build is a Minimum Viable Product (MVP) that wi
 
 #### Target/MVP Features	
 
-<<<<<<< HEAD
--   `User login/registration` : This feature is vital, because it will allow users to interact with the website. There will be no unauthorised view of the website.
--   `Marking movies as "Watched"` : A user should be able to mark movies as “watched” or “want-to-watch”, and then review the lists of movies and their ratings.
--   `View which movies they have watched` : A user should be able to review the list of shows they have watched and their ratings.
--   `Add details to movies` : A user should be able to rate a movie (out of 5 starts), leave a review of what they thought, and record the date they watched it.
--   `Follow friends accounts` : Following another account should allow a user to view all of their friends watchlists and reviews
--   `Liking reviews` : Users can like their friends reviews
--   `Searching` : A user can search for movies to read simple data (plot, year, name etc...)
-=======
 -   `User login/registration` : This feature is vital, because it will allow users to interact with the website. There will be no unauthorised view of the website.	
 -   `Marking shows as "Watched"` : A user should be able to mark shows as “watched” or “want-to-watch”, and then review the lists of shows and their ratings.	
 -   `View which shows they have watched` : A user should be able to review the list of shows they have watched and their ratings.	
@@ -40,7 +23,6 @@ The application we are aiming to build is a Minimum Viable Product (MVP) that wi
 -   `Follow friends accounts` : Following another account should allow a user to view all of their friends watchlists and reviews	
 -   `Liking reviews` : Users can like their friends reviews	
 -   `Searching` : A user can search for movies to read simple data (plot, year, name etc...)	
->>>>>>> 2e790531741bddee4c1192488d6ae77a71f0995b
 
 #### Extra Features	
 
@@ -50,7 +32,6 @@ The application we are aiming to build is a Minimum Viable Product (MVP) that wi
 -   `Commenting on a friends review` : This is an extension from liking a friends review, a user could also comment on their review. This could be achieved, but would require us to alter the data structure we had currently planned. This feature is one of our stretch goals - if time permits, we will include this.
 
 ## What We've Achieved
-<<<<<<< HEAD
 
 <!-- Addressing milestones A description of what you have been able to implement in this MVP, use your milestones to highlight what you've achieved -->
 
@@ -76,9 +57,6 @@ The extra features we implemented are as follows:
 ### Refactoring
 
 Our original project plan did not account for time to refactor our code during the final sprint. Ideally, we would have planned to finish coding earlier and spent the majority of week 13 refactoring our codebase. This would have resulted in cleaner code with a more efficent use of components.
-=======
-Addressing milestones	A description of what you have been able to implement in this MVP, use your milestones to highlight what you've achieved
->>>>>>> 2e790531741bddee4c1192488d6ae77a71f0995b
 
 ## Source Code
 
