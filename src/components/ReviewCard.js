@@ -104,7 +104,7 @@ const ReviewCard = ({
 
 	//*****TODO fix re-rendering after deleting a review*******
 	const handleDelete = () => {
-		deleteFn(reviews)
+		reviewServices.deleteReview(review, reviews, setReviews)
 	}
 
 	//@mentions and links to profiles
@@ -253,15 +253,16 @@ const ReviewCard = ({
 					<Accordion.Toggle as={Card.Link} eventKey="0">
 						View/Hide Comments
 					</Accordion.Toggle>
-					{reviews && reviews.username === loggedInUser.username ? (
-						<Button
-							variant="outline-secondary"
-							onClick={handleDelete}
-							className="ml-3"
-						>
-							Delete
-						</Button>
-					) : null}
+					{reviews 
+						? review.username === loggedInUser.username 
+							? (<Button
+								variant="outline-secondary"
+								onClick={handleDelete}
+								className="ml-3"
+							>
+								Delete
+							</Button>
+					) : null : null}
 					<Accordion.Collapse eventKey="0">
 						<ListGroup className="mt-2">
 							{comments !== null
