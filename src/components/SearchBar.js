@@ -9,7 +9,7 @@ const SearchBar = ({ history, setMovie }) => {
 	const search = () => {
 		console.log("searched: ", searched)
 		axios
-			.get("http://localhost:3001/api/movie/title", {
+			.get("/api/movie/title", {
 				params: { title: searched },
 			})
 			.then((res) => {

@@ -24,7 +24,7 @@ const ReviewForm = ({ user, addNewReview, movie, setMovie, handleClose }) => {
 	const getMovie = async (e) => {
 		e.preventDefault()
 		await axios
-			.get("http://localhost:3001/api/movie/title", {
+			.get("/api/movie/title", {
 				params: { title: movieSearch },
 			})
 			.then((res) => {
