@@ -36,7 +36,7 @@ const SearchBar = ({ history, setMovie }) => {
 				className="mr-sm-2"
 				style={{ width: "300px" }}
 			/>
-			<Button>Search</Button>
+			<Button onClick={search}>Search</Button>
 		</Form>
 	)
 }
