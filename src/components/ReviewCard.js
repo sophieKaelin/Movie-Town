@@ -12,11 +12,23 @@ import {
 	FormControl,
 	Image,
 	Accordion,
+	Popover,
+	OverlayTrigger,
 } from "react-bootstrap"
 import axios from "axios"
 import "../style/ReviewCard.css"
+import reviewServices from "../axiosServices/reviewServices.js"
+import userServices from "../axiosServices/userServices"
 
-const ReviewCard = ({ reviews, user, loggedInUser, deleteFn }) => {
+const ReviewCard = ({
+	review,
+	user,
+	reviews,
+	setReviews,
+	users,
+	setUser,
+	setUsers, loggedInUser, deleteFn
+}) => {
 	const {
 		username,
 		titleid,
@@ -25,12 +37,13 @@ const ReviewCard = ({ reviews, user, loggedInUser, deleteFn }) => {
 		content,
 		likes,
 		comments,
-	} = reviews
+	} = review
 	const [newComment, setNewComment] = useState("")
 	const [like, setLike] = useState(false)
 	// store state for star rating
 	const [starRating, setStarRating] = useState()
 	const [hover, setHover] = useState(null)
+	const [reviewUser, setReviewUser] = useState(user)
 	const [movie, setMovie] = useState({
 		Title: "",
 		imdbID: "",
@@ -53,6 +66,17 @@ const ReviewCard = ({ reviews, user, loggedInUser, deleteFn }) => {
 		}
 	}, [titleid, user])
 
+	useEffect(() => {
+		axios
+			.get("http://localhost:3001/api/users/" + username)
+			.then((response) => {
+				setReviewUser(response.data)
+			})
+			.catch((err) => {
+				console.log(err)
+			})
+	}, [])
+
 	const handleChange = (e) => {
 		e.preventDefault()
 		const { name, value } = e.target
@@ -60,38 +84,20 @@ const ReviewCard = ({ reviews, user, loggedInUser, deleteFn }) => {
 	}
 
 	const handleLike = () => {
-		if (!like) {
-			setLike(true)
-		} else {
-			setLike(false)
-		}
+		reviewServices.likeReview(review, user, reviews, setReviews)
+	}
+
+	const handleUnlike = () => {
+		reviewServices.unlikeReview(review, user, reviews, setReviews)
 	}
 
 	const handleAddToList = () => {
-		alert("TODO: Movie added to your movie list")
+		userServices.addToWatch(titleid, user, users, setUser, setUsers)
+		alert(movie.Title + " has been added to your to watch list")
 	}
 
-	// TODO: send comments to back-end..below is old code just testing comments on the front-end
-	const [commentsList, setCommentsList] = useState([
-		{
-			author: "Dwight Schrute",
-			comment: "beetroots",
-			timestamp: "28/10/20",
-		},
-	])
-
 	const handleComment = () => {
-		console.log(newComment)
-		// TODO: Get comments working with back-end
-
-		setCommentsList([
-			...commentsList,
-			{
-				author: username,
-				comment: newComment,
-				timestamp: "28/10/20",
-			},
-		])
+		reviewServices.addComment(review, newComment, reviews, setReviews)
 	}
 
 	//*****TODO fix re-rendering after deleting a review*******
@@ -117,7 +123,16 @@ const ReviewCard = ({ reviews, user, loggedInUser, deleteFn }) => {
 		newContent.push(content)
 		return newContent
 	}
-
+  
+	const popover = (
+		<Popover id="popover-basic">
+			<Popover.Title as="h3">Likes</Popover.Title>
+			<Popover.Content>
+				{likes.length > 0 ? likes : "Be the first to like this review!"}
+			</Popover.Content>
+		</Popover>
+	)
+  
 	return (
 		<Card className="mt-5" style={{ width: "56rem", margin: "auto auto" }}>
 			<Row className="no-gutters">
@@ -130,7 +145,7 @@ const ReviewCard = ({ reviews, user, loggedInUser, deleteFn }) => {
 							}}
 							className="mr-3"
 							alt="Avatar"
-							src={user.avatar}
+							src={reviewUser.avatar}
 							roundedCircle
 						/>
 						<b><Link to={"/profile/" + username}> {username} </Link></b> reviewed <b>{movie.Title}</b>
@@ -214,9 +229,19 @@ const ReviewCard = ({ reviews, user, loggedInUser, deleteFn }) => {
 
 			<Card.Footer>
 				<Accordion>
-					<Card.Link onClick={handleLike}>
-						{like ? "Unlike" : "Like"}
-					</Card.Link>
+					<OverlayTrigger
+						trigger={["hover", "focus"]}
+						placement="right"
+						overlay={popover}
+					>
+						{review.likes.includes(user.username)
+							? <Card.Link onClick={handleUnlike}>
+									Unlike
+								</Card.Link>
+							: <Card.Link onClick={handleLike}>
+									Like
+								</Card.Link>}
+					</OverlayTrigger>
 					<Accordion.Toggle as={Card.Link} eventKey="0">
 						View/Hide Comments
 					</Accordion.Toggle>
@@ -233,22 +258,24 @@ const ReviewCard = ({ reviews, user, loggedInUser, deleteFn }) => {
 					}
 					<Accordion.Collapse eventKey="0">
 						<ListGroup className="mt-2">
-							{comments !== undefined ? comments.map((comment) => (
-								<ListGroupItem className="mt-2">
-									<Image
-										style={{
-											height: "50px",
-											width: "50px",
-										}}
-										className="mr-3"
-										alt="Avatar"
-										src={user.avatar}
-										roundedCircle
-									/>
-									<b>{comment.author}: </b>
-									{comment.comment}
-								</ListGroupItem>
-							)) : null}
+							{comments !== null
+								? comments.map((comment) => (
+										<ListGroupItem className="mt-2">
+											<Image
+												style={{
+													height: "50px",
+													width: "50px",
+												}}
+												className="mr-3"
+												alt="Avatar"
+												src={user.avatar}
+												roundedCircle
+											/>
+											<b>{user.username}: </b>
+											{comment}
+										</ListGroupItem>
+								  ))
+								: null}
 						</ListGroup>
 					</Accordion.Collapse>
 				</Accordion>

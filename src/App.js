@@ -30,6 +30,7 @@ function App() {
 	const [users, setUsers] = useState([]) //all users
 	const [user, setUser] = useState("") //Logged In User
 	const [reviews, setReviews] = useState([]) //all reviews
+	const [review, setReview] = useState([])
 	const [movie, setMovie] = useState("") //movie currently being searched
 
 	//REVIEW MODAL STATE VARIABLES & FUNCTIONS
@@ -101,6 +102,15 @@ function App() {
 		reviewServices.editContent(content, review, reviews, setReviews)
 	}
 
+	const getReview = () => {
+		reviews
+			.slice(0)
+			.reverse()
+			.map((r) => {
+				setReview(r)
+			})
+	}
+
 	const baseURL = "/api/"
 	//Not working, response with 404 not found hence hardcoded url in useEffects
 
@@ -142,8 +152,15 @@ function App() {
 						) : (
 							<Redirect to="/login" />
 						)}
-						<Home />
-						{reviews.length !== 0 ? (reviews.slice(0).reverse().map((r) => (<Feed 
+						<Home
+							user={user}
+							users={users}
+							reviews={reviews}
+							setReviews={setReviews}
+							setUser={FsetUser}
+							setUsers={setUsers}
+						/>
+                {reviews.length !== 0 ? (reviews.slice(0).reverse().map((r) => (<Feed 
 																							review={r} 
 																							user={user} 
 																							users={users}
@@ -172,7 +189,9 @@ function App() {
 						/>
 					</Route>
 					<Route path="/reviews">
+						{getReview}
 						<ReviewCardList
+							review={review}
 							user={user}
 							setUser={FsetUser}
 							movie={movie}
