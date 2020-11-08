@@ -153,10 +153,7 @@ const ReviewCard = ({
 					</Col>
 					<Col style={{ marginTop: "12px" }}>
 						<b>
-							<Link to={"/profile/" + username}>
-								{" "}
-								{username}{" "}
-							</Link>
+							<Link to={"/profile/" + username}>{username}</Link>
 						</b>{" "}
 						reviewed <b>{movie.Title}</b>
 					</Col>
