@@ -26,7 +26,7 @@ export const CardList = ({
 			console.log(user.watched)
 			if (watched) {
 				axios
-					.get("http://localhost:3001/api/movies", {
+					.get("/api/movies", {
 						params: { id: user.watched },
 					})
 					.then((res) => {
@@ -36,7 +36,7 @@ export const CardList = ({
 					.catch((err) => console.log(err))
 			} else {
 				axios
-					.get("http://localhost:3001/api/movies", {
+					.get("/api/movies", {
 						params: { id: user.toWatch },
 					})
 					.then((res) => {

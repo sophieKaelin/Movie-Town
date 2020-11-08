@@ -56,7 +56,7 @@ const ReviewCard = ({
 	useEffect(() => {
 		if (user) {
 			axios
-				.get("http://localhost:3001/api/movie/id", {
+				.get("/api/movie/id", {
 					params: { id: titleid },
 				})
 				.then((res) => {
@@ -70,7 +70,7 @@ const ReviewCard = ({
 
 	useEffect(() => {
 		axios
-			.get("http://localhost:3001/api/users/" + username)
+			.get("/api/users/" + username)
 			.then((response) => {
 				setReviewUser(response.data)
 			})
@@ -253,16 +253,17 @@ const ReviewCard = ({
 					<Accordion.Toggle as={Card.Link} eventKey="0">
 						View/Hide Comments
 					</Accordion.Toggle>
-					{reviews 
-						? review.username === loggedInUser.username 
-							? (<Button
+					{reviews ? (
+						review.username === loggedInUser.username ? (
+							<Button
 								variant="outline-secondary"
 								onClick={handleDelete}
 								className="ml-3"
 							>
 								Delete
 							</Button>
-					) : null : null}
+						) : null
+					) : null}
 					<Accordion.Collapse eventKey="0">
 						<ListGroup className="mt-2">
 							{comments !== null
