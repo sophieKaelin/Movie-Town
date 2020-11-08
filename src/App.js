@@ -152,23 +152,14 @@ function App() {
 						) : (
 							<Redirect to="/login" />
 						)}
-						<Home />
-						{reviews.length !== 0
-							? reviews
-									.slice(0)
-									.reverse()
-									.map((r) => (
-										<Feed
-											review={r}
-											user={user}
-											users={users}
-											reviews={reviews}
-											setReviews={setReviews}
-											setUser={FsetUser}
-											setUsers={setUsers}
-										/>
-									))
-							: null}
+						<Home
+							user={user}
+							users={users}
+							reviews={reviews}
+							setReviews={setReviews}
+							setUser={FsetUser}
+							setUsers={setUsers}
+						/>
 					</Route>
 					<Route path="/profile/:username">
 						<Profile
