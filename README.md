@@ -119,11 +119,13 @@ From the login page, a user also has the option to register an account. This wil
 
 ![movieCard](screenshots/movieCard.png "Movie Card")
 
-A movie card displays all information about a researched movie, as seen in the above screenshot. Included in this component is a button that will
+A movie card displays all information about a researched movie, as seen in the above screenshot. Included in this component is a button that will make PUT request to the database which updates a logged in users `watched` or `toWatch` list. If the movie already belongs to a list, this button will reflect that. You can also select the "review" button which will display the modal for writing a review.
 
 #### _Review Card_
 
 ![reviewCard](screenshots/reviewCard.png "Review Card")
+
+Similar to a movie card, a review card shows some information on a movie, and a users rating and review of the movie. Other users can comment and like the review, and those changes are made through a PUT request to the database which updates the `likes` and `comments` property on the review.
 
 #### _Navigation Bar_
 
