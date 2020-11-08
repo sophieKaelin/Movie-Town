@@ -23,7 +23,7 @@ const likeReview = (review, user, reviews, setReviews) => {
 	review.likes.push(user.username)
 	console.log("review ", review)
 	axios
-		.put(baseURL + "reviews/" + review._id + "likes", review)
+		.put(baseURL + "reviews/" + review._id + "/likes", review)
 		.then((response) => {
 			setReviews(
 				reviews.map((r) => (r._id !== review._id ? r : response.data))
@@ -35,7 +35,7 @@ const unlikeReview = (review, user, reviews, setReviews) => {
 	const index = review.likes.indexOf(user.username)
 	review.likes.splice(index, 1)
 	axios
-		.put(baseURL + "reviews/" + review._id + "reviews", review)
+		.put(baseURL + "reviews/" + review._id + "/likes", review)
 		.then((response) => {
 			setReviews(
 				reviews.map((r) => (r._id !== review._id ? r : response.data))
@@ -46,7 +46,7 @@ const unlikeReview = (review, user, reviews, setReviews) => {
 const addComment = (review, comment, reviews, setReviews) => {
 	review.comments.push(comment)
 	axios
-		.put(baseURL + "reviews/" + review._id + "comments", comment)
+		.put(baseURL + "reviews/" + review._id + "/comments", comment)
 		.then((response) => {
 			setReviews(
 				reviews.map((r) => (r._id !== review._id ? r : response.data))
@@ -57,7 +57,7 @@ const addComment = (review, comment, reviews, setReviews) => {
 const editStars = (stars, review, reviews, setReviews) => {
 	review.stars = stars
 	axios
-		.put(baseURL + "reviews/" + review._id + "stars", review)
+		.put(baseURL + "reviews/" + review._id + "/stars", review)
 		.then((response) => {
 			setReviews(
 				reviews.map((r) => (r._id !== review._id ? r : response.data))
@@ -68,7 +68,7 @@ const editStars = (stars, review, reviews, setReviews) => {
 const editContent = (content, review, reviews, setReviews) => {
 	review.content = content
 	axios
-		.put(baseURL + "reviews/" + review._id + "content", content)
+		.put(baseURL + "reviews/" + review._id + "/content", content)
 		.then((response) => {
 			setReviews(
 				reviews.map((r) => (r._id !== review._id ? r : response.data))
