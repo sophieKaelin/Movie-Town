@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import {Link} from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.css"
 import {
 	Card,
@@ -26,7 +27,7 @@ const ReviewCard = ({
 	setReviews,
 	users,
 	setUser,
-	setUsers,
+	setUsers, loggedInUser, deleteFn
 }) => {
 	const {
 		username,
@@ -99,6 +100,30 @@ const ReviewCard = ({
 		reviewServices.addComment(review, newComment, reviews, setReviews)
 	}
 
+	//*****TODO fix re-rendering after deleting a review*******
+	const handleDelete = () => {
+		deleteFn(reviews)
+	}
+
+	//@mentions and links to profiles
+	const contentLinks = (content) => {
+		var newContent = []
+		while (content.indexOf("@") !== -1) {
+			const firstIndex = content.indexOf("@")
+			const str = content.substr(0, firstIndex)
+			newContent.push(str)
+			content = content.slice(firstIndex)
+			const lastIndex = content.indexOf(" ")
+			const name = content.substr(0, lastIndex)
+			const nameURL = content.substr(1, lastIndex - 1)
+			const newLink = <Link to={"/profile/" + nameURL}> {name} </Link>
+			newContent.push(newLink)
+			content = content.slice(lastIndex)
+		}
+		newContent.push(content)
+		return newContent
+	}
+  
 	const popover = (
 		<Popover id="popover-basic">
 			<Popover.Title as="h3">Likes</Popover.Title>
@@ -107,6 +132,7 @@ const ReviewCard = ({
 			</Popover.Content>
 		</Popover>
 	)
+  
 	return (
 		<Card className="mt-5" style={{ width: "56rem", margin: "auto auto" }}>
 			<Row className="no-gutters">
@@ -122,7 +148,7 @@ const ReviewCard = ({
 							src={reviewUser.avatar}
 							roundedCircle
 						/>
-						<b>{username}</b> reviewed <b>{movie.Title}</b>
+						<b><Link to={"/profile/" + username}> {username} </Link></b> reviewed <b>{movie.Title}</b>
 					</Card.Header>
 					<Card.Body>
 						<ListGroup className="list-group-flush">
@@ -162,7 +188,7 @@ const ReviewCard = ({
 									<em>{""} Date Reviewed: </em> {timestamp}
 								</p>
 							</ListGroupItem>
-							<ListGroupItem>{content}</ListGroupItem>
+							<ListGroupItem>{contentLinks(content)}</ListGroupItem>
 						</ListGroup>
 						<Card
 							style={{
@@ -219,6 +245,17 @@ const ReviewCard = ({
 					<Accordion.Toggle as={Card.Link} eventKey="0">
 						View/Hide Comments
 					</Accordion.Toggle>
+					{reviews.username === loggedInUser.username 
+							? (
+								<Button
+									variant="outline-secondary"
+									onClick={handleDelete}
+									className="ml-3"
+									>
+								Delete
+								</Button>
+							) : null
+					}
 					<Accordion.Collapse eventKey="0">
 						<ListGroup className="mt-2">
 							{comments !== null
