@@ -10,14 +10,81 @@ An outline of the application you were aiming to build, target users, data sourc
 Addressing milestones	A description of what you have been able to implement in this MVP, use your milestones to highlight what you've achieved
 
 ## Source Code
-Our project has various pages and various components. For the front end, We will break up the source code description section into components.
+
+### Back End
+
+#### _Database_
+We have used a MongoDB database to store all user and review information. The two schemas are as follows:
+
+```
+const usersSchema = ({
+	username: String,
+	password: String,
+	avatar: String,
+	follows: Array, 
+	watched: Array,
+	toWatch: Array,
+})
+```
+**NOTES:**
+ 
+* The user password is hashed using the bcrypt library.
+* Avatar is a user profile image stored in Flickr
+* watched and toWatch are lists of movie ID's from OMDB.
+
+```
+const reviewSchema = ({
+	username: String,
+	titleid: String,
+	timestamp: String,
+	stars: Number,
+	content: String,
+	likes: Array,
+	comments: Array,
+})
+```
+**Notes**
+
+* Username is the user who wrote the review
+* titleid is the id of the movie from OMDB
+* stars is the users rating of the movie from 0-5.
+
+#### _User Services_
+
+#### _Review Services_
+
+#### _OMDB Services_
+
 
 ### Front End
+#### _App Component_
+The `App.js` component contains various state variables that are passed through other components:
+
+* `user`: the current user logged into the website. This is an object that contains all user information (i.e. username, avatar, followers, password, watch lists) 
+* `users`: a list of all usernames signed up for the web application
+* `reviews`: a list of all reviews made by all users
+* `review`: an object containing information about a review if the review modal is active. This object gets posted to the database
+* `movie`: contains movie information if there is a movie currently searched in the search bar. 
+* `show`: a state variable that determines whether a "Write Review" modal is visable or not. If `show` is false, the modal is hidden from view.
+
+The App component contains a router that creates the routes to each of the pages in our application. If the user state variable is empty or null, the user is re-routed to the login page, since only authenticated users can use this application.
+
 #### _Login/Registration_
 ![Login](screenshots/Login.png "Login Page")
+
+The login page allows users to log into their account before access the page. The code for this exists in `Login.js` Once details are entered and submited, they are cross checked with the database before a user is re-navigated to the home page. A user will be alerted if they have successfully entered the correct or incorrect password and username. 
+
 ![register](screenshots/register.png "Register Page")
+
+From the login page, a user also has the option to register an account. This will route users to a new page, featuring code from the `Register.js` file, which will submit a POST request to the database. The object will only be posted if the submitted username is available; part of the register file checks if there is a user with the same username, and stops the creation of accounts with duplicate usernames. This is achieved with the following boolean:
+
+`(users.map(u => u.username).includes(value) === true)`
+
 #### _Movie Card_
 ![movieCard](screenshots/movieCard.png "Movie Card")
+
+A movie card displays all information about a researched movie, as seen in the above screenshot. Included in this component is a button that will 
+
 #### _Review Card_
 ![reviewCard](screenshots/reviewCard.png "Review Card")
 #### _Navigation Bar_
@@ -38,14 +105,6 @@ Our project has various pages and various components. For the front end, We will
 ![myReviews](screenshots/myReviews.png "My Reviews Page")
 #### _About_
 ![AboutPage](screenshots/about.png "About Page")
-
-### Back End
-
-#### _User Services_
-
-#### _Review Services_
-
-#### _OMDB Services_
 
 ## Future work	
 A summary of what your next steps would be if you were to continue the project
