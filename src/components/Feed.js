@@ -9,7 +9,7 @@ const Feed = ({
 	setReviews,
 	setUser,
 	setUsers,
-  deleteFn
+  	deleteFn
 }) => {
 	let reviewUser = ""
 	if (users !== undefined && review !== null) {
@@ -30,8 +30,8 @@ const Feed = ({
 					users={users}
 					setUser={setUser}
 					setUsers={setUsers}
-          loggedInUser={user} 
-          deleteFn={deleteFn}
+          			loggedInUser={user} 
+          			deleteFn={deleteFn}
 				/>
 			)
 		} else {
