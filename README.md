@@ -62,6 +62,17 @@ Our original project plan did not account for time to refactor our code during t
 
 ### Back End
 
+Backend code was completed using axios and http requests to communicate with the  MongoDB database, which relies on node.js and express. Below is an outline of each feature.
+
+-   `Nodejs and Express via ./server/server.js` 
+	Node.js and Express as the web server platform. nodemon was used during development to automatically restart the server when changes were made. This was only used during development, as no changes are being made to server code after publishing. 
+
+-   `Axios via ./src/axiosServices/reviewServices.js && ./src/axiosServices/userServices.js`
+	The axios library provides communication between the browser and the server. Requests for data from the server ares split into requests for the reviews and requests for the users. Requests were written based on data that was needed for the MVP, including post, put, and delete. Requests including post and delete use general URL paths to access and modify data. post requests were split into multiple requests, depending on what was being modified. These can be distinguished by their URL's. These functions are mostly accessed in the main App.js file, but are sometimes accessed directly in a component file. Axios is imported into these files. 
+
+-   `REST HTTP API requests via ./server/api.js`
+	HTTP requests are grouped based on wether the interact with data pertaining to reviews, users, or user login. The api router uses express to communicate with the database. Most requests that would be needed are accounted for, including GET, POST, DELETE, and PUT based on the data as a group or individual data pieces based on ID. 
+
 #### _Database_
 We have used a MongoDB database to store all user and review information. The two schemas are as follows:
 
