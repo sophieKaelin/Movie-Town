@@ -32,7 +32,31 @@ The application we are aiming to build is a Minimum Viable Product (MVP) that wi
 -   `Commenting on a friends review` : This is an extension from liking a friends review, a user could also comment on their review. This could be achieved, but would require us to alter the data structure we had currently planned. This feature is one of our stretch goals - if time permits, we will include this.
 
 ## What We've Achieved
-Addressing milestones	A description of what you have been able to implement in this MVP, use your milestones to highlight what you've achieved
+
+<!-- Addressing milestones A description of what you have been able to implement in this MVP, use your milestones to highlight what you've achieved -->
+
+For our MVP application we were able to complete all of our target features and some of the extra features. The target features we completed are:
+
+-   `User login/registration` : Users can login and register an account
+-   `Marking movies as "Watched"` : Users can add movies to a list of movies they have watched
+-   `View of watched movies` : Users can view a list of movies they have watched
+-   `Review movies` : Users can write a review on a movie of their choice
+-   `Following friends` : Users can follow other users on the users profile page
+-   `Liking reviews` : Users can like/unlike reviews
+-   `Searching for movies` : Users can search for movies to get information about the movie
+
+The extra features we implemented are as follows:
+
+-   `Delete reviews` : Users can delete their own reviews
+-   `Commenting on reviews` : Users can comment on their own or others' reviews
+-   `"Want to watch" movie list` : Users can add movies to their "want to watch" list, full of movies they want to see
+-   `Search validation` : When searching for a movie to review, form validation is implemented to ensure only valid movie titles are searched
+-   `Login/Register form validation` : Form validation has been implemented on login and register cards, restricting users to enter credentials that are long enough. If the user enters a username or password that is too short, an error message is shown below the field.
+-   `User Logout` : Users can logout of their account
+
+### Refactoring
+
+Our original project plan did not account for time to refactor our code during the final sprint. Ideally, we would have planned to finish coding earlier and spent the majority of week 13 refactoring our codebase. This would have resulted in cleaner code with a more efficent use of components.
 
 ## Source Code
 
@@ -68,7 +92,7 @@ const reviewSchema = ({
 	comments: Array,
 })
 ```
-**Notes**
+**NOTES:**
 
 * Username is the user who wrote the review
 * titleid is the id of the movie from OMDB
@@ -95,7 +119,7 @@ The `App.js` component contains various state variables that are passed through 
 The App component contains a router that creates the routes to each of the pages in our application. If the user state variable is empty or null, the user is re-routed to the login page, since only authenticated users can use this application.
 
 #### _Login/Registration_
-![Login](screenshots/Login.png "Login Page")
+![Login](screenshots/login.png "Login Page")
 
 The login page allows users to log into their account before access the page. The code for this exists in `Login.js` Once details are entered and submited, they are cross checked with the database before a user is re-navigated to the home page. A user will be alerted if they have successfully entered the correct or incorrect password and username. 
 
