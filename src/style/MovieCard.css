@@ -10,8 +10,9 @@ input[type="radio"] {
 .card-img {
 	float: left;
 	height: 400px !important;
-	width: auto !important;
+	width: 270px !important;
 	margin-right: 10px;
+	padding: 0px !important;
 }
 
 body {
