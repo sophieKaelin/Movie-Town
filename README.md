@@ -186,6 +186,7 @@ The home feed contains review cards of all the reviews by users that you follow.
 
 ![profile](screenshots/profile.png "Profile Page")
 ![otherProfile](screenshots/otherProfile.png "Other Profile Page")
+![profileMovieDetail](screenshots/profileMovieDetail.png "Clicked Movie on Profile")
 
 There are two modes for the profile page. First mode is reviewing your own profile. On this page you can view your profile information, and view a collage of movie posters from a users `watched` list. When you select any of these movie posters, a Modal will appear containing further information about that movie. This functionality comes from the `MoviePoster.js` file.
 
