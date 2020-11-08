@@ -192,16 +192,16 @@ Each group member contributed to various elements of the project. This differed 
 
 ### Team Roles
 #### _Bradley:_
-* Bradley's role was  had prior experience using React.js, and was able to perform a lot of troubleshooting of issues from other group members.
+* Bradley focused on the front-end, OMDB integration, and general trouble shooting. Since he had prior experience using React.js, he was able to perform a lot of troubleshooting of issues from other group members. He took the structure of files provided, and populated it with dynamic data from the database.
 
 #### _Cecilia:_
-* Cece did that
+* Cece focused on the backend of the website, creating all POST, GET, PUT and DELETE requests to our OMDB database. Since she had good knowledge of the requests, she was able to implement a lot of the liking/following functionality for reviews.
 
 #### _George:_
-* George is the coolest
+* George was in charge of integration react-boostrap and other styling. He was also responsible for creating the general structure for all the cards, since he excelled in styling and design. He worked closely with Bradley to get these cards working. 
 
 #### _Sophie:_
-* Sophie did things too
+* Sophie focused on the integration of the front-end and the back-end to ensure everything was maintained and working as it should. She also focused on the review form and modal, and the general structure of all the files in the respository.
 
 ### Communication/Interactions
 * Each week in our weekly COMP3120 workshop, our group would work together to decide what each member would work on for the week. This was also a time where we could assist each other with any errors we had come across, or discuss ideas for the project.
