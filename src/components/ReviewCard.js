@@ -130,7 +130,11 @@ const ReviewCard = ({
 		<Popover id="popover-basic">
 			<Popover.Title as="h3">Likes</Popover.Title>
 			<Popover.Content>
-				{likes.length > 0 ? likes : "Be the first to like this review!"}
+				{likes.length > 0
+					? likes.length > 1
+						? likes.join(", ")
+						: likes
+					: "Be the first to like this review!"}
 			</Popover.Content>
 		</Popover>
 	)
