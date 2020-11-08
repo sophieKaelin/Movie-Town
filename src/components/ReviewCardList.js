@@ -32,7 +32,7 @@ export const ReviewCardList = ({
 		if (user) {
 			console.log("USE EFFECT")
 			axios
-				.get("http://localhost:3001/api/reviews/by/" + user.username)
+				.get("/api/reviews/by/" + user.username)
 				.then((res) => {
 					console.log(res)
 					setReviews(res.data)

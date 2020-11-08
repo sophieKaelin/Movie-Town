@@ -1,7 +1,7 @@
 import axios from "axios"
 
 //const baseURL = "/api/" **not working
-const baseURL = "http://localhost:3001/api/"
+const baseURL = "/api/"
 
 const addNewUser = (newUser, users, setUsers, setUser) => {
 	axios.post(baseURL + "users", newUser).then((response) => {
@@ -13,25 +13,33 @@ const addNewUser = (newUser, users, setUsers, setUser) => {
 
 const followUser = (userToFollow, user, users, setUser, setUsers) => {
 	const temp = user
-	temp.follows.push(userToFollow) 
-    axios.put(baseURL + "users/" + temp.username + "/follows", temp)
-    .then((response) => {
-        setUser(temp)
-        setUsers(users.map((u) => (u._id !== response.data._id ? u : response.data)))
-        console.log("followed", user.follows)
-    })
+	temp.follows.push(userToFollow)
+	axios
+		.put(baseURL + "users/" + temp.username + "/follows", temp)
+		.then((response) => {
+			setUser(temp)
+			setUsers(
+				users.map((u) =>
+					u._id !== response.data._id ? u : response.data
+				)
+			)
+			console.log("followed", user.follows)
+		})
 }
 
 const unfollowUser = (userToFollow, user, users, setUser, setUsers) => {
-    const temp = user
-    const index = temp.follows.indexOf(userToFollow)
+	const temp = user
+	const index = temp.follows.indexOf(userToFollow)
 	temp.follows.splice(index, 1)
-    axios.put(baseURL + "users/" + temp.username + "/follows", temp)
-    .then((response) => {
-        setUser(temp)
-        setUsers(users.map((u) => (u._id !== response._id ? u : response.data)))
-        console.log("unfollowed", user.follows)
-    })
+	axios
+		.put(baseURL + "users/" + temp.username + "/follows", temp)
+		.then((response) => {
+			setUser(temp)
+			setUsers(
+				users.map((u) => (u._id !== response._id ? u : response.data))
+			)
+			console.log("unfollowed", user.follows)
+		})
 }
 
 const addWatched = (titleid, user, users, setUser, setUsers) => {
