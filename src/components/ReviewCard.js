@@ -56,7 +56,7 @@ const ReviewCard = ({
 	useEffect(() => {
 		if (user) {
 			axios
-				.get("http://localhost:3001/api/movie/id", {
+				.get("/api/movie/id", {
 					params: { id: titleid },
 				})
 				.then((res) => {
@@ -70,7 +70,7 @@ const ReviewCard = ({
 
 	useEffect(() => {
 		axios
-			.get("http://localhost:3001/api/users/" + username)
+			.get("/api/users/" + username)
 			.then((response) => {
 				setReviewUser(response.data)
 			})
@@ -104,7 +104,7 @@ const ReviewCard = ({
 
 	//*****TODO fix re-rendering after deleting a review*******
 	const handleDelete = () => {
-		deleteFn(reviews)
+		reviewServices.deleteReview(review, reviews, setReviews)
 	}
 
 	//@mentions and links to profiles
@@ -136,10 +136,10 @@ const ReviewCard = ({
 	)
 
 	return (
-		<Card className="mt-5" style={{ width: "56rem", margin: "auto auto" }}>
-			<Row className="no-gutters">
-				<Col>
-					<Card.Header>
+		<Card className="reviewCard">
+			<Card.Header>
+				<Row>
+					<Col style={{ width: "65px", maxWidth: "65px" }}>
 						<Image
 							style={{
 								height: "50px",
@@ -150,92 +150,84 @@ const ReviewCard = ({
 							src={reviewUser.avatar}
 							roundedCircle
 						/>
+					</Col>
+					<Col style={{ marginTop: "12px" }}>
 						<b>
-							<Link to={"/profile/" + username}>
-								{" "}
-								{username}{" "}
-							</Link>
+							<Link to={"/profile/" + username}>{username}</Link>
 						</b>{" "}
 						reviewed <b>{movie.Title}</b>
-					</Card.Header>
-					<Card.Body>
-						<ListGroup className="list-group-flush">
-							<ListGroupItem
-								style={{
-									padding: "0",
-									margin: "0",
-								}}
-							>
-								<em className="text-muted ml-3 mr-2">
-									Rating:
-								</em>
-								{[...Array(5)].map((star, i) => {
-									const ratingValue = i + 1
+					</Col>
+				</Row>
+			</Card.Header>
+			<Card.Body>
+				<ListGroup className="list-group-flush reviewCard-listItem">
+					<ListGroupItem
+						style={{
+							padding: "0",
+							margin: "0",
+						}}
+					>
+						<em className="text-muted ml-3 mr-2">Rating:</em>
+						{[...Array(5)].map((star, i) => {
+							const ratingValue = i + 1
 
-									return (
-										<label>
-											<svg
-												width="1em"
-												height="1em"
-												viewBox="0 0 16 16"
-												className="bi bi-star-fill"
-												fill={
-													ratingValue <=
-													(hover || stars)
-														? "#ffc107"
-														: "#e4e5e9"
-												}
-												xmlns="http://www.w3.org/2000/svg"
-											>
-												<path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-											</svg>
-										</label>
-									)
-								})}
-								<p className="text-muted ml-3">
-									<em>{""} Date Reviewed: </em> {timestamp}
-								</p>
-							</ListGroupItem>
-							<ListGroupItem>
-								{contentLinks(content)}
-							</ListGroupItem>
-						</ListGroup>
-						<Card
-							style={{
-								maxWidth: "42rem",
-								margin: "auto auto",
-							}}
-						>
-							<Row>
-								<Col>
-									<Card.Body>
-										<Card.Img
-											className="moviePoster col-auto img-fluid"
-											src={movie.Poster}
-											alt={movie.Title + " poster"}
-										/>
+							return (
+								<label>
+									<svg
+										width="1em"
+										height="1em"
+										viewBox="0 0 16 16"
+										className="bi bi-star-fill"
+										fill={
+											ratingValue <= (hover || stars)
+												? "#ffc107"
+												: "#e4e5e9"
+										}
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+									</svg>
+								</label>
+							)
+						})}
+						<p className="text-muted ml-3">
+							<em>{""} Date Reviewed: </em> {timestamp}
+						</p>
+					</ListGroupItem>
+					<ListGroupItem>{content}</ListGroupItem>
+				</ListGroup>
+				<Card
+					style={{
+						margin: "15px",
+					}}
+				>
+					<Row>
+						<Col>
+							<Card.Body>
+								<Card.Img
+									className="reviewCardPoster moviePoster col-auto img-fluid"
+									src={movie.Poster}
+									alt={movie.Title + " poster"}
+								/>
+								<ListGroup className="list-group-flush reviewCardMovie-listItem">
+									<ListGroupItem>
 										<h3>
 											{movie.Title} ({movie.Year})
 										</h3>
-										<ListGroup className="list-group-flush">
-											<ListGroupItem>
-												<Button
-													onClick={handleAddToList}
-												>
-													Add to list
-												</Button>
-											</ListGroupItem>
-											<ListGroupItem>
-												{movie.Plot}
-											</ListGroupItem>
-										</ListGroup>
-									</Card.Body>
-								</Col>
-							</Row>
-						</Card>
-					</Card.Body>
-				</Col>
-			</Row>
+										<Button
+											onClick={handleAddToList}
+											size="sm"
+										>
+											Add to list
+										</Button>
+									</ListGroupItem>
+									<ListGroupItem>{movie.Plot}</ListGroupItem>
+								</ListGroup>
+							</Card.Body>
+						</Col>
+					</Row>
+				</Card>
+			</Card.Body>
 
 			<Card.Footer>
 				<Accordion>
@@ -253,14 +245,16 @@ const ReviewCard = ({
 					<Accordion.Toggle as={Card.Link} eventKey="0">
 						View/Hide Comments
 					</Accordion.Toggle>
-					{reviews && reviews.username === loggedInUser.username ? (
-						<Button
-							variant="outline-secondary"
-							onClick={handleDelete}
-							className="ml-3"
-						>
-							Delete
-						</Button>
+					{reviews ? (
+						review.username === loggedInUser.username ? (
+							<Button
+								variant="outline-secondary"
+								onClick={handleDelete}
+								className="ml-3"
+							>
+								Delete
+							</Button>
+						) : null
 					) : null}
 					<Accordion.Collapse eventKey="0">
 						<ListGroup className="mt-2">

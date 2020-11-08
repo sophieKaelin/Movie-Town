@@ -16,3 +16,31 @@ input[type="radio"] {
 body {
 	padding-bottom: 50px !important;
 }
+
+.reviewCardPoster {
+	margin-bottom: 20px;
+	margin-left: 0px;
+	margin-right: 20px;
+}
+
+.reviewCardMovie-listItem > .list-group-item {
+	padding: 15px 0px !important;
+}
+
+.reviewCardMovie-listItem > .list-group-item > h3 {
+	margin: -10px auto 15px;
+}
+
+.reviewCardMovie-listItem > .list-group-item > button {
+	margin-bottom: 5px;
+}
+
+.reviewCard-listItem > .list-group-item {
+	padding: 0px !important;
+	margin: 20px 20px 10px;
+}
+
+.reviewCard {
+	margin-top: 0 !important;
+	margin-bottom: 40px !important;
+}
