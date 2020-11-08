@@ -70,7 +70,7 @@ function App() {
 	}, [])
 
 	const addNewUser = (newUser) => {
-		userServices.addNewUser(newUser, users, setUsers)
+		userServices.addNewUser(newUser, users, setUsers, setUser)
 	}
 	const followUser = (userToFollow, user) => {
 		userServices.followUser(userToFollow, user, users, setUser, setUsers)
