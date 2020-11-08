@@ -13,7 +13,7 @@ const ReviewModal = ({
 }) => {
 	return (
 		<div>
-			<Modal show={show} onHide={handleClose} animation={false} size="lg">
+			<Modal show={show} onHide={handleClose} animation={false} size="xl">
 				<Modal.Header closeButton></Modal.Header>
 				<Modal.Body>
 					<ReviewForm
