@@ -16,6 +16,7 @@ export const ReviewCardList = ({
 	show,
 	handleClose,
 	handleShow,
+	deleteFn,
 	users,
 	setUser,
 	setUsers,
@@ -78,6 +79,8 @@ export const ReviewCardList = ({
 									users={users}
 									setUser={setUser}
 									setUsers={setUsers}
+									loggedInUser={user}
+									deleteFn={deleteFn}
 								/>
 							)
 						})}
