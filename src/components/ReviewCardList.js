@@ -79,8 +79,8 @@ export const ReviewCardList = ({
 									users={users}
 									setUser={setUser}
 									setUsers={setUsers}
-                  loggedInUser={user} 
-                  deleteFn={deleteFn}
+									loggedInUser={user}
+									deleteFn={deleteFn}
 								/>
 							)
 						})}
