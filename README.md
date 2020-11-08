@@ -68,7 +68,7 @@ const reviewSchema = ({
 	comments: Array,
 })
 ```
-**Notes**
+**NOTES:**
 
 * Username is the user who wrote the review
 * titleid is the id of the movie from OMDB
