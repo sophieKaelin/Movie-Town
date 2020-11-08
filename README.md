@@ -114,6 +114,10 @@ const reviewSchema = {
 
 #### _OMDB Services_
 
+OMDB was used instead of the IMDB API as it was free and allowed us to retrieve data without requiring paid access. They are based on using GET requests to the API route provided by OMDB. Once we created an account with OMDB, we were provided an API key. The API URL and key were stored in an environment variable to ensure we were not sharing this publicly. This was accessible using `process.env.OMDB_API`. 
+
+OMDB proved to be simple to integrate into the project. To do this, we created a series of back-end routes that queried the API and returned relevant data. For example, appending `t=` to the end of the route meant that we could query for movie titles and `i=` meant we could query based on their IMDB ID. The API then returns appropriate JSON data and we use this to return it in each relevant route. 
+
 ### Front End
 
 #### _App Component_
