@@ -6,7 +6,8 @@ import axios from "axios"
 const SearchBar = ({ history, setMovie }) => {
 	const [searched, setSearch] = useState([])
 
-	const search = () => {
+	const search = (e) => {
+		e.preventDefault()
 		console.log("searched: ", searched)
 		axios
 			.get("http://localhost:3001/api/movie/title", {
@@ -27,7 +28,7 @@ const SearchBar = ({ history, setMovie }) => {
 	}
 
 	return (
-		<Form inline style={{ margin: "15px" }}>
+		<Form inline style={{ margin: "15px" }} onSubmit={search}>
 			<FormControl
 				onChange={handleSearchChange}
 				type="text"
@@ -35,7 +36,7 @@ const SearchBar = ({ history, setMovie }) => {
 				className="mr-sm-2"
 				style={{ width: "300px" }}
 			/>
-			<Button onClick={search}>Search</Button>
+			<Button>Search</Button>
 		</Form>
 	)
 }

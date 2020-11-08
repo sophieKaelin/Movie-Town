@@ -125,7 +125,7 @@ const ReviewCard = ({
 							roundedCircle
 						/>
 					</Col>
-					<Col>
+					<Col style={{ marginTop: "12px" }}>
 						<b>{username}</b> reviewed <b>{movie.Title}</b>
 					</Col>
 				</Row>
