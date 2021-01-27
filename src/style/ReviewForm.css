@@ -1,6 +1,5 @@
 .reviewCard {
-	margin-top: 6em;
-	margin-bottom: 6em;
+	margin-bottom: 2em;
 }
 
 .movie-button {
@@ -10,4 +9,9 @@
 
 #notYourMovie:hover {
 	font-weight: bold;
+}
+
+.writeReviewImg {
+	height: 444px !important;
+	width: 300px !important;
 }

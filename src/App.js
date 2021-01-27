@@ -24,7 +24,7 @@ import MovieCard from "./components/MovieCard"
 //TODO: Reroute to login page if there is no user logged in (set this on all pages)
 
 //TODO: change this to relative path when pushed to heroku
-const userURL = "http://localhost:3001/api/users/"
+const userURL = "/api/users/"
 
 function App() {
 	const [users, setUsers] = useState([]) //all users
@@ -60,11 +60,11 @@ function App() {
 			})
 		}
 
-		axios.get("http://localhost:3001/api/users").then((response) => {
+		axios.get("/api/users").then((response) => {
 			setUsers(response.data)
 		})
 
-		axios.get("http://localhost:3001/api/reviews").then((response) => {
+		axios.get("/api/reviews").then((response) => {
 			setReviews(response.data)
 			console.log("reviews set")
 		})
@@ -160,11 +160,6 @@ function App() {
 							setUser={FsetUser}
 							setUsers={setUsers}
 						/>
-                {reviews.length !== 0 ? (reviews.slice(0).reverse().map((r) => (<Feed 
-																							review={r} 
-																							user={user} 
-																							users={users}
-																							deleteFn={deleteReview}/>))):null}
 					</Route>
 					<Route path="/profile/:username">
 						<Profile
@@ -200,7 +195,7 @@ function App() {
 							show={show}
 							handleClose={handleClose}
 							handleShow={handleShow}
-							deleteFn = {deleteReview}
+							deleteFn={deleteReview}
 							users={users}
 							setUser={setUser}
 							setUsers={setUsers}
