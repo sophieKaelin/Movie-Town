@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import "bootstrap/dist/css/bootstrap.css"
 import { Nav, Navbar, NavDropdown, Image } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
@@ -24,7 +24,23 @@ const NavBar = ({ user, setUser, movie, setMovie }) => {
 			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 			<Navbar.Collapse id="responsive-navbar-nav">
 				<Nav className="mr-auto">
-					<Nav.Link href="/myprofile">
+					<Nav.Link href="/home">
+						<svg
+							width="1em"
+							height="1em"
+							viewBox="0 0 16 16"
+							className="bi bi-list mr-2 mb-1"
+							fill="currentColor"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								fillRule="evenodd"
+								d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+							/>
+						</svg>
+						Feed
+					</Nav.Link>
+					<Nav.Link href={"/profile/" + user.username}>
 						<svg
 							width="1em"
 							height="1em"
@@ -45,23 +61,7 @@ const NavBar = ({ user, setUser, movie, setMovie }) => {
 						</svg>
 						Profile
 					</Nav.Link>
-					<Nav.Link href="#movieList">
-						<svg
-							width="1em"
-							height="1em"
-							viewBox="0 0 16 16"
-							className="bi bi-list mr-2 mb-1"
-							fill="currentColor"
-							xmlns="http://www.w3.org/2000/svg"
-						>
-							<path
-								fillRule="evenodd"
-								d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
-							/>
-						</svg>
-						Movie List
-					</Nav.Link>
-					<Nav.Link href="/myMovies">
+					<Nav.Link href="/my/movies">
 						<svg
 							width="1em"
 							height="1em"
@@ -92,7 +92,7 @@ const NavBar = ({ user, setUser, movie, setMovie }) => {
 								d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
 							/>
 						</svg>
-						Reviews
+						My Reviews
 					</Nav.Link>
 					<Nav.Link href="#about">About</Nav.Link>
 				</Nav>
@@ -104,6 +104,9 @@ const NavBar = ({ user, setUser, movie, setMovie }) => {
 					setMovie={setMovie}
 				/>
 				<NavDropdown
+					alignRight
+					id="dropdown-menu-align-right"
+					flip
 					title={
 						<Image
 							style={{
@@ -115,7 +118,6 @@ const NavBar = ({ user, setUser, movie, setMovie }) => {
 							roundedCircle
 						/>
 					}
-					id="basic-nav-dropdown"
 				>
 					<NavDropdown.Item href="/myProfile">
 						<svg
