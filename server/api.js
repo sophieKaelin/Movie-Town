@@ -100,7 +100,7 @@ apiRouter.put("/api/users/:id/follows", (req, res, next) => {
 		follows: body.follows,
 	}
 
-	User.findByIdAndUpdate(req.params.id, user, { new: true })
+	User.findByIdAndUpdate(req.body._id, user, { new: true })
 		.then((updatedUser) => {
 			res.json(updatedUser)
 		})
@@ -138,6 +138,12 @@ apiRouter.put("/api/users/:id/toWatch", (req, res, next) => {
 apiRouter.get("/api/reviews", (req, res) => {
 	Review.find({}).then((result) => {
 		res.json(result)
+	})
+})
+
+apiRouter.get("/api/reviews/by/:username", (req, res) => {
+	Review.find({ username: req.params.username }).then((reviews) => {
+		res.json(reviews)
 	})
 })
 
@@ -206,7 +212,6 @@ apiRouter.put("/api/reviews/:id/likes", (req, res, next) => {
 	const review = {
 		likes: body.likes,
 	}
-
 	Review.findByIdAndUpdate(req.params.id, review, { new: true })
 		.then((updatedReview) => {
 			res.json(updatedReview)
@@ -221,6 +226,7 @@ apiRouter.put("/api/reviews/:id/comments", (req, res, next) => {
 		comments: body.comments,
 	}
 
+	console.log(review)
 	Review.findByIdAndUpdate(req.params.id, review, { new: true })
 		.then((updatedReview) => {
 			res.json(updatedReview)

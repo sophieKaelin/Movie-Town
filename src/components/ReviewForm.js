@@ -5,15 +5,16 @@ import "../style/ReviewForm.css"
 import axios from "axios"
 import { useHistory } from "react-router-dom"
 import blank from "../moviePosters/blankPoster.png"
+import moment from "moment"
 
-const ReviewForm = ({ user, addNewReview, movie, setMovie }) => {
+const ReviewForm = ({ user, addNewReview, movie, setMovie, handleClose }) => {
 	const history = useHistory()
 	const [movieSearch, setMovieSearch] = useState("")
 	const [hover, setHover] = useState(null)
 	const [reviewInfo, setReviewInfo] = useState({
 		username: "",
 		titleid: movie.imdbID, //TODO: does this work?
-		timestamp: Date.now(),
+		timestamp: moment().format("MMMM Do, h:mm a"),
 		stars: 0,
 		content: "",
 		likes: [],
@@ -47,8 +48,9 @@ const ReviewForm = ({ user, addNewReview, movie, setMovie }) => {
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		addNewReview(reviewInfo)
-		history.push("/myprofile")
+		history.push("/reviews")
 		clearMovie()
+		handleClose()
 	}
 
 	const clearMovie = () => {

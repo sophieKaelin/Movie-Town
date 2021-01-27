@@ -1,12 +1,22 @@
 import React, { useEffect, useState } from "react"
 import "bootstrap/dist/css/bootstrap.css"
-import { Form, Container, Row, Col } from "react-bootstrap"
+import { Container, Form, Row, Col } from "react-bootstrap"
 import "../style/MovieCard.css"
 
 import MovieCard from "./MovieCard"
 import axios from "axios"
 
-export const CardList = ({ user }) => {
+export const CardList = ({
+	user,
+	addNewReview,
+	setMovie,
+	show,
+	handleClose,
+	handleShow,
+	users,
+	setUser,
+	setUsers,
+}) => {
 	const [movies, setMovies] = useState([])
 	const [watched, setWatched] = useState(true)
 
@@ -51,7 +61,21 @@ export const CardList = ({ user }) => {
 					/>
 					{movies.map((m) => {
 						console.log(m)
-						return <MovieCard movie={m} />
+						return (
+							<MovieCard
+								movie={m}
+								user={user}
+								addNewReview={addNewReview}
+								setMovie={setMovie}
+								show={show}
+								handleShow={handleShow}
+								handleClose={handleClose}
+								watched={watched}
+								users={users}
+								setUser={setUser}
+								setUsers={setUsers}
+							/>
+						)
 					})}
 				</Col>
 				<Col xs={2}></Col>
