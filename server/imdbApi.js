@@ -16,6 +16,26 @@ IMDBRouter.get("/api/movie/title", async (req, res) => {
 		.catch((err) => console.log(err))
 })
 
+IMDBRouter.get("/api/movie/id", async (req, res) => {
+	const urlString = omdb + 'i="' + req.query.imdbID + '"'
+	axios
+		.get(urlString)
+		.then((result) => {
+			res.json(result.data)
+		})
+		.catch((err) => console.log(err))
+})
+
+IMDBRouter.get("/api/movie/title", async (req, res) => {
+	const urlString = omdb + 't="' + req.query.title + '"'
+	axios
+		.get(urlString)
+		.then((result) => {
+			res.json(result.data)
+		})
+		.catch((err) => console.log(err))
+})
+
 IMDBRouter.get("/api/movies", async (req, res) => {
 	let results = []
 	for (const id of req.query.id) {
