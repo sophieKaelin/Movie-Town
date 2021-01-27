@@ -24,7 +24,7 @@ const ReviewForm = ({ user, addNewReview, movie, setMovie, handleClose }) => {
 	const getMovie = async (e) => {
 		e.preventDefault()
 		await axios
-			.get("http://localhost:3001/api/movie/title", {
+			.get("/api/movie/title", {
 				params: { title: movieSearch },
 			})
 			.then((res) => {
@@ -109,121 +109,109 @@ const ReviewForm = ({ user, addNewReview, movie, setMovie, handleClose }) => {
 	return (
 		<div>
 			<Container className="align-items-center">
-				<Card bg="light" className="reviewCard">
-					<Card.Body>
-						<Row className="d-flex justify-content-center">
-							<Col sm={6} className="align-items-center">
-								<Card.Title className="text-center">
-									<h1>Write Review</h1>
-								</Card.Title>
-							</Col>
-						</Row>
-						<Row>
-							<Col sm={4}>
-								{movie ? (
-									<Card.Img
-										className="col-auto img-fluid"
-										src={movie.Poster}
-										alt={movie.title}
-									/>
-								) : (
-									<Card.Img
-										className="col-auto img-fluid"
-										//TODO: EDIT POSTER INPUT -> make it greyed out, or some other default
-										src={blank}
-										alt="No Movie"
-									/>
-								)}
-							</Col>
-							<Col sm={8}>
-								<Form>
-									{!movie ? (
-										<Form.Group>
-											<Form inline>
-												<Form.Label>Movie: </Form.Label>
-												<Form.Control
-													placeholder="Movie Title"
-													onChange={(e) =>
-														setMovieSearch(
-															e.target.value
-														)
-													}
-												/>
-												<Button
-													disabled={!movieSearch}
-													className="movie-button"
-													variant="primary"
-													type="submit"
-													onClick={getMovie}
-												>
-													Search
-												</Button>
-											</Form>
-											{!movieSearch ? (
-												<Form.Text className="error text-danger">
-													Please Enter a REAL Movie
-													Title
-												</Form.Text>
-											) : (
-												<br></br>
-											)}
-										</Form.Group>
+				<Row>
+					<Col style={{ maxWidth: "300px", marginRight: "10px" }}>
+						{movie ? (
+							<Card.Img
+								className="writeReviewImg col-auto img-fluid"
+								src={movie.Poster}
+								alt={movie.title}
+							/>
+						) : (
+							<Card.Img
+								className="writeReviewImg col-auto img-fluid"
+								//TODO: EDIT POSTER INPUT -> make it greyed out, or some other default
+								src={blank}
+								alt="No Movie"
+							/>
+						)}
+					</Col>
+					<Col
+						style={{
+							width: "476px",
+							maxWidth: "476px",
+							padding: "0px 10px 0px 0px",
+						}}
+					>
+						<Form>
+							{!movie ? (
+								<Form.Group>
+									<Form inline>
+										<Form.Label>Movie: </Form.Label>
+										<Form.Control
+											placeholder="Movie Title"
+											onChange={(e) =>
+												setMovieSearch(e.target.value)
+											}
+										/>
+										<Button
+											disabled={!movieSearch}
+											className="movie-button"
+											variant="primary"
+											type="submit"
+											onClick={getMovie}
+										>
+											Search
+										</Button>
+									</Form>
+									{!movieSearch ? (
+										<Form.Text className="error text-danger">
+											Please Enter a REAL Movie Title
+										</Form.Text>
 									) : (
-										<div>
-											<Form.Group>
-												<Form.Label>Movie: </Form.Label>
-												<h3 className="error text-primary">
-													{movie.Title}
-												</h3>
-												<Form.Text
-													//TODO: On click, this text should  clear the movie field clearMovie()
-													className="text-danger"
-												>
-													<i>
-														<a
-															id="notYourMovie"
-															onClick={clearMovie}
-														>
-															Not the movie you
-															were looking for?
-															Click here.
-														</a>
-													</i>
-												</Form.Text>
-											</Form.Group>
-											<Form.Group>
-												{stars()}
-												<Form.Label>
-													Review:{" "}
-												</Form.Label>
-												<Form.Control
-													as="textarea"
-													rows={5}
-													onChange={(e) =>
-														setReviewInfo({
-															...reviewInfo,
-															content:
-																e.target.value,
-														})
-													}
-												/>
-											</Form.Group>
-											<Button
-												disabled={!reviewInfo.content}
-												variant="primary"
-												type="submit"
-												className="btn-block"
-												onClick={handleSubmit}
-											>
-												Post
-											</Button>
-										</div>
+										<br></br>
 									)}
-								</Form>
-							</Col>
-						</Row>
-					</Card.Body>
-				</Card>
+								</Form.Group>
+							) : (
+								<div>
+									<Form.Group>
+										<Form.Label>Movie: </Form.Label>
+										<h3 className="error text-primary">
+											{movie.Title}
+										</h3>
+										<Form.Text
+											//TODO: On click, this text should  clear the movie field clearMovie()
+											className="text-danger"
+										>
+											<i>
+												<a
+													id="notYourMovie"
+													onClick={clearMovie}
+												>
+													Not the movie you were
+													looking for? Click here.
+												</a>
+											</i>
+										</Form.Text>
+									</Form.Group>
+									<Form.Group>
+										{stars()}
+										<Form.Label>Review: </Form.Label>
+										<Form.Control
+											as="textarea"
+											rows={5}
+											onChange={(e) =>
+												setReviewInfo({
+													...reviewInfo,
+													content: e.target.value,
+												})
+											}
+										/>
+									</Form.Group>
+									<Button
+										disabled={!reviewInfo.content}
+										variant="primary"
+										type="submit"
+										className="btn-block"
+										onClick={handleSubmit}
+									>
+										Post
+									</Button>
+								</div>
+							)}
+						</Form>
+					</Col>
+				</Row>
 			</Container>
 		</div>
 	)

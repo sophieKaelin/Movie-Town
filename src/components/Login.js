@@ -6,7 +6,7 @@ import "../style/Login.css"
 import { Redirect } from "react-router-dom"
 
 //TODO: change this to relative path when pushed to heroku
-const loginURL = "http://localhost:3001/api/login"
+const loginURL = "/api/login"
 
 const validateForm = (errors) => {
 	let valid = true
@@ -17,7 +17,7 @@ const validateForm = (errors) => {
 	return valid
 }
 
-const userURL = "http://localhost:3001/api/users/"
+const userURL = "/api/users/"
 
 const Login = ({ user, setUser }) => {
 	const [loginInfo, setLoginInfo] = useState({ username: "", password: "" })
