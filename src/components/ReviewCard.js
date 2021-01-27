@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
+import {Link} from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.css"
 import {
 	Card,
@@ -11,49 +12,70 @@ import {
 	FormControl,
 	Image,
 	Accordion,
+	Popover,
+	OverlayTrigger,
 } from "react-bootstrap"
+import axios from "axios"
 import "../style/ReviewCard.css"
-import samProfile from "../profilepictures/samProf.png"
+import reviewServices from "../axiosServices/reviewServices.js"
+import userServices from "../axiosServices/userServices"
 
-const ReviewCard = ({ props }) => {
+const ReviewCard = ({
+	review,
+	user,
+	reviews,
+	setReviews,
+	users,
+	setUser,
+	setUsers, loggedInUser, deleteFn
+}) => {
+	const {
+		username,
+		titleid,
+		timestamp,
+		stars,
+		content,
+		likes,
+		comments,
+	} = review
 	const [newComment, setNewComment] = useState("")
 	const [like, setLike] = useState(false)
-	const [comments, setComments] = useState([
-		{
-			author: "Dwight Schrute",
-			comment: "beetroots",
-			timestamp: "28/10/20",
-		},
-	])
-	console.log("props ", props)
-
-	// const {
-	// 	username,
-	// 	titleid,
-	// 	timestamp,
-	// 	starts,
-	// 	content,
-	// 	likes,
-	// 	comments
-	// } = reviews
-
 	// store state for star rating
 	const [starRating, setStarRating] = useState()
 	const [hover, setHover] = useState(null)
+	const [reviewUser, setReviewUser] = useState(user)
+	const [movie, setMovie] = useState({
+		Title: "",
+		imdbID: "",
+		Year: "",
+		Plot: "",
+		Poster: "",
+	})
+	useEffect(() => {
+		if (user) {
+			axios
+				.get("http://localhost:3001/api/movie/id", {
+					params: { id: titleid },
+				})
+				.then((res) => {
+					setMovie(res.data)
+				})
+				.catch((err) => {
+					console.log(err)
+				})
+		}
+	}, [titleid, user])
 
-	// review data
-	const user = "Professor Sam"
-	const title = "Avengers Endgame"
-	const watchDate = "21/10/20"
-	const year = "2019"
-	const synopsis =
-		"After the devastating events of Avengers: Infinity War (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe."
-	const link = "https://www.imdb.com/title/tt4154796/"
-	const poster =
-		"https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_SX300.jpg"
-	const avatar = samProfile
-	const stars = 5
-	const content = "Broom Broom, I like Cards"
+	useEffect(() => {
+		axios
+			.get("http://localhost:3001/api/users/" + username)
+			.then((response) => {
+				setReviewUser(response.data)
+			})
+			.catch((err) => {
+				console.log(err)
+			})
+	}, [])
 
 	const handleChange = (e) => {
 		e.preventDefault()
@@ -62,28 +84,55 @@ const ReviewCard = ({ props }) => {
 	}
 
 	const handleLike = () => {
-		if (!like) {
-			setLike(true)
-		} else {
-			setLike(false)
-		}
+		reviewServices.likeReview(review, user, reviews, setReviews)
+	}
+
+	const handleUnlike = () => {
+		reviewServices.unlikeReview(review, user, reviews, setReviews)
 	}
 
 	const handleAddToList = () => {
-		alert("TODO: Movie added to your movie list")
+		userServices.addToWatch(titleid, user, users, setUser, setUsers)
+		alert(movie.Title + " has been added to your to watch list")
 	}
 
 	const handleComment = () => {
-		console.log(newComment)
-		setComments([
-			...comments,
-			{
-				author: "Dwight Schrute",
-				comment: newComment,
-				timestamp: "28/10/20",
-			},
-		])
+		reviewServices.addComment(review, newComment, reviews, setReviews)
 	}
+
+	//*****TODO fix re-rendering after deleting a review*******
+	const handleDelete = () => {
+		deleteFn(reviews)
+	}
+
+	//@mentions and links to profiles
+	const contentLinks = (content) => {
+		var newContent = []
+		while (content.indexOf("@") !== -1) {
+			const firstIndex = content.indexOf("@")
+			const str = content.substr(0, firstIndex)
+			newContent.push(str)
+			content = content.slice(firstIndex)
+			const lastIndex = content.indexOf(" ")
+			const name = content.substr(0, lastIndex)
+			const nameURL = content.substr(1, lastIndex - 1)
+			const newLink = <Link to={"/profile/" + nameURL}> {name} </Link>
+			newContent.push(newLink)
+			content = content.slice(lastIndex)
+		}
+		newContent.push(content)
+		return newContent
+	}
+  
+	const popover = (
+		<Popover id="popover-basic">
+			<Popover.Title as="h3">Likes</Popover.Title>
+			<Popover.Content>
+				{likes.length > 0 ? likes : "Be the first to like this review!"}
+			</Popover.Content>
+		</Popover>
+	)
+  
 	return (
 		<Card className="mt-5" style={{ width: "56rem", margin: "auto auto" }}>
 			<Row className="no-gutters">
@@ -96,10 +145,10 @@ const ReviewCard = ({ props }) => {
 							}}
 							className="mr-3"
 							alt="Avatar"
-							src={avatar}
+							src={reviewUser.avatar}
 							roundedCircle
 						/>
-						<b>{user}</b> reviewed <b>{title}</b>
+						<b><Link to={"/profile/" + username}> {username} </Link></b> reviewed <b>{movie.Title}</b>
 					</Card.Header>
 					<Card.Body>
 						<ListGroup className="list-group-flush">
@@ -136,10 +185,10 @@ const ReviewCard = ({ props }) => {
 									)
 								})}
 								<p className="text-muted ml-3">
-									<em>{""} Date Watched: </em> {watchDate}
+									<em>{""} Date Reviewed: </em> {timestamp}
 								</p>
 							</ListGroupItem>
-							<ListGroupItem>{content}</ListGroupItem>
+							<ListGroupItem>{contentLinks(content)}</ListGroupItem>
 						</ListGroup>
 						<Card
 							style={{
@@ -152,11 +201,11 @@ const ReviewCard = ({ props }) => {
 									<Card.Body>
 										<Card.Img
 											className="moviePoster col-auto img-fluid"
-											src={poster}
-											alt={title + " poster"}
+											src={movie.Poster}
+											alt={movie.Title + " poster"}
 										/>
 										<h3>
-											{title} ({year})
+											{movie.Title} ({movie.Year})
 										</h3>
 										<ListGroup className="list-group-flush">
 											<ListGroupItem>
@@ -167,7 +216,7 @@ const ReviewCard = ({ props }) => {
 												</Button>
 											</ListGroupItem>
 											<ListGroupItem>
-												{synopsis}
+												{movie.Plot}
 											</ListGroupItem>
 										</ListGroup>
 									</Card.Body>
@@ -180,30 +229,53 @@ const ReviewCard = ({ props }) => {
 
 			<Card.Footer>
 				<Accordion>
-					<Card.Link onClick={handleLike}>
-						{like ? "Unlike" : "Like"}
-					</Card.Link>
+					<OverlayTrigger
+						trigger={["hover", "focus"]}
+						placement="right"
+						overlay={popover}
+					>
+						{review.likes.includes(user.username)
+							? <Card.Link onClick={handleUnlike}>
+									Unlike
+								</Card.Link>
+							: <Card.Link onClick={handleLike}>
+									Like
+								</Card.Link>}
+					</OverlayTrigger>
 					<Accordion.Toggle as={Card.Link} eventKey="0">
 						View/Hide Comments
 					</Accordion.Toggle>
+					{reviews.username === loggedInUser.username 
+							? (
+								<Button
+									variant="outline-secondary"
+									onClick={handleDelete}
+									className="ml-3"
+									>
+								Delete
+								</Button>
+							) : null
+					}
 					<Accordion.Collapse eventKey="0">
 						<ListGroup className="mt-2">
-							{comments.map((comment) => (
-								<ListGroupItem className="mt-2">
-									<Image
-										style={{
-											height: "50px",
-											width: "50px",
-										}}
-										className="mr-3"
-										alt="Avatar"
-										src={avatar}
-										roundedCircle
-									/>
-									<b>{comment.author}: </b>
-									{comment.comment}
-								</ListGroupItem>
-							))}
+							{comments !== null
+								? comments.map((comment) => (
+										<ListGroupItem className="mt-2">
+											<Image
+												style={{
+													height: "50px",
+													width: "50px",
+												}}
+												className="mr-3"
+												alt="Avatar"
+												src={user.avatar}
+												roundedCircle
+											/>
+											<b>{user.username}: </b>
+											{comment}
+										</ListGroupItem>
+								  ))
+								: null}
 						</ListGroup>
 					</Accordion.Collapse>
 				</Accordion>

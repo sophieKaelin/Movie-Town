@@ -1,10 +1,20 @@
-import React, { useEffect } from "react"
+import React from "react"
 import "bootstrap/dist/css/bootstrap.css"
 import { Nav, Navbar, NavDropdown, Image } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
 import SearchBar from "./SearchBar.js"
+import ReviewModal from "./ReviewModal.js"
 
-const NavBar = ({ user, setUser, movie, setMovie }) => {
+const NavBar = ({
+	user,
+	setUser,
+	movie,
+	setMovie,
+	addNewReview,
+	show,
+	handleClose,
+	handleShow,
+}) => {
 	const history = useHistory()
 
 	//TODO: Fix this so that it doesn't use localstorage
@@ -94,7 +104,7 @@ const NavBar = ({ user, setUser, movie, setMovie }) => {
 						</svg>
 						My Reviews
 					</Nav.Link>
-					<Nav.Link href="#about">About</Nav.Link>
+					<Nav.Link href="/about">About</Nav.Link>
 				</Nav>
 			</Navbar.Collapse>
 			<Navbar.Collapse className="justify-content-end">
@@ -140,7 +150,7 @@ const NavBar = ({ user, setUser, movie, setMovie }) => {
 						</svg>
 						Profile
 					</NavDropdown.Item>
-					<NavDropdown.Item href="/reviews">
+					<NavDropdown.Item onClick={handleShow}>
 						<svg
 							width="1em"
 							height="1em"
@@ -164,6 +174,15 @@ const NavBar = ({ user, setUser, movie, setMovie }) => {
 					</NavDropdown.Item>
 				</NavDropdown>
 			</Navbar.Collapse>
+			{/* MODAL for the review */}
+			<ReviewModal
+				user={user}
+				addNewReview={addNewReview}
+				movie={movie}
+				setMovie={setMovie}
+				show={show}
+				handleClose={handleClose}
+			/>
 		</Navbar>
 	)
 }

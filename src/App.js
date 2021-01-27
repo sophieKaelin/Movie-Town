@@ -9,8 +9,10 @@ import Register from "./components/Register.js"
 import NavBar from "./components/NavBar.js"
 import Profile from "./components/Profile.js"
 import Home from "./components/Home.js"
+import About from "./components/About.js"
 import { CardList } from "./components/CardList.js"
-import ReviewCard from "./components/ReviewCard.js"
+import ReviewCardList from "./components/ReviewCardList.js"
+import Feed from "./components/Feed.js"
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -18,7 +20,6 @@ import {
 	Redirect,
 } from "react-router-dom"
 import MovieCard from "./components/MovieCard"
-import ReviewForm from "./components/ReviewForm"
 
 //TODO: Reroute to login page if there is no user logged in (set this on all pages)
 
@@ -29,10 +30,20 @@ function App() {
 	const [users, setUsers] = useState([]) //all users
 	const [user, setUser] = useState("") //Logged In User
 	const [reviews, setReviews] = useState([]) //all reviews
+	const [review, setReview] = useState([])
 	const [movie, setMovie] = useState("") //movie currently being searched
+
+	//REVIEW MODAL STATE VARIABLES & FUNCTIONS
+	const [show, setShow] = useState(false)
+	const handleClose = () => setShow(false)
+	const handleShow = () => setShow(true)
 
 	const FsetUser = (user) => {
 		setUser(user)
+	}
+
+	const FsetUsers = (users) => {
+		setUsers(users)
 	}
 
 	const FsetMovie = (movie) => {
@@ -55,27 +66,18 @@ function App() {
 
 		axios.get("http://localhost:3001/api/reviews").then((response) => {
 			setReviews(response.data)
+			console.log("reviews set")
 		})
 	}, [])
 
 	const addNewUser = (newUser) => {
-		userServices.addNewUser(newUser, users, setUsers)
+		userServices.addNewUser(newUser, users, setUsers, setUser)
 	}
-	const followUser = (userToFollow) => {
-		//pass a user to the function or grab state variable user???
+	const followUser = (userToFollow, user) => {
 		userServices.followUser(userToFollow, user, users, setUser, setUsers)
 	}
-	const unfollowUser = (userToFollow) => {
-		//pass a user to the function or grab state variable user???
+	const unfollowUser = (userToFollow, user) => {
 		userServices.unfollowUser(userToFollow, user, users, setUser, setUsers)
-	}
-	const addWatched = (titleid) => {
-		//pass a user to the function or grab state variable user???
-		userServices.addWatched(titleid, user, users, setUser, setUsers)
-	}
-	const addToWatch = (titleid) => {
-		//pass a user to the function or grab state variable user???
-		userServices.addToWatch(titleid, user, users, setUser, setUsers)
 	}
 
 	const addNewReview = (newReview) => {
@@ -85,11 +87,9 @@ function App() {
 		reviewServices.deleteReview(review, reviews, setReviews)
 	}
 	const likeReview = (review) => {
-		//pass a user to the function or grab state variable user???
 		reviewServices.likeReview(review, user, reviews, setReviews)
 	}
 	const unlikeReview = (review) => {
-		//pass a user to the function or grab state variable user???
 		reviewServices.unlikeReview(review, user, reviews, setReviews)
 	}
 	const addComment = (review, comment) => {
@@ -102,79 +102,139 @@ function App() {
 		reviewServices.editContent(content, review, reviews, setReviews)
 	}
 
+	const getReview = () => {
+		reviews
+			.slice(0)
+			.reverse()
+			.map((r) => {
+				setReview(r)
+			})
+	}
+
 	const baseURL = "/api/"
 	//Not working, response with 404 not found hence hardcoded url in useEffects
 
 	return (
-		<Router>
-			<Switch>
-				<Route path="/home">
-					{user ? <Redirect to="/home" /> : <Redirect to="/login" />}
+		<div>
+			<Router>
+				<Switch>
+					<Route path="/login">
+						<Login user={user} setUser={FsetUser} />
+					</Route>
+					<Route path="/register">
+						<Register
+							users={users}
+							setUser={FsetUser}
+							addNewUser={addNewUser}
+						/>
+					</Route>
+				</Switch>
+			</Router>
+			<Router>
+				{user ? (
 					<NavBar
 						user={user}
 						setUser={FsetUser}
 						movie={movie}
 						setMovie={FsetMovie}
+						addNewReview={addNewReview}
+						show={show}
+						handleClose={handleClose}
+						handleShow={handleShow}
 					/>
-					<Home />
-				</Route>
-				<Route path="/login">
-					<Login user={user} setUser={FsetUser} />
-				</Route>
-				<Route path="/register">
-					<Register
-						users={users}
-						setUser={FsetUser}
-						addNewUser={addNewUser}
-					/>
-				</Route>
-				<Route path="/profile/:username">
-					<NavBar
-						user={user}
-						setUser={FsetUser}
-						movie={movie}
-						setMovie={FsetMovie}
-					/>
-					{/* TODO: Fix this so it's not dodgy. If no user input, then check useParams. Had null check issues */}
-					<Profile
-						loggedInUser={user}
-						followUser={followUser}
-						unfollowUser={unfollowUser}
-					/>
-				</Route>
-				<Route path="/my/movies">
-					<NavBar
-						user={user}
-						setUser={FsetUser}
-						movie={movie}
-						setMovie={FsetMovie}
-					/>
-					<CardList user={user} />
-				</Route>
-				<Route path="/reviews">
-					<NavBar
-						user={user}
-						setUser={FsetUser}
-						movie={movie}
-						setMovie={FsetMovie}
-					/>
-					<ReviewCard user={user} />
-				</Route>
-				<Route path="/movie/:id">
-					<NavBar
-						user={user}
-						setUser={FsetUser}
-						movie={movie}
-						setMovie={FsetMovie}
-					/>
-					<MovieCard movie={movie} />
-				</Route>
-				{/* ALWAYS LEAVE LAST */}
-				<Route path="/">
-					{user ? <Redirect to="/home" /> : <Redirect to="/login" />}
-				</Route>
-			</Switch>
-		</Router>
+				) : (
+					<br></br>
+				)}
+				<Switch>
+					<Route path="/home">
+						{user ? (
+							<Redirect to="/home" />
+						) : (
+							<Redirect to="/login" />
+						)}
+						<Home
+							user={user}
+							users={users}
+							reviews={reviews}
+							setReviews={setReviews}
+							setUser={FsetUser}
+							setUsers={setUsers}
+						/>
+                {reviews.length !== 0 ? (reviews.slice(0).reverse().map((r) => (<Feed 
+																							review={r} 
+																							user={user} 
+																							users={users}
+																							deleteFn={deleteReview}/>))):null}
+					</Route>
+					<Route path="/profile/:username">
+						<Profile
+							loggedInUser={user}
+							followUser={followUser}
+							unfollowUser={unfollowUser}
+						/>
+					</Route>
+					<Route path="/my/movies">
+						<CardList
+							user={user}
+							setUser={FsetUser}
+							movie={movie}
+							setMovie={FsetMovie}
+							addNewReview={addNewReview}
+							show={show}
+							handleClose={handleClose}
+							handleShow={handleShow}
+							users={users}
+							setUser={setUser}
+							setUsers={setUsers}
+						/>
+					</Route>
+					<Route path="/reviews">
+						{getReview}
+						<ReviewCardList
+							review={review}
+							user={user}
+							setUser={FsetUser}
+							movie={movie}
+							setMovie={FsetMovie}
+							addNewReview={addNewReview}
+							show={show}
+							handleClose={handleClose}
+							handleShow={handleShow}
+							deleteFn = {deleteReview}
+							users={users}
+							setUser={setUser}
+							setUsers={setUsers}
+						/>
+					</Route>
+					<Route path="/movie/:id">
+						<MovieCard
+							movie={movie}
+							user={user}
+							addNewReview={addNewReview}
+							setMovie={setMovie}
+							show={show}
+							handleShow={handleShow}
+							handleClose={handleClose}
+							watched={null}
+							users={users}
+							setUser={FsetUser}
+							setUsers={FsetUsers}
+						/>
+					</Route>
+					<Route path="/about">
+						<About />
+					</Route>
+					{/* ALWAYS LEAVE LAST */}
+					<Route path="/">
+						{user ? (
+							<Redirect to="/home" />
+						) : (
+							<Redirect to="/login" />
+						)}
+					</Route>
+				</Switch>
+			</Router>
+		</div>
 	)
 }
 
